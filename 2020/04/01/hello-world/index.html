@@ -6,24 +6,24 @@
   <meta name="keywords" content="">
   <meta name="description" content="Hello World | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="[toc] Defcon Qual 2019Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。  speedrun-009 保护全开   格式化字符串漏洞、栈溢出 攻击思路   fmt 泄露栈上内容，得到libc一些符号地址，one_gadget也就有了  fmt 泄露canary  ROP 到one_gadget  Pwned!#!&#x2F;usr&#x2F;bin&#x2F;env python #co">
+<meta name="description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Defcon2019Q">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/09/Defcon2019Q/index.html">
+<meta property="og:title" content="AFL基础">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="[toc] Defcon Qual 2019Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。  speedrun-009 保护全开   格式化字符串漏洞、栈溢出 攻击思路   fmt 泄露栈上内容，得到libc一些符号地址，one_gadget也就有了  fmt 泄露canary  ROP 到one_gadget  Pwned!#!&#x2F;usr&#x2F;bin&#x2F;env python #co">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/09/Defcon2019Q/image-20200409133508781.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/09/Defcon2019Q/image-20200409133959847.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/09/Defcon2019Q/image-20200409133712725.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/09/Defcon2019Q/image-20200409133700701.png">
-<meta property="article:published_time" content="2020-04-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-09T05:42:50.788Z">
+<meta property="og:description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
+<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
+<meta property="article:modified_time" content="2020-04-10T04:40:24.139Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="Pwn">
-<meta property="article:tag" content="CTF">
-<meta property="article:tag" content="Defcon">
+<meta property="article:tag" content="fuzz">
+<meta property="article:tag" content="afl">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/09/Defcon2019Q/image-20200409133508781.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
 
 
 <link rel="icon" href="/img/avatar2.jpg">
