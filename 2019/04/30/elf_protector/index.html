@@ -6,27 +6,39 @@
   <meta name="keywords" content="">
   <meta name="description" content="elf_protector | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta name="description" content="2018网鼎杯 Pwn@[toc] 今年网鼎杯5月10日开赛。第一届在前年举办，参赛队伍众多，堪称网络安全”奥运会“。谷歌了一圈，第三场的 Pwn Writeup 不齐全。第三场有4道题目。有两道题目比较有趣，写一篇博文记录心得。  note下标溢出+改puts_got+写shellcode。 from pwn import  *  import primedbg context.log_leve">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFL基础">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="2018网鼎杯Pwn">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
-<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
-<meta property="article:modified_time" content="2020-04-10T17:11:17.085Z">
+<meta property="og:description" content="2018网鼎杯 Pwn@[toc] 今年网鼎杯5月10日开赛。第一届在前年举办，参赛队伍众多，堪称网络安全”奥运会“。谷歌了一圈，第三场的 Pwn Writeup 不齐全。第三场有4道题目。有两道题目比较有趣，写一篇博文记录心得。  note下标溢出+改puts_got+写shellcode。 from pwn import  *  import primedbg context.log_leve">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415105527230.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415110504350.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415111251913.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415111522133.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112027183.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112214299.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112255131.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112413083.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112500837.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/A36095D72B8EB2F5E57AADAAB011A196.jpg">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113625535.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113806831.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113930530.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113949168.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114013078.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114044935.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114244732.png">
+<meta property="article:published_time" content="2020-04-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-15T03:49:46.830Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="fuzz">
-<meta property="article:tag" content="afl">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415105527230.png">
 
 
-<link rel="icon" href="/img/mac.png">
+<link rel="icon" href="/img/avatar2.jpg">
 
 <link href="/css/style.css?v=1.0.1" rel="stylesheet">
 
