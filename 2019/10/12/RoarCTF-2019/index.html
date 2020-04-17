@@ -6,35 +6,24 @@
   <meta name="keywords" content=" Pwn , CTF ">
   <meta name="description" content="RoarCTF-2019 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="2018网鼎杯 Pwn@[toc] 今年网鼎杯5月10日开赛。第一届在前年举办，参赛队伍众多，堪称网络安全”奥运会“。谷歌了一圈，第三场的 Pwn Writeup 不齐全。第三场有4道题目。有两道题目比较有趣，写一篇博文记录心得。  note下标溢出+改puts_got+写shellcode。 from pwn import  *  import primedbg context.log_leve">
+<meta name="description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2018网鼎杯Pwn">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/index.html">
+<meta property="og:title" content="AFL基础">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="2018网鼎杯 Pwn@[toc] 今年网鼎杯5月10日开赛。第一届在前年举办，参赛队伍众多，堪称网络安全”奥运会“。谷歌了一圈，第三场的 Pwn Writeup 不齐全。第三场有4道题目。有两道题目比较有趣，写一篇博文记录心得。  note下标溢出+改puts_got+写shellcode。 from pwn import  *  import primedbg context.log_leve">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415105527230.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415110504350.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415111251913.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415111522133.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112027183.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112214299.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112255131.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112413083.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415112500837.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/A36095D72B8EB2F5E57AADAAB011A196.jpg">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113625535.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113806831.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113930530.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415113949168.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114013078.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114044935.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415114244732.png">
-<meta property="article:published_time" content="2020-04-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-15T03:49:46.830Z">
+<meta property="og:description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
+<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
+<meta property="article:modified_time" content="2020-04-10T17:11:17.085Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="Pwning">
+<meta property="article:tag" content="fuzz">
+<meta property="article:tag" content="afl">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/image-20200415105527230.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
 
 
 <link rel="icon" href="/img/avatar2.jpg">
@@ -110,7 +99,7 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="21">
+<input type="hidden" id="yelog_site_posts_number" value="20">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -167,10 +156,6 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a class="color2">Defcon</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a class="color5">fuzz</a>
     </li>
     
@@ -178,19 +163,15 @@
         <a class="color4">afl</a>
     </li>
     
+    <li class="article-tag-list-item">
+        <a class="color2">Defcon</a>
+    </li>
+    
     <div class="clearfix"></div>
 </div>
 
     
     <nav id="title-list-nav">
-        
-        <a  class=""
-           href="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AFPwn/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="2018网鼎杯Pwn">2018网鼎杯Pwn</span>
-            <span class="post-date" title="2020-04-15 00:00:00">2020/04/15</span>
-        </a>
         
         <a  class="Fuzz "
            href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
@@ -329,18 +310,18 @@
         </a>
         
         <a  class=""
-           href="/2019/04/30/elf_protector/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="elf_protector">elf_protector</span>
-            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
-        </a>
-        
-        <a  class=""
            href="/2019/04/30/shellcode/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="shellcode">shellcode</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/elf_protector/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="elf_protector">elf_protector</span>
             <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
         </a>
         
@@ -624,7 +605,7 @@ if __name__==&quot;__main__&quot;:
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#Pwn','#CTF','#CVE','#Defcon','#fuzz','#afl',],
+            'data': ['#Pwn','#CTF','#CVE','#fuzz','#afl','#Defcon',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
