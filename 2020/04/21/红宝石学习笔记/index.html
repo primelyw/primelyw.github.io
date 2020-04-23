@@ -6,24 +6,20 @@
   <meta name="keywords" content=" ruby , lang ">
   <meta name="description" content="红宝石学习笔记 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
+<meta name="description" content="红宝石🍬 📒 数字运算符优先级  📒 取余只返回正数  puts (5 % 3)     # prints  2   puts (-5 % 3)    # prints  1   puts (5 % -3)    # prints -1   puts (-5 % -3)   # prints -2   🍬 逻辑或返回值取决于第一个操作数，返回第一个操作数如果其为非假，否则返回第二个操作数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFL基础">
-<meta property="og:url" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="红宝石学习笔记">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="风云阁">
-<meta property="og:description" content="@[toc] Fuzzing 炼金路Lazy Pwner ☞ primelee  声明：以下仅作为笔记学习，不是作者原创。  开箱即用的佩剑 —— AFL make .  写栈溢出源码 gets(name)   插桩编译   创建初识语料库 echo &#39;Pwn me&#39; &gt;&gt; .&#x2F;input&#x2F;a.in Go fuzzing ! Oh no …   Fix it… sudo">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021513499-6493565.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021916706.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022711028.png">
-<meta property="og:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302022730604.png">
-<meta property="article:published_time" content="2020-04-10T04:35:49.741Z">
-<meta property="article:modified_time" content="2020-04-10T17:11:17.085Z">
+<meta property="og:description" content="红宝石🍬 📒 数字运算符优先级  📒 取余只返回正数  puts (5 % 3)     # prints  2   puts (-5 % 3)    # prints  1   puts (5 % -3)    # prints -1   puts (-5 % -3)   # prints -2   🍬 逻辑或返回值取决于第一个操作数，返回第一个操作数如果其为非假，否则返回第二个操作数。">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20200422173243739.png">
+<meta property="article:published_time" content="2020-04-21T12:18:56.368Z">
+<meta property="article:modified_time" content="2020-04-22T16:29:29.169Z">
 <meta property="article:author" content="枫云李">
-<meta property="article:tag" content="fuzz">
-<meta property="article:tag" content="afl">
+<meta property="article:tag" content="ruby">
+<meta property="article:tag" content="lang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://primelyw.github.io/2020/04/10/AFL%E5%9F%BA%E7%A1%80/image-20200302021009932.png">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20200422173243739.png">
 
 
 <link rel="icon" href="/img/avatar2.jpg">
@@ -99,7 +95,7 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="22">
+<input type="hidden" id="yelog_site_posts_number" value="23">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -126,7 +122,9 @@
             
             <li><a target="_blank" href="https://enivs0rt.github.io/">enivS0rt</a></li>
             
-            <li><a target="_blank" href="https://me.csdn.net/getsum">SuperGate</a></li>
+            <li><a target="_blank" href="http://sup3rgate.xyz/">SuperGate</a></li>
+            
+            <li><a target="_blank" href="https://ccdragon.cc/">ccdragon</a></li>
             
         </ul>
     </div>
@@ -180,6 +178,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="数字中国虎符网安大赛2020">数字中国虎符网安大赛2020</span>
+            <span class="post-date" title="2020-04-23 12:50:42">2020/04/23</span>
+        </a>
         
         <a  class=""
            href="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
@@ -389,7 +395,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-04-21 21:09:48'>2020-04-21 20:18</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-23 00:29:29'>2020-04-21 20:18</time>
         
     </div>
     <div class="article-meta">
@@ -411,7 +417,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#红宝石学习笔记"><span class="toc-text">红宝石学习笔记</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#红宝石"><span class="toc-text">红宝石</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数字"><span class="toc-text">数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串"><span class="toc-text">字符串</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -427,8 +433,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="红宝石学习笔记"><a href="#红宝石学习笔记" class="headerlink" title="红宝石学习笔记"></a>红宝石学习笔记</h1><p>#{任意ruby表达式}</p>
-<pre><code>puts(&quot;hello #{puts &quot;world&quot;}&quot;)</code></pre><p><strong>字符串</strong></p>
+        <h1 id="红宝石"><a href="#红宝石" class="headerlink" title="红宝石"></a>红宝石</h1><p>🍬 📒</p>
+<h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a><strong>数字</strong></h2><p>运算符优先级</p>
+<p><img src="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20200422173243739.png" alt></p>
+<p>📒 取余只返回正数</p>
+<blockquote>
+<pre><code>puts (5 % 3)     # prints  2  
+puts (-5 % 3)    # prints  1  
+puts (5 % -3)    # prints -1  
+puts (-5 % -3)   # prints -2  </code></pre></blockquote>
+<p>🍬 逻辑或返回值取决于第一个操作数，返回第一个操作数如果其为非假，否则返回第二个操作数。</p>
+<blockquote>
+<pre><code>@variable = @variable || &quot;default value&quot; </code></pre></blockquote>
+<p>🍬 #{任意ruby表达式}</p>
+<pre><code>puts(&quot;hello #{puts &quot;world&quot;}&quot;)</code></pre><h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a><strong>字符串</strong></h2><p>🍬 %w 创建单词数组</p>
+<blockquote>
+<pre><code>names1 = [ &#39;ann&#39;, &#39;richard&#39;, &#39;william&#39;, &#39;susan&#39;, &#39;pat&#39; ]  
+puts names1[0] # ann  
+puts names1[3] # susan  
+# this is the same:  
+names2 = %w{  ann richard william susan pat }  
+puts names2[0] # ann  
+puts names2[3] # susan </code></pre></blockquote>
 <pre><code>strip
 index 
 ljust
@@ -436,7 +462,8 @@ to_i
 reverse
 split
 captitalize[!]
-upcase</code></pre><p><strong>数组</strong></p>
+upcase</code></pre><p>🍬语句修饰</p>
+<pre><code>puts &quot;Enrollments will now Stop&quot; if participants &gt; 2500  </code></pre><p><strong>数组</strong></p>
 <pre><code>Array.new()</code></pre><p><strong>循环控制</strong></p>
 <pre><code>key=[ 0x66, 0x0A, 0x07, 0x0B, 0x1D, 0x08, 0x51, 0x38, 0x1F, 0x5C,  0x14, 0x38, 0x30, 0x0A, 0x1A, 0x28, 0x39, 0x59, 0x0C, 0x24,  0x24, 0x22, 0x01, 0x1F, 0x1E, 0x73, 0x1D, 0x3A, 0x08, 0x05, 0x15, 0x0A]
 
@@ -462,7 +489,7 @@ for i in (0..31)
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
     <p><span class="copy-title">发布时间:</span>2020-04-21, 20:18:56</p>
-    <p><span class="copy-title">最后更新:</span>2020-04-21, 21:09:48</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-23, 00:29:29</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="红宝石学习笔记">https://primelyw.github.io/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
