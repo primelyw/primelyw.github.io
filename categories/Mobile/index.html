@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>AOSP刷机 | 风云阁</title>
+  <title>风云阁</title>
   <meta name="keywords" content="">
-  <meta name="description" content="AOSP刷机 | 风云阁">
+  <meta name="description" content="风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
 <meta property="og:type" content="article">
@@ -56,7 +56,7 @@
 </div>
 
 <body>
-<aside class="nav">
+<aside class="nav mobile">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar2.jpg" />
@@ -83,6 +83,10 @@
     
         
             <li><div data-rel="Fuzz">Fuzz</div></li>
+        
+    
+        
+            <li><div data-rel="Mobile">Mobile</div></li>
         
     
 </ul>
@@ -178,11 +182,27 @@
         <a class="color5">lang</a>
     </li>
     
+    <li class="article-tag-list-item">
+        <a class="color5">AOSP</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Mobile</a>
+    </li>
+    
     <div class="clearfix"></div>
 </div>
 
     
     <nav id="title-list-nav">
+        
+        <a  class="Mobile "
+           href="/2020/06/20/AOSP%E5%88%B7%E6%9C%BA/"
+           data-tag="AOSP,Mobile"
+           data-author="" >
+            <span class="post-title" title="AOSP刷机">AOSP刷机</span>
+            <span class="post-date" title="2020-06-20 00:00:00">2020/06/20</span>
+        </a>
         
         <a  class=""
            href="/2020/04/23/MyGems/"
@@ -253,14 +273,6 @@
            data-tag=""
            data-author="" >
             <span class="post-title" title="强网杯2019">强网杯2019</span>
-            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
-        </a>
-        
-        <a  class=""
-           href="/2020/01/16/AOSP%E5%88%B7%E6%9C%BA/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="AOSP刷机">AOSP刷机</span>
             <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
         </a>
         
@@ -394,43 +406,12 @@
         </div>
     </div>
 </aside>
-<div class="post">
+<div class="post index">
     <div class="pjax">
-        <article id="post-AOSP刷机" class="article article-type-post" itemscope itemprop="blogPost">
+        <article class="index">
+            <div class="toc-ref">
     
-        <h1 class="article-title">AOSP刷机</h1>
-    
-    <div class="article-meta">
         
-        
-        
-        
-    </div>
-    <div class="article-meta">
-        
-        创建时间:<time class="date" title='更新时间: 2020-07-04 18:25:09'>2020-01-16 02:06</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        
-        <span id="busuanzi_container_page_pv">
-            阅读:<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </span>
-        </span>
-        
-        
-    </div>
-    
-    <div class="toc-ref">
-    
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tag-Mobile-AOSP"><span class="toc-text">tag:[Mobile,AOSP]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AOSP-10刷机"><span class="toc-text">AOSP 10刷机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷机-flash-images"><span class="toc-text">刷机 (flash images)</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -443,63 +424,11 @@
     }
 </style>
 </div>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h2 id="tag-Mobile-AOSP"><a href="#tag-Mobile-AOSP" class="headerlink" title="tag:[Mobile,AOSP]"></a>tag:[Mobile,AOSP]</h2><p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tag-Mobile-AOSP"><span class="toc-text">tag:[Mobile,AOSP]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AOSP-10刷机"><span class="toc-text">AOSP 10刷机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷机-flash-images"><span class="toc-text">刷机 (flash images)</span></a></li></ol></div></p>
-<h1 id="AOSP-10刷机"><a href="#AOSP-10刷机" class="headerlink" title="AOSP 10刷机"></a>AOSP 10刷机</h1><p>终于把项目完成了，抽空有时间把这篇博客补齐。以后学习重心从Linux转移到安卓的移动安全了。 </p>
-<p>macos 编译成功 AOSP 10 的过程，遇到几个编译异常，谷歌搜索好长一段时间才把问题解决。 </p>
-<p>我编译过两个版本，一个是最新的android-10，适配Pixel 3XL，另一个版本是 android-5.0，适配 Nexus 5。</p>
-<p>整个过程主要参考的<a href="https://source.android.com/" target="_blank" rel="noopener">官方文档</a>，由于代码仓库下载速度慢，改用国内镜像。这里推荐<a href="https://lug.ustc.edu.cn/wiki/mirrors/help/aosp" target="_blank" rel="noopener">中科大源</a>，下载没出任何意外。3个小时完成。</p>
-<p>工作机硬件配置是6核i7、16G内存，android-10 编译时长2.5个小时。android-5 的编译耗时40分钟。 </p>
-<p>写这篇博客记录AOSP下载、编译、刷机的完整过程，备忘。 主要内容记录的版本是 android-10，对 5 的过程稍加补充说明。</p>
-<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>找到手机支持的版本号 build。 这里我选择的是 – </p>
-<p><img src="/2020/01/16/AOSP%E5%88%B7%E6%9C%BA/image-20200704175023906.png" alt="image-20200704175023906"></p>
-<p>安装 repo 工具。</p>
-<p>home 目录创建 bin目录，其他地方也可以。 </p>
-<pre><code>mkdir ~/bin
-PATH=~/bin:$PATH</code></pre><p>下载，改权限。 </p>
-<pre><code>curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo
-chmod a+x ~/bin/repo</code></pre><p>初始化repo，选择指定版本号build，这里使用中科大源，<strong>下载速度快很多</strong>。</p>
-<pre><code>repo init -u git://mirrors.ustc.edu.cn/aosp/platform/manifest -b $ANDROID_VERSION_CODE</code></pre><p>开始下载。 预计耗时3小时。 </p>
-<pre><code>repo sync</code></pre><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>使用 <code>envsetup.sh</code> 脚本初始化环境，此过程将导入若干命令。 </p>
-<pre><code>source build/envsetup.sh </code></pre><p>执行 <code>lunch</code> 命令，选择设备代号。</p>
-<pre><code>lunch</code></pre><p>执行 <code>make</code> 进行编译。 N参数表示线程数。 工作机6核12线程，N=12。</p>
-<pre><code>m -j12</code></pre><p>macOS 10.15 版本编译时候遇到 sepolicy 错误，需要改编译配置文件。 </p>
-<p>经过一番谷歌查找，找到此处。 修改一下继续编译。 </p>
-<h2 id="刷机-flash-images"><a href="#刷机-flash-images" class="headerlink" title="刷机 (flash images)"></a>刷机 (flash images)</h2><p>Google 的手机同时按音量下键和电源键，长按至进入<code>bootloader</code> 模式。</p>
-<pre><code>export 
-fastboot </code></pre><p>等待，开机后，一款很土的UI出现了，是的，这就是AOSP裸系统，哈哈哈。</p>
+            <p><img src="/img/hatmac.png" alt="向着风，拥抱彩虹"></p>
 
-      
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
-    </div>
-</article>
-
-
-
-<div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>AOSP刷机</p>
-    
-    <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-16, 02:06:12</p>
-    <p><span class="copy-title">最后更新:</span>2020-07-04, 18:25:09</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/16/AOSP%E5%88%B7%E6%9C%BA/" title="AOSP刷机">https://primelyw.github.io/2020/01/16/AOSP%E5%88%B7%E6%9C%BA/</a>
-    <p>
-        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-    </p>
-</div>
-
-
-
-
-
-    
-
-
-
-
+        </article>
+        
+        
     </div>
     <div class="copyright">
         <p class="footer-entry">©2020 枫云李</p>
@@ -529,7 +458,7 @@ fastboot </code></pre><p>等待，开机后，一款很土的UI出现了，是�
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#Pwn','#CTF','#CVE','#fuzz','#afl','#auto','#Defcon','#ruby','#lang',],
+            'data': ['#Pwn','#CTF','#CVE','#fuzz','#afl','#auto','#Defcon','#ruby','#lang','#AOSP','#Mobile',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
