@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>finance | 风云阁</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="finance | 风云阁">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyGems">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/23/MyGems/index.html">
+<meta property="og:site_name" content="风云阁">
+<meta property="og:description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135125165.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135109179.png">
+<meta property="article:published_time" content="2020-04-23T05:41:24.548Z">
+<meta property="article:modified_time" content="2020-04-23T05:51:56.833Z">
+<meta property="article:author" content="枫云李">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="auto">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135125165.png">
+
+
+<link rel="icon" href="/img/avatar2.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/github.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar2.jpg" />
+</a>
+<div class="author">
+    <span>枫云李</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+<a class="more-menus">更多菜单</a>
+
+
+<ul>
+    <li><div class="all active">全部文章</div></li>
+    
+        
+            <li><div data-rel="CTF">CTF</div></li>
+        
+    
+        
+            <li><div data-rel="Fuzz">Fuzz</div></li>
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+    </div>
+    <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="24">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://blog.plusls.com/">师父</a></li>
+            
+            <li><a target="_blank" href="https://blog.xhyh.best/">潇晗宇浩</a></li>
+            
+            <li><a target="_blank" href="http://pzhxbz.cn/">pzhxbz</a></li>
+            
+            <li><a target="_blank" href="https://evi0s.com/">evi0s</a></li>
+            
+            <li><a target="_blank" href="https://enivs0rt.github.io/">enivS0rt</a></li>
+            
+            <li><a target="_blank" href="http://sup3rgate.xyz/">SuperGate</a></li>
+            
+            <li><a target="_blank" href="https://ccdragon.cc/">ccdragon</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CVE</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">fuzz</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">afl</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">auto</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Defcon</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">ruby</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">lang</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2020/04/23/MyGems/"
+           data-tag="Pwn,auto"
+           data-author="" >
+            <span class="post-title" title="MyGems">MyGems</span>
+            <span class="post-date" title="2020-04-23 13:41:24">2020/04/23</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/23/%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="虎符网安大赛2020">虎符网安大赛2020</span>
+            <span class="post-date" title="2020-04-23 12:50:42">2020/04/23</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+           data-tag="ruby,lang"
+           data-author="" >
+            <span class="post-title" title="红宝石学习笔记">红宝石学习笔记</span>
+            <span class="post-date" title="2020-04-21 20:18:56">2020/04/21</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="2018网鼎杯">2018网鼎杯</span>
+            <span class="post-date" title="2020-04-15 00:00:00">2020/04/15</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/14/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-14 00:00:00">2020/04/14</span>
+        </a>
+        
+        <a  class="Fuzz "
+           href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
+           data-tag="fuzz,afl"
+           data-author="" >
+            <span class="post-title" title="AFL基础">AFL基础</span>
+            <span class="post-date" title="2020-04-10 12:35:49">2020/04/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/05/CVEs/"
+           data-tag="Pwn,CVE"
+           data-author="" >
+            <span class="post-title" title="CVEs">CVEs</span>
+            <span class="post-date" title="2020-04-05 20:45:40">2020/04/05</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/02/10/NullConCTF2020/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NullConCTF2020">NullConCTF2020</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="强网杯2019">强网杯2019</span>
+            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/N1CTF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="N1CTF2019">N1CTF2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="安洵杯2019">安洵杯2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/07/Advance-rop/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Advance-rop">Advance-rop</span>
+            <span class="post-date" title="2019-11-07 09:50:48">2019/11/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/10/20/heap_details/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="heap_details">heap_details</span>
+            <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/10/12/RoarCTF-2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="RoarCTF-2019">RoarCTF-2019</span>
+            <span class="post-date" title="2019-10-12 00:00:00">2019/10/12</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/22/Pwner/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwner">pwner</span>
+            <span class="post-date" title="2019-07-22 00:00:00">2019/07/22</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/18/tmux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="tmux">tmux</span>
+            <span class="post-date" title="2019-07-18 00:00:00">2019/07/18</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/11/server_misc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="server_misc">server_misc</span>
+            <span class="post-date" title="2019-07-11 00:00:00">2019/07/11</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/07/git_handbook/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="git handbook">git handbook</span>
+            <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/assembly/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="assembly">assembly</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/10/pwning/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwning">pwning</span>
+            <span class="post-date" title="2019-05-10 00:00:00">2019/05/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/01/finance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="finance">finance</span>
+            <span class="post-date" title="2019-05-01 00:00:00">2019/05/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/elf_protector/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="elf_protector">elf_protector</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/shellcode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="shellcode">shellcode</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/04/29/StarCTF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="StarCTF">StarCTF</span>
+            <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-finance" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">finance</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-01-16 02:06:12'>2019-05-01 00:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#金融-指尖笔记"><span class="toc-text">金融 指尖笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#期权"><span class="toc-text">期权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上证180指数投资组合的风险测度"><span class="toc-text">上证180指数投资组合的风险测度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指定年份，计算这时期的上证180的风险"><span class="toc-text">指定年份，计算这时期的上证180的风险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用教程"><span class="toc-text">使用教程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-或-Mac-系统："><span class="toc-text">Linux 或 Mac 系统：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows"><span class="toc-text">Windows:</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附件"><span class="toc-text">附件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows版"><span class="toc-text">Windows版</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux或Mac版"><span class="toc-text">Linux或Mac版</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="金融-指尖笔记"><a href="#金融-指尖笔记" class="headerlink" title="金融 指尖笔记"></a>金融 指尖笔记</h1><h2 id="期权"><a href="#期权" class="headerlink" title="期权"></a>期权</h2><blockquote>
+<p>看涨期权：拥有在交割日以行权价格买入标的物的权利</p>
+<p>看跌期权：拥有在交割日以行权价格卖出标的物的权利</p>
+</blockquote>
+<p>在行权日，期权持有者可以选择或放弃交付。因为买入期权的人拥有选择的权利（option）。</p>
+<p>期权可以买入，那么期权的卖方是谁呢？</p>
+<p>两种期权分别分析。</p>
+<blockquote>
+<p>看涨期权：</p>
+</blockquote>
+<blockquote>
+<p>看涨期权赋予期权买方买入标的物的权利，标的物的来源则来自于卖方。看涨期权的卖方必须拥有标的物。标的物和行权价格形成看涨期权合约这一商品。它就由卖方卖给买方。期权合约这类商品有价值，它的价值就是权利金。下面从两方面分析。</p>
+<p>买方角度：买方以权利金的价格买入期权。到了交割日，若标的物价格大于行权价格，买方必定行使权力，买入标的物，然后再卖出标的物，赚取价格差。若标的物价格小于行权价格，买方肯定放弃行使权力，因为不可能买入标的物然后再卖出，这样亏死。那么买方的收益 = max(0, 即期价格-行权价格) - 权利金</p>
+<p>卖方角度：卖方卖出期权获得权利金。在交割日，买方若行权，卖方必须卖出标的物。买方放弃行权，卖方保留标的物。当即期价格 &gt; 行权价格：卖方卖出标的物，相比于不选择卖出期权合约的情况，显然卖方在出售标的物的收益上处于亏损状态。当即期价格 &lt; 行权价格：买方放弃行权。卖方保留标的物，相比于不选择卖出期权合约的情况，卖方在出售标的物的收益上不亏不赚。卖方的收益 = min(权利金,权利金+即期价格-行权价格)</p>
+</blockquote>
+<blockquote>
+<p>看跌期权:</p>
+</blockquote>
+<blockquote>
+<p>看跌期权赋予买方在交割日以行权价格卖出标的物的权利。买方卖出的标的物必须得有人接手，那个接手的人就是看跌期权的卖方。所以看跌期权合约由行权价格，卖方买入标的物的义务组成。这个义务取决于买方是否行权。</p>
+<p>分析</p>
+<p>买方角度：买方以权利金从卖方出购买期权，付权利金。期权赋予买方在交割日是否选择卖出标的物的权利 。在交割日，若即期价格 &gt; 行权价格，买方肯定放弃卖出，然后以即期价格卖掉标的物赚钱。否则行权肯定亏死。若即期价格 &lt; 行权价格，卖方肯定行权赚钱。买方收益 = max(0 , 行权价格 - 即期价格 ) - 权利金。</p>
+<p>卖方角度：卖方卖出期权获得权利金。若即期价格 &lt; 行权价格， 买方行权，卖方必须以行权价格买入标的物，相比于直接以即期价格买标的物来看，卖方处于亏损状态。若即期价格 &gt; 行权价格，买方放弃行权，卖方无需买入标的物。 卖方收益 = min(权利金，权利金 + 即期价格 - 行权价格)</p>
+</blockquote>
+<p>以上是阿枫对期权的浅显思考，仅参考课件和书本基础知识，没有细查专业知识。如有错误，请留言斧正。</p>
+<h2 id="上证180指数投资组合的风险测度"><a href="#上证180指数投资组合的风险测度" class="headerlink" title="上证180指数投资组合的风险测度"></a>上证180指数投资组合的风险测度</h2><h3 id="指定年份，计算这时期的上证180的风险"><a href="#指定年份，计算这时期的上证180的风险" class="headerlink" title="指定年份，计算这时期的上证180的风险"></a>指定年份，计算这时期的上证180的风险</h3><h3 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h3><p>数据表准备</p>
+<ol>
+<li>在CSMAR数据库下载某一时期的上证180指数的数据表</li>
+<li>另存为数据表，保存到你的工作目录，格式csv，名称“stock”+”number”，比如”stock4”</li>
+</ol>
+<p>代码准备</p>
+<ol start="0">
+<li><p>安装 numpy 和 matplotlib 模块</p>
+</li>
+<li><p>复制代码（有两个版本），保存到当前目录 ，命名。比如”magic.py”</p>
+</li>
+<li><blockquote>
+<h4 id="Linux-或-Mac-系统："><a href="#Linux-或-Mac-系统：" class="headerlink" title="Linux 或 Mac 系统："></a>Linux 或 Mac 系统：</h4></blockquote>
+<blockquote>
+<p>打开Terminal，cd 当前目录，chmod +x magic.py。</p>
+<p>magic.py -i stock_id。例如 导入stock4.csv 文件，开始变魔法。</p>
+<pre><code class="python">./magic.py -i 4</code></pre>
+</blockquote>
+<blockquote>
+<h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows:"></a>Windows:</h4></blockquote>
+<blockquote>
+<p>在IDE里直接 Run。（不熟悉Win，所以直接修改了代码，不用命令行操作）</p>
+<p>数据表和代码放在同一个目录下。</p>
+</blockquote>
+</li>
+<li><p>结果示例</p>
+</li>
+</ol>
+<p><img src="/images/finance.png" alt="finance"></p>
+<h1 id="附件"><a href="#附件" class="headerlink" title="附件"></a>附件</h1><h4 id="Windows版"><a href="#Windows版" class="headerlink" title="Windows版"></a>Windows版</h4><pre><code class="python">#!/usr/bin/env python
+#coding=utf8
+import csv
+import numpy as np
+import argparse
+import random 
+import matplotlib.pyplot as plt
+
+stock_max = None
+stock = []
+stock_exp = []
+stock_var = []
+stock_val = []
+
+def main():
+    print &#39;This is Windows Version&#39;
+    file_id = raw_input(&quot;File Name:&quot;)
+    clean_data(file_id)
+    x = np.array([i for i in range(1,stock_max)])
+    y_list = [];note_list = []
+    note_list.append(&#39;Same weight&#39;);y_list.append(Var(x,1))
+    note_list.append(&#39;Capitalization-weight&#39;); y_list.append(Var(x,0))
+    draw_plot(x,y_list,note_list)
+
+def Var(x,opt):
+        y = []
+        #shuffle
+        global stock;global stock_val
+        com = zip(stock,stock_val)
+        random.shuffle(com)
+        stock = []
+        stock_val = []
+        for i in range(stock_max):
+            stock.append(com[i][0])
+            stock_val.append(com[i][1])
+        #shuffle
+        for n in x:
+            cov_mat = []
+            weight = []
+
+            for i in range(n):
+                cov_mat.append(stock[i])
+            weight_sum = sum(stock_val[0:n])
+            cov_mat = np.mat(np.cov(cov_mat))
+            for i in range(n):
+                weight.append(stock_val[i]/weight_sum)
+            if opt==1 :weight = [1.0/n for i in range(n)]
+            weight = np.mat(weight)
+            var = float(weight*cov_mat*weight.T)
+            var_sqrt = pow(var,0.5)
+            y.append(var_sqrt)
+        return y
+
+
+def draw_plot(x,y,note):
+    for i in range(len(y)):
+        plt.plot(x, y[i], label=note[i])
+    plt.xlabel(&#39;Number of stocks&#39;)
+    plt.ylabel(&#39;Portfolio Standard Deviation&#39;)
+    plt.title(&quot;Finance&quot;)
+    plt.legend()
+    plt.show()
+
+def clean_data(id):
+    with open(id,&#39;r&#39;) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=&#39;,&#39;)
+        line_cnt = 0
+        stock_map = dict()
+        for row in csv_reader:
+            line_cnt+=1
+            if line_cnt&lt;4: continue
+            if row[0] not in stock_map.keys():
+                stock_map[row[0]] = [[],[]]
+            if row[4]==&#39;&#39; or row[3] == &#39;&#39;: continue
+            stock_map[row[0]][0].append(float(row[4]))
+            stock_map[row[0]][1].append(float(row[3]))
+        global stock;global stock_val;global stock_max
+
+        good_len = 120
+
+        #;get good_len:
+        len_map = dict()
+        for i in stock_map:
+            if len(stock_map[i][0]) not in len_map.keys():
+                len_map[len(stock_map[i][0])] = 1
+            else:
+                len_map[len(stock_map[i][0])] += 1
+        cur_max = 0
+        for i in len_map:
+            if len_map[i]&gt;cur_max:
+                good_len = i
+                cur_max = len_map[i]
+        #get good_len: done
+        print &#39;Appearance of one stock:&#39;,good_len
+
+        stock_max = len(stock_map)
+        for i in stock_map:
+            if len(stock_map[i][0])&lt;good_len: continue
+            stock.append(stock_map[i][0][:good_len])
+            stock_val.append(stock_map[i][1][:good_len])
+        for i in range(len(stock_val)):
+            stock_val[i] = np.mean(np.array(stock_val[i]))
+
+        stock_max = len(stock)
+        print &#39;Number of stock:&#39;,stock_max
+
+def parse_args():
+    parser = argparse.ArgumentParser(description=&quot;Give me a stock data , I will give you a chart!&quot;)
+    parser.add_argument(&quot;-i&quot;, &quot;--id&quot;, dest=&quot;id&quot;, help=&quot;stock data ID.&quot;)
+    return parser.parse_args()
+
+if __name__ ==&#39;__main__&#39;:
+    main()
+
+</code></pre>
+<h4 id="Linux或Mac版"><a href="#Linux或Mac版" class="headerlink" title="Linux或Mac版"></a>Linux或Mac版</h4><pre><code class="python">#!/usr/bin/env python
+#coding=utf8
+import csv
+import numpy as np
+import argparse
+import random 
+import matplotlib.pyplot as plt
+
+stock_max = None
+stock = []
+stock_exp = []
+stock_var = []
+stock_val = []
+
+def main():
+    args = parse_args()
+    file_id = args.id
+    clean_data(file_id)
+
+    x = np.array([i for i in range(1,stock_max)])
+    y_list = [];note_list = []
+    note_list.append(&#39;Same weight&#39;);y_list.append(Var(x,1))
+    note_list.append(&#39;Capitalization-weight&#39;); y_list.append(Var(x,0))
+    draw_plot(x,y_list,note_list)
+
+def Var(x,opt):
+        y = []
+        #shuffle
+        global stock;global stock_val
+        com = zip(stock,stock_val)
+        random.shuffle(com)
+        stock = []
+        stock_val = []
+        for i in range(stock_max):
+            stock.append(com[i][0])
+            stock_val.append(com[i][1])
+        #shuffle
+        for n in x:
+            cov_mat = []
+            weight = []
+
+            for i in range(n):
+                cov_mat.append(stock[i])
+            weight_sum = sum(stock_val[0:n])
+            cov_mat = np.mat(np.cov(cov_mat))
+            for i in range(n):
+                weight.append(stock_val[i]/weight_sum)
+            if opt==1 :weight = [1.0/n for i in range(n)]
+            weight = np.mat(weight)
+            var = float(weight*cov_mat*weight.T)
+            var_sqrt = pow(var,0.5)
+            y.append(var_sqrt)
+        return y
+
+
+def draw_plot(x,y,note):
+    for i in range(len(y)):
+        plt.plot(x, y[i], label=note[i])
+    plt.xlabel(&#39;Number of stocks&#39;)
+    plt.ylabel(&#39;Portfolio Standard Deviation&#39;)
+    plt.title(&quot;Finance&quot;)
+    plt.legend()
+    plt.show()
+
+def clean_data(id):
+    with open(&#39;stock&#39;+str(id)+&#39;.csv&#39;,&#39;r&#39;) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=&#39;,&#39;)
+        line_cnt = 0
+        stock_map = dict()
+        for row in csv_reader:
+            line_cnt+=1
+            if line_cnt&lt;4: continue
+            if row[0] not in stock_map.keys():
+                stock_map[row[0]] = [[],[]]
+            if row[4]==&#39;&#39; or row[3] == &#39;&#39;: continue
+            stock_map[row[0]][0].append(float(row[4]))
+            stock_map[row[0]][1].append(float(row[3]))
+        global stock;global stock_val;global stock_max
+
+        good_len = 120
+
+        #;get good_len:
+        len_map = dict()
+        for i in stock_map:
+            if len(stock_map[i][0]) not in len_map.keys():
+                len_map[len(stock_map[i][0])] = 1
+            else:
+                len_map[len(stock_map[i][0])] += 1
+        cur_max = 0
+        for i in len_map:
+            if len_map[i]&gt;cur_max:
+                good_len = i
+                cur_max = len_map[i]
+        #get good_len: done
+        print &#39;Appearance of one stock:&#39;,good_len
+
+        stock_max = len(stock_map)
+        for i in stock_map:
+            if len(stock_map[i][0])&lt;good_len: continue
+            stock.append(stock_map[i][0][:good_len])
+            stock_val.append(stock_map[i][1][:good_len])
+        for i in range(len(stock_val)):
+            stock_val[i] = np.mean(np.array(stock_val[i]))
+
+        stock_max = len(stock)
+        print &#39;Number of stock:&#39;,stock_max
+
+def parse_args():
+    parser = argparse.ArgumentParser(description=&quot;Give me a stock data , I will give you a chart!&quot;)
+    parser.add_argument(&quot;-i&quot;, &quot;--id&quot;, dest=&quot;id&quot;, help=&quot;stock data ID.&quot;)
+    return parser.parse_args()
+
+if __name__ ==&#39;__main__&#39;:
+    main()
+
+</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>finance</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-05-01, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-16, 02:06:12</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/05/01/finance/" title="finance">https://primelyw.github.io/2019/05/01/finance/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2020 枫云李</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Pwn','#CTF','#CVE','#fuzz','#afl','#auto','#Defcon','#ruby','#lang',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/article-list-bg.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+</div>
+
+
+</html>

